@@ -1,0 +1,14 @@
+/* http://www.dailymotion.com/video/xjc81q_integrer-une-maquette-html-css-jquery-orientee-portfolio_lifestyle */
+
+/*
+
+body {
+font-family: helvetica,arial,verdana,sans;
+}
+
+p {clear:both;}
+*/
+* {margin:0;padding:0;}
+#menu {list-style-type:none;text-align:right;padding:80px 30px 0 0;font-size:20px;line-height:30px;}
+#left {background-color: #333; background: url('stripegenerator.jpg') repeat;color:white;width:33%;height:100%;position:fixed;}
+#right {background-color:red;width:67%;float:right;}

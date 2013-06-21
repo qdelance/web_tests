@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tests liens JS et CSS</title>
+		<link href="styles.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="test.js"></script>
+		<style type="text/css">
+		#div2 {
+			background-color: yellow;
+		}
+		</style>
+	</head>
+	<body>
+		<h1>Test liens JS et CSS</h1>
+		<h2>Test JS</h2>
+		
+		<p>Texte ci dessous chargé via JS dans la page, la popup vient d'un fichier externe.</p>
+<script type="text/javascript">
+//<![CDATA[
+document.write("Hello World!")
+//]]>
+</script> 
+		
+		<h2>Test CSS</h2>
+		
+		<div id="div1">Première div</div>
+		<div id="div2">Deuxième div</div>
+		<style type="text/css">
+		#div3 {
+			background-color: red;
+		}
+		</style>
+		
+		<div id="div3">Troisième div</div>
+		
+	</body>
+</html>

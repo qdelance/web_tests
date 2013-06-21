@@ -1,0 +1,265 @@
+﻿<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" >
+		function goToByScroll(id) {
+			$('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
+			// QDE: TODO, is it safer to prevent default behaviour, as we did not use javascript:void(0) on href (danger to scroll as usual instead of using jQuery scrolling ?)
+			//event.preventDefault();
+		}
+		
+		$(document).ready(function() {
+		
+			var initialH2pos = $("#test1h2").offset().top;
+			
+			$(document).scroll(function(event) {
+				if (initialH2pos <= window.scrollY) {
+					$("#test1h2").addClass("sticky");
+				} else {
+					$("#test1h2").removeClass("sticky");
+				}
+				
+				if (window.scrollY > ($(window).height() / 2)) {
+					$("#backToTop").fadeIn();
+				} else {
+					$("#backToTop").fadeOut();
+				}
+			});
+		
+			$("#contact-button").click(function(event){
+				// console.log("list of classes: " + $('#contact').attr('class'));
+				if ($("#contact").hasClass("expanded")) {
+					$("#contact").removeClass("expanded");
+					$("#contact").addClass("non-expanded");
+				} else {
+					$("#contact").removeClass("non-expanded");
+					$("#contact").addClass("expanded");				
+				}
+			});
+			
+			$("#arrows-button").click(function(event){
+				console.log("click, #arrows-button offset top=" + $("#arrows-button").offset().top);
+				if ($("#arrows-button").offset().top - window.scrollY != 0) {
+					// console.log("move up");
+					$("#arrows-button").animate({top: 0},'slow');					
+				} else {
+					//console.log("move down");
+					var newTopValue = $(window).height() - 100; // img is 100px high
+					$("#arrows-button").animate({top: newTopValue},'slow');
+				}
+			});
+			
+			$("#arrows2-button").click(function(event){
+				var newTopValue = $(window).height() - 100; // img is 100px high
+				$("#arrows2-button").animate({top: newTopValue},600, 'linear', function() {
+					$("#arrows2-button").animate({top: 0},'fast');
+				});
+			});
+			
+		});
+		
+		</script>
+		<style>
+		#backToTop {
+			position: fixed;
+			top: 0px;
+			right: 20px;
+			padding: 10px 20px 10px 20px;
+			background-color: #eee;
+		}
+		
+		h2 {
+			background-color: #ccc;
+			/* To avoid conflict with arrows-buttons when in fixed mode */
+			z-index: -1;
+		}
+		
+		/******************** Test with headers *******************************************/
+		.sticky {
+			position: fixed;
+			/* Don't know why, but div is reduced otherwise */
+			width: 100%;
+			top: 0;
+		}
+		
+		/******************** Test with arrows images *******************************************/
+		#arrows-button {
+			position: fixed;
+			top: 0px;
+			right: 300px;
+		}
+		
+		#arrows-button:hover {
+			cursor: pointer;
+		}		
+		
+		#arrows2-button {
+			position: fixed;
+			top: 0px;
+			right: 180px;
+		}
+		
+		#arrows2-button:hover {
+			cursor: pointer;
+		}		
+		
+		/******************** Test with contact form on the right *******************************************/
+		#contact {
+			background-color: blue;
+			position: fixed;
+			top: 100px;
+			width: 300px;
+			
+		}
+		
+		#contact.non-expanded {
+			right: -270px; /* 300px - 30px contact img */		
+		}
+		
+		#contact.expanded {
+			right: 0px;	
+		}		
+		
+		#contact img {
+			float: left;
+		}
+		#contact img:hover {
+			cursor: pointer;
+		}		
+		
+		/* Failed attempt to use vertical pure text, replaced by an img
+		#contact-title {
+			-webkit-transform: rotate(90deg);
+			-moz-transform: rotate(90deg);
+			-o-transform: rotate(90deg);
+			Needed for a <span>, not needed with <p> but I got unexpected positionning
+			position: absolute;
+			font-family: Trebuchet MS,Arial,Helvetica,sans-serif;
+			font-size: 18px;
+			background-color: red;
+			padding-left: 40px; 
+		}
+		*/
+		#contact form {
+			margin-left: 35px;
+		}		
+		
+		#contact input {
+			margin: 10px;
+		}
+		</style>
+		
+	</head>
+	<body>
+		<h1>Tests scroll and animations</h1>
+		
+		<div class="toc">
+			<ul>
+				<li><a href="#test1" onClick="goToByScroll('test1')" title="Link to Test1">Test 1</a></li>
+				<li><a href="#test2" onClick="goToByScroll('test2')" title="Link to Test1">Test 2</a></li>
+				<li><a href="#test3" onClick="goToByScroll('test3')" title="Link to Test1">Test 3</a></li>
+			</ul>
+		</div>
+		
+		<div id="backToTop">
+			<a href="#">Back to top</a>
+		</div>
+		
+		<div id="contact" class="non-expanded">
+		    <!-- Failed attempt to use vertical pure text, replaced by an img -->
+			<!-- <span id="contact-title">Contact</span> -->
+			<img id="contact-button" alt="contact" title="contact" src="img/contact.png">
+			<form action="/contact" method="POST">
+				<label>Your email: <input type="text" name="email"></label><br>
+				<label>Your msg: <input type="textarea" name="msg"></label><br>
+				<input type="submit" value="Send !">
+			</form>
+		</div>
+		
+		<img id="arrows-button" alt="arrows" title="arrows" src="img/arrows.png">
+		<img id="arrows2-button" alt="arrows2" title="arrows2" src="img/arrows2.png">
+		
+		Some tests implemented using those links as source of information :
+		<ul>
+		<li><a href="http://updates.html5rocks.com/2012/08/Stick-your-landings-position-sticky-lands-in-WebKit">Sticky property (not yet supported in FF at the time of my tests, so I had to rely on JS)</a></li>
+		<li><a href="http://www.seomix.fr/">Example (haut de page)</a></li>
+		<li><a href="http://www.canneslions.com/awards/">Example (left side bar, scroll down)</a></li>
+		<li><a href="http://jsbin.com/omanut/2">Example</a></li>
+		<li><a href="http://drupalfr.org/forum/support/developpement/21910-lien-retour-haut-de-page-affiche-selon-conditions">(not used) How to use it in Drupal</a></li>
+		<li><a href="http://imakewebthings.com/jquery-waypoints/">(not used) If I wanted to go further, I may use that</a></li>
+		</ul>
+		
+		<h2 id="test1h2"><a id="test1">Test 1</a></h2>
+		
+		<h3>Qu'est ce que le Lorem Ipsum ?</h3>
+		<p style="width:80%">
+Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.		
+		</p>
+		
+		<h3>D'où vient-il ?</h3>
+		<p style="width:80%">
+L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).		
+		</p>
+
+		<h3>Pourquoi l'utiliser ?</h3>
+		<p style="width:80%">		
+On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).		
+		</p>
+		
+		<h3>Où puis-je m'en procurer ?</h3>
+		<p style="width:80%">
+Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour.		
+		</p>
+		
+		
+		
+		<h2><a id="test2">Test 2</a></h2>
+	
+		<h3>Qu'est ce que le Lorem Ipsum ?</h3>
+		<p style="width:80%">
+Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.		
+		</p>
+		
+		<h3>D'où vient-il ?</h3>
+		<p style="width:80%">
+L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).		
+		</p>
+
+		<h3>Pourquoi l'utiliser ?</h3>
+		<p style="width:80%">		
+On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).		
+		</p>
+		
+		<h3>Où puis-je m'en procurer ?</h3>
+		<p style="width:80%">
+Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour.		
+		</p>	
+		
+		
+		
+		<h2><a id="test3">Test 3</a></h2>
+	
+		<h3>Qu'est ce que le Lorem Ipsum ?</h3>
+		<p style="width:80%">
+Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.		
+		</p>
+		
+		<h3>D'où vient-il ?</h3>
+		<p style="width:80%">
+L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914).		
+		</p>
+
+		<h3>Pourquoi l'utiliser ?</h3>
+		<p style="width:80%">		
+On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).		
+		</p>
+		
+		<h3>Où puis-je m'en procurer ?</h3>
+		<p style="width:80%">
+Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour.		
+		</p>	
+	
+	</body>
+</html>

@@ -1,0 +1,64 @@
+Toujours mettre un h1, si possible avec du texte qu'on ne fait pas apparaître avec text-indent:-9999em (http://peol.github.com/960gridder/, https://drupal.org/)
+
+Mettre des liens d'accessibilité (http://www.alsacreations.com/, http://www.alsacreations.com/article/lire/572-Les-liens-d-evitement.html)
+
+Si grille fixe (pas fluide), partir sur width: X% & margin: 0 auto, attention : http://blog.studiovitamine.com/actualite,107,fr/css-margin,304,fr.html?id=186
+
+Menu déroulant, une bonne méthode semble être d'utiliser superfish (http://users.tpg.com.au/j_birch/plugins/superfish/#examples), attention le module Drupal associé semble charger une version modifiée (améliorée, en particulier pour les tablettes ?). Se soucier de l'accessibilité : http://staff.washington.edu/tft/tests/menus/
+
+===================
+Alsa : 
+mettre attribut title sur les "a" quand il n'y a pas de texte mais juste une image (logo, parfois des menus graphiques) ; mettre un title long bien descriptif (SEO)
+mettre également un alt sur l'image qui reprendre le texte du lien
+mettre les height et width sur les images (optimise le positionnement dans le navigateur qui n'a pas besoin d'avoir fini le téléchargement pour déduire le layout ?)
+penser au SEO sur le nom des images (exemple : logo-alsacreations-com.png)
+
+HEAD ne pas oublier l'entête meta <meta charset="UTF-8"> (simplifiée en HTML 5)
+HEAD ne pas oublier le title, meta keywords et meta description (SEO)
+HEAD 3 directives pour favicon (OMG !)
+HEAD possible de déclarer plein d'autres choses (geolocalisation, icon iPad ?, listes des RSS de la page, viewport)
+
+Semble mieux de mettre 
+
+list-style: none outside none;
+
+que
+
+list-style-type: none;
+
+??? besoin d'un position: relative sur l'élément parent d'un élément à positionner avec position: absolute
+
+TODO :
+pb des 1px entre FF et Chrome (mineur)
+mise en forme des éléments sur le focus
+vrai reset css (bordures bleues sous IE : c'était ca...)
+
+Arret : environ 6-7 h
+
+===================
+CFengine : 
+mettre des line-height sur les a lorsqu'on fait un menu afin que le texte soit centré verticalement (plutôt que de jouer avec height et par exemple margin-top)
+plutôt faire porter la mise en forme des éléments de menu par le a que le ul.li car ainsi - par exemple - c'est tout le rectangle arrondi qui est cliquable (puisque c'est un a et pas un li) ; possible aussi d'envisager de changer la couleur sur un :hover de cette manière
+
+Pour faire apparaître la box-shadow, qui était dans un premier temps couverte par le background de l'élément en dessous, il a fallu utiliser z-index.
+Attention, z-index ne fonctionne que sur un élément avec position: relative
+
+
+
+Divers tests JS:
+
+Balises link et script, et les attributs src ou href
+Penser à mettre JS en bas de page pour optimiser chargement
+Attention à ne pas laisser trainer des appels à console.log() qui plantent si pas firebug ou chrome dev tools
+Possible d'utiliser toSource() pour débugguer les objets jQuery, mais ne marche que sous firebug
+Ne pas appeler des $(document) de jQuery si chargement jQuery en bas de page
+Privilégier <input type="button" ... à <button (meilleur support dans IE)
+<html lang="en"> et <meta charset="utf-8">
+
+======
+Width = X px => ne tient pas compte du padding ni du border (sauf si box-sizing: boder-box;) !!!
+Overflow: auto = "has layout" sous FF sur le test 20_responsive (en cours de debug par Pierre Yves)
+Notion d'em : http://www.alsacreations.com/article/lire/563-gerer-la-taille-du-texte-avec-les-em.html
+Polices : http://www.alsacreations.com/article/lire/631-quelles-polices-pour-un-site-web.html
+
+

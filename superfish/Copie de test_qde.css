@@ -1,0 +1,225 @@
+body {
+font-family: helvetica,arial,verdana,sans;
+}
+
+p {clear:both;}
+
+form {
+background:#eee;
+margin-top:40px;
+padding:20px;
+float:left;
+font-size:80%;
+clear:both;
+}
+
+fieldset {
+float:left;
+width:400px;
+margin-bottom:20px;
+}
+
+div.form-item {
+padding:0.3em 0;
+}
+
+#sooperfish-theme {
+float:left;
+padding:2px;
+clear:both;
+font-weight:bold;
+}
+
+input#set-menu {
+clear:right;
+float:right;
+padding:2px 15px;
+cursor:pointer;
+font-weight:bold;
+}
+
+//Load all themes
+
+/* Theming the menu */
+
+ul#theme3 {
+float:left;
+}
+
+ul#theme3 ul {
+background:#111;
+}
+
+ul#theme3 li a {
+padding:10px 15px;
+font-family:helvetica,arial,verdana,sans;
+text-decoration:none;
+color:#eee;
+background:#222;
+border-bottom:1px solid #eee;
+}
+
+ul#theme3 li a:hover
+,ul#theme3 li a:focus {
+background:#444;
+}
+
+ul#theme3 ul ul {
+border-top:1px solid #eee;
+margin-top:-1px;
+}
+
+ul#theme3 span.sf-arrow {
+top:18px;
+right:2px;
+background-image:url(images/arrows-white.png);
+}
+
+ul#theme3 ul span.sf-arrow {
+right:12px;
+top:16px;
+}
+
+
+/* Theming the menu */
+
+ul#theme2 {
+float:left;
+text-transform:uppercase;
+font-weight:bold;
+}
+
+ul#theme2 ul {
+text-transform:none;
+font-weight:normal;
+}
+
+ul#theme2 li a {
+padding:10px 15px;
+font-family:helvetica,arial,verdana,sans;
+text-decoration:none;
+color:#000;
+background-color:#fff;
+font-size:80%;
+}
+
+ul#theme2 ul li a {
+opacity:0.9;
+text-transform:lowercase;
+}
+
+ul#theme2 li a:hover
+,ul#theme2 li a:focus {
+
+}
+
+ul#theme2 ul ul {
+margin-top:-1px;
+}
+
+ul#theme2 {
+top:18px;
+right:2px;
+}
+
+ul#theme2 span.sf-arrow {
+top:16px;
+right:0;
+}
+
+ul#theme2 ul span.sf-arrow {
+right:12px;
+top:16px;
+}
+
+/* Configuration of menu width */
+
+html body ul#theme1 ul
+,html body ul#theme1 ul li {
+width:200px;
+}
+html body ul#theme1 ul ul {
+margin:0 0 0 200px;
+}
+
+/* Theming the menu */
+
+ul#theme1 {
+float:left;
+font-size:120%;
+border:solid #aeff5e;
+border-width:0 5px 0 5px;
+}
+
+ul#theme1 ul {
+border-bottom:5px solid #aeff5e;
+background:#222;
+}
+
+ul#theme1 li a {
+padding:20px 30px;
+font-family:"Lucida Sans","Century Gothic","Franklin Gothic Book","Franklin Gothic",helvetica,arial,verdana,sans;
+text-decoration:none;
+background:#222;
+color:#fff;
+}
+
+ul#theme1 ul li a {
+padding:10px 15px;
+}
+
+ul#theme1 li a:hover
+,ul#theme1 li a:focus {
+color:#aeff5e;
+}
+
+ul#theme1 span.sf-arrow {
+top:28px;
+right:6px;
+background-image:url(images/arrows-white.png);
+}
+
+ul#theme1 ul span.sf-arrow {
+right:12px;
+top:16px;
+}
+
+/* Theming the menu */
+
+ul#theme4 {
+float:left;
+}
+
+ul#theme4 ul {
+background:#eee;
+}
+
+ul#theme4 li a {
+padding:10px 15px;
+font-family:helvetica,arial,verdana,sans;
+text-decoration:none;
+color:#000;
+background:#ddd;
+border-bottom:1px solid #000;
+}
+
+ul#theme4 li a:hover
+,ul#theme4 li a:focus {
+color:#eee;
+background:#222;
+}
+
+ul#theme4 ul ul {
+border-top:1px solid #000;
+margin-top:-1px;
+}
+
+ul#theme4 span.sf-arrow {
+top:18px;
+right:0;
+}
+
+ul#theme4 ul span.sf-arrow {
+right:12px;
+top:16px;
+}

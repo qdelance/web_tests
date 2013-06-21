@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery-1.8.3.js"></script>
+		<link rel="stylesheet" href="js/jcarousel/styles.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="js/jcarousel/skins/tango/skin.css" />
+		<style>
+.imgBox {
+	height: 407px; /* 375px + 2 * 15px + 2 * 1px */
+	width: 306px; /* 274px + 2 * 15px + 2 * 1px */
+	padding: 0;
+	margin: 15px;
+	display: block;
+	float: left;
+}	
+
+.imgBox img {
+	background-color: #ccc;
+	border: 1px solid #aaa;
+	padding: 15px;
+}		
+		</style>
+	</head>
+	<body>
+		<h1>Tests images</h1>
+		
+		<h2>Test Carousel</h2>
+
+		<p>
+		Work in progress using the following library: <a href="http://sorgalla.com/projects/jcarousel/">jCarousel</a><br>
+		Here is a link for a custom <a href="http://www.queness.com/post/3036/create-a-custom-jquery-image-gallery-with-jcarousel">carousel display</a><br>
+		Another <a href="http://www.script-tutorials.com/content-slider-with-jcarousel/">one</a>
+		</p>
+		
+		<script>
+$(document).ready(function() {
+	
+	 $('#jcarousel').jcarousel({
+    	wrap: 'circular'
+    });
+
+});
+		</script>
+		
+		<ul id="jcarousel" class="jcarousel-skin-tango">
+			<li><img alt="image1" src="images/carousel/1.jpg" alt="image1" width="300" height="225"></li>
+			<li><img alt="image1" src="images/carousel/2.jpg" alt="image2" width="300" height="225"></li>
+			<li><img alt="image1" src="images/carousel/3.jpg" alt="image3" width="300" height="225"></li>
+			<li><img alt="image1" src="images/carousel/4.jpg" alt="image4" width="300" height="225"></li>
+			<li><img alt="image1" src="images/carousel/5.jpg" alt="image5" width="300" height="225"></li>
+			<li><img alt="image1" src="images/carousel/6.jpg" alt="image6" width="300" height="225"></li>
+		</ul>
+		
+		<h2>Test Cycle</h2>
+		
+		<script>
+$(document).ready(function() {
+	
+	$('#fade').cycle();
+	
+	$('#right').cycle({ 
+		fx:      'fade',
+		speed:  'fast', 
+		next:   '#right', 
+		timeout:  0
+	});
+});
+		</script>
+
+		<p>Here are 2 set of pictures cycling (click on the second one to go on with the next picture) implemented with <a href="http://jquery.malsup.com/cycle/">jQuery cycle plugin</a>.
+		<div id="fade" class="imgBox">
+			<img alt="image1" width="274" height="375" src="images/cycle/1.jpg">
+			<img alt="image2" width="274" height="375" src="images/cycle/2.jpg">
+			<img alt="image3" width="274" height="375" src="images/cycle/3.jpg">
+		</div>
+		
+		<div id="right" class="imgBox">
+			<img alt="image1" width="274" height="375" src="images/cycle/1.jpg">
+			<img alt="image2" width="274" height="375" src="images/cycle/2.jpg">
+			<img alt="image3" width="274" height="375" src="images/cycle/3.jpg">
+		</div>
+		
+		<div style="clear:both" />
+
+		
+		<!-- scripts below to optimize display -->
+		<script src="js/jquery.cycle.lite.js"></script>
+		<script src="js/jcarousel/lib/jquery.jcarousel.js"></script>
+	</body>
+</html>

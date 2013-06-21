@@ -1,0 +1,200 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* CSS start here */
+
+body {
+    color: #646464;
+	font-family: 'Myriad',arial,Helvetica,sans-serif;
+	/* font: <font-size>/<line-height> */
+    font: 14px/21px;
+}
+
+#page {
+
+}
+
+#header-wrapper {
+	background-color: #FFFAF0;
+	box-shadow: 0 4px 8px #555555;
+	z-index: 1; /* position: relative needed below*/
+	position: relative;
+}
+
+#header {
+	width: 980px;
+	margin: 0 auto;
+	height: 105px;
+	position: relative;
+}
+
+#separator {
+	border-top: 2px dashed #B5B5A8;
+	height: 5px;
+}
+
+#header h1 img {
+	position: absolute;
+	top: 40px;
+}
+
+#login {
+	position: absolute;
+	float: right;
+	right: 490px;
+	bottom: 65px;
+}
+
+#search {
+	position: absolute;
+	float: right;
+	right: 300px;
+	bottom: 65px;
+	height: 26px;
+}
+
+#search_button {
+	float: left;
+	height: 26px;
+}
+
+#search_text {
+	float: left;
+	width: 135px;
+	height: 22px;
+	border: 1px solid #B8B4A2;
+	border-radius: 0 5px 5px 0;
+}
+
+#social-menu {
+	list-style: none outside none;
+	position: absolute;
+	float: right;
+	right: 150px;
+	bottom: 65px;
+}
+
+#menu {
+	list-style: none outside none;
+	position: absolute;
+	float: right;
+	right: 150px;
+	bottom: 19px;
+}
+
+#social-menu  li {
+	float: left;
+	margin-left: 1px;
+}
+
+#social-menu  a {
+	display: block;
+	font-size: 0;
+	line-height: 0;
+}
+
+#menu li {
+	float: left;
+	margin-left: 7px;
+}
+
+#menu a {
+	color: white;
+	display: block;
+	line-height: 27px;
+	text-decoration: none;
+	padding: 0 12px 0 12px;
+	text-align: center;
+	background-color: #F8851B;
+	border-radius: 4px 4px 4px 4px;
+}
+
+#menu a.active {
+	color: #4D465E;	
+}
+
+#teaser-wrapper {
+	background: url('img/background-grey.png');
+	color: white;
+	font-size: 14px;
+}
+
+#teaser {
+	padding-top: 25px;
+	width: 970px;
+	height: 266px;
+	margin: 0 auto;
+}
+
+#teaser h1 {
+    font-size: 36px;
+    font-weight: normal;
+    line-height: 32px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+#teaser h2 {
+    font-size: 16px;
+	font-weight: bold;
+    margin: 10px 0;
+}
+#teaser-img {
+	float: left;
+}
+
+#teaser-text {
+	padding-left: 200px;
+
+}
+
+#teaser li {
+	background: url('img/puce_blanche.png') no-repeat left 5px;
+	padding-left: 15px;
+	font-size: 14px;
+	line-height: 1.5;
+}

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:addthis="http://www.addthis.com/help/api-spec" lang="en"><head>
+<!-- base href="http://cfengine.com/" -->
+<!--
+
+	This website is powered by Contao Open Source CMS :: Licensed under GNU/LGPL
+	Copyright ©2005-2012 by Leo Feyer :: Extensions are copyright of their respective owners
+	Visit the project website at http://www.contao.org for more information
+
+//-->
+<title>Why CFEngine - CFEngine - Distributed Configuration Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<link rel="canonical" href="http://cfengine.com/why-cfengine">
+
+
+
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<![endif]--> 
+
+<meta name="robots" content="index,follow">
+
+<link rel="shortcut icon" href="http://cfengine.com/favicon.ico" type="image/x-icon">
+<link rel="icon" href="http://cfengine.com/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="http://cfengine.com/touch-icon-iphone.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://cfengine.com/touch-icon-ipad.png">
+<link rel="apple-touch-icon" sizes="114x114" href="http://cfengine.com/touch-icon-iphone4.png">
+
+<link rel="stylesheet" type="text/css" href="why-cfengine_fichiers/styles_new.css" media="all">
+<link rel="stylesheet" type="text/css" href="why-cfengine_fichiers/navigations_new.css" media="all">
+
+
+<link rel="stylesheet" href="why-cfengine_fichiers/shCore.css" media="screen">
+<link type="application/rss+xml" rel="alternate" href="http://cfengine.com/CFE_blog.xml" title="CFEngine blog">
+<link type="application/rss+xml" rel="alternate" href="https://cfengine.com/CFE_events.xml" title="CFEngine events">
+<script src="why-cfengine_fichiers/mlt.js" type="text/javascript" async=""></script><script src="why-cfengine_fichiers/ga.js" async="" type="text/javascript"></script><script src="why-cfengine_fichiers/98544bd989e7.js"></script>
+
+<script>
+SyntaxHighlighter.defaults.toolbar = false;
+SyntaxHighlighter.all();
+</script>
+
+
+<script type="text/javascript" src="why-cfengine_fichiers/jquery.js"></script>
+
+
+
+
+
+ <!--[if IE 6]>
+   <script type="text/javascript" src="tl_files/cfengine/js/ie6.js"></script>
+<![endif]--> 
+ 
+  <!--[if IE 7]>
+   <script type="text/javascript" src="tl_files/cfengine/js/ie7.js"></script>
+<![endif]--> 
+ 
+
+
+ 
+ 
+
+
+<script type="text/javascript">
+    function redirect(url)
+    {
+        window.location.href=url;
+    }
+</script>
+        
+       
+        
+        
+        
+ <!--[if lte ie 6]>
+    <link rel="stylesheet" type="text/css" href="tl_files/cfengine/css/ie6.css?v=110" media="all" />
+<![endif]-->
+  <!--[if ie 7]>
+    <link rel="stylesheet" type="text/css" href="tl_files/cfengine/css/ie7.css?v=110" media="all" />
+<![endif]-->
+<!--[if ie 8]>
+    <link rel="stylesheet" type="text/css" href="tl_files/cfengine/css/ie7.css?v=110" media="all" />
+<![endif]-->
+
+   
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#ctrl_73').addClass("text_light");
+    
+    $('#ctrl_73').focus( function() {
+        if ($.trim($('#ctrl_73').val()) == 'Search' ) {
+            $('#ctrl_73').val('');
+            $('#ctrl_73').removeClass("text_light");
+    	}
+   });
+
+    $('#ctrl_73').blur(function() {
+        if ($.trim($('#ctrl_73').val()) == '') {
+            $('#ctrl_73').val('Search');
+            $('#ctrl_73').addClass("text_light");
+    	}
+    });
+
+    $('#header .mod_form form').submit(function() {
+        if ($.trim($('#ctrl_73').val()) == 'Search') {
+            $('#ctrl_73').val('');
+            $('#ctrl_73').addClass("text_light");
+    	}
+    });
+    if ($.trim($('#ctrl_73').val()) != 'Search') {
+         $('#ctrl_73').removeClass("text_light");
+    }
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2576171-2']);
+  _gaq.push(['_setDomainName', 'cfengine.com']);
+    _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<!-- HT Code -->
+<script type="text/javascript">
+(function(){ var ht = document.createElement('script');ht.async = true;
+ ht.type='text/javascript';ht.src = '//95585.hittail.com/mlt.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ht, s);})();
+</script>	
+<!-- HT Code --> 
+
+</head>
+
+<body id="top" class=" mac chrome ch21">
+  <div id="header">
+    <div class="wrapper">
+        <div id="logo" class="logo_active">
+                            <a href="http://cfengine.com/">
+                    <img src="why-cfengine_fichiers/logo8.png" alt="CFEngine">
+                </a>
+             
+        </div>
+
+        <div id="nav_wrapper" class="un_logged_nav">
+
+            <div id="header_block">
+                <div class="l_link" id="login_block"> 
+                    
+<div id="loginnav">
+
+<a href="http://cfengine.com/login">Login</a>&nbsp;<span>/</span>&nbsp;<a href="http://cfengine.com/register">Register</a>
+</div>
+ 
+
+                    
+<div id="search">
+
+<!-- indexer::stop -->
+<div class="mod_form tableless block">
+
+<form action="search" id="f9" method="get" enctype="application/x-www-form-urlencoded">
+<div class="formbody">
+  <div class="submit_container">
+    <input src="why-cfengine_fichiers/search_btn3_single.png" id="ctrl_74" class="submit" title="Search" alt="Search" type="image"> 
+  </div>
+     
+  <input name="keywords" id="ctrl_73" class="text text_light" value="Search" type="text"></div>
+</form>
+
+</div>
+<!-- indexer::continue -->
+
+</div>
+            
+
+
+                    <div id="social">
+                        <span>
+                            <a class="facebook" title="Join us on Facebook" target="_blank" href="http://www.facebook.com/pages/Cfengine/311003700627?ref=ts"></a>
+                            <a class="twitter" title="Join us on Twitter" target="_blank" href="http://twitter.com/cfengine_news"></a>
+                            <a class="linkedin" title="Join us on LinkedIn" target="_blank" href="http://www.linkedin.com/groups?gid=136574&amp;trk=hb_side_g"></a>
+                            <a class="rss" title="Subscribe to our RSS feeds" target="_blank" href="http://cfengine.com/rss"></a>
+                            <a class="support" title="Support" href="http://cfengine.com/Support"></a>
+                            <a class="contactus last" title="Contact Us" href="http://info.cfengine.com/ContactUs.html"></a>
+                        </span>
+                    </div>
+
+                </div>
+
+                
+<div id="mainnav">
+<!-- indexer::stop -->
+<div class="mod_navigation block ">
+
+<a href="http://cfengine.com/why-cfengine#skipNavigation6" class="invisible">Skip navigation</a>
+<ul class="clearfix level_1">
+        
+       
+       
+    
+    
+<li class="level_1 
+    active_first  
+        first     ">
+    <span class="level_1 active first">
+        Why CFEngine    </span>
+    
+</li>
+        
+       
+       
+    
+    
+<li class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/products" class="level_1 submenu sibling">
+        Products &amp; Services    </a>
+   <ul class="clearfix level_2">
+        
+       
+       
+    
+    
+<li class=" level_2 first">
+    <a href="http://cfengine.com/what-is-cfengine" class="level_2 first">
+        What is CFEngine?    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/community" class="level_2">
+        Community Edition    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/enterprise" class="level_2">
+        Enterprise Edition    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/oem-cfengine" class="level_2">
+        Smart Infrastructure    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/cfengine-design-center" class="level_2">
+        CFEngine Design Center    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/training" class="level_2">
+        CFEngine Training    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 last">
+    <a href="http://cfengine.com/consultancy" class="level_2 last">
+        CFEngine Consulting    </a>
+   </li>
+</ul></li>
+        
+       
+       
+    
+    
+<li class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/manuals" class="level_1 submenu sibling">
+        Resources    </a>
+   <ul class="clearfix level_2">
+        
+       
+       
+    
+    
+<li class=" level_2 first">
+    <a href="http://cfengine.com/manuals" class="level_2 first">
+        User Manuals &amp; Docs    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="https://cfengine.com/forum/" class="level_2">
+        Community Forum    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/downloads" class="level_2">
+        CFEngine Downloads    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/support" class="level_2">
+        Help &amp; Support    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/demos" class="level_2">
+        Videos &amp; Webinars    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/solutions" class="level_2">
+        Solutions    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/upgrade-from-cfengine-2-to-cfengine-3" class="level_2">
+        CFEngine 2 to CFEngine 3    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/techFaq" class="level_2">
+        Technical FAQ    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="https://cfengine.com/manuals/cf3-solutions" class="level_2">
+        Code Examples    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 last">
+    <a href="http://cfengine.com/science" class="level_2 last">
+        CFEngine Science    </a>
+   </li>
+</ul></li>
+        
+       
+       
+    
+    
+<li class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/company" class="level_1 submenu sibling">
+        Company    </a>
+   <ul class="clearfix level_2">
+        
+       
+       
+    
+    
+<li class=" level_2 first">
+    <a href="http://cfengine.com/news" class="level_2 first">
+        What's new?    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/events" class="level_2">
+        Upcoming Events    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/people" class="level_2">
+        Leadership    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/use_cases" class="level_2">
+        Customers    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/jobs" class="level_2">
+        Careers    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 ">
+    <a href="http://cfengine.com/blog" class="level_2">
+        Blog    </a>
+   </li>
+        
+       
+       
+    
+    
+<li class=" level_2 last">
+    <a href="http://info.cfengine.com/ContactUs.html" class="level_2 last">
+        Contact Us    </a>
+   </li>
+</ul></li>
+        
+       
+       
+    
+    
+<li class=" level_1 sibling">
+    <a href="http://cfengine.com/events" class="level_1 sibling">
+        Events    </a>
+   </li>
+    </ul> 
+<a name="skipNavigation6" id="skipNavigation6" class="invisible">&nbsp;</a>
+
+</div>
+<!-- indexer::continue -->
+</div>
+            </div>
+        </div>
+        <a id="try_now" href="http://cfengine.com/enterprise-demo">Try now</a>
+        <div class="fclear"></div>
+    </div>
+<div class="fclear"></div>
+<div id="divider_top"></div>
+</div>
+<div id="top_spacer"></div>
+<div class="fclear"></div>
+
+        <div id="topic">
+            <div class="wrapper">
+                
+<div id="topic_content">
+<div class="mod_article block" id="why_title">
+
+<div class="cfe_topic_el ce_CFEText_topics block">
+    <div id="topic_icon">
+                    <img src="why-cfengine_fichiers/get_started.png" alt="" height="156" width="148">
+            </div>    
+    <div id="topic_text">    
+            
+            <h1>Why CFEngine</h1>
+        
+            
+            <h2>The best Configuration Management Solution if you need:</h2>
+        
+            
+            <p>✔&nbsp; The Fastest and most Scalable Solution<br>✔&nbsp; To know the Actual State of your Systems<br>✔&nbsp; The Solution with the Best Security Track-record<br>✔&nbsp; Full Flexibility and Granular Control<br>✔&nbsp; A Mature and Enterprise ready Solution</p>
+            
+    </div>    
+</div>
+
+
+</div>
+
+
+</div>
+                <div class="fclear"></div>
+            </div>
+               <div class="fclear"></div>
+            <div class="gray_dashed"></div>
+        </div> 
+        <div class="fclear"></div>
+<div id="content">
+    <div class="wrapper">
+        <div id="maincontent" class="cols2_default two_cols ">
+                            <div id="nav_left">
+                    
+                    <div class="fclear"></div>
+                </div>  
+                <div class="main_with_menu">
+                                        <div class="mod_article block" id="why-cfengine">
+
+<div class="ce_CFEText_products block">
+    <div id="tempDownText">   
+        
+
+
+            
+
+
+                                            </div>        
+                <table style="width: 900px;" border="0">
+<tbody>
+<tr>
+<td>
+<p><a title="CFEngine 3 Enterprise for IT Executives" href="http://info.cfengine.com/CFEngine-3-Enterprise-for-IT-Executives.html"><img style="border: 1px solid black;" title="Download the CFEngine 3 Enterprise White Paper" src="why-cfengine_fichiers/white-paper-thumb.png" alt="Download the CFEngine 3 Enterprise White Paper" height="193" width="150"></a></p>
+
+<p><a title="CFEngine 3 Enterprise for IT Executives" href="http://info.cfengine.com/CFEngine-3-Enterprise-for-IT-Executives.html">Download the whitepaper</a></p>
+
+</td>
+<td width="40px">&nbsp;</td>
+<td>
+<h2>✔ The Fastest and most Scalable Solution</h2>
+<p>CFEngine Agents execute within 1-2 seconds. Within 5 minutes you can 
+roll-out a global change regardless of size. The responsiveness is 
+uniquely fast. The largest deployment of CFEngine runs on more than 
+100,000 servers.</p>
+
+<h2><br>✔ Know the Actual State of your Systems</h2>
+<p>With CFEngine you will get information about the Actual state on your
+ system, and not only the intended state. CFEngine Agents probe the 
+system every 2.5 minutes by default, and frequent report collection 
+ensures that you at<br>all times will be able to see what the current state of all your machines, services and settings are.</p>
+
+<h2><br>✔ Best Security Track-record</h2>
+<p>CFEngine has very few third party dependencies. Since its inception 
+back in 1993 less than a handful of security vulnerabilities have been 
+published. That's almost 20 years of excellent track-record, and a big 
+reason why CFEngine is so popular among industries like finance, 
+government, oil and gas.</p>
+
+<h2><br>✔ Full Flexibility and Granular Control</h2>
+<p>CFEngine gives you more granular control than any other Configuration
+ management Solution in the industry. Our System Engineers have&nbsp; 
+full control to automate their systems at whatever level they want. 
+CFEngine Agents operates at file-level, and conduct changes in the 
+actual files as opposed to doing snapshot comparisons and whole 
+file-replacements. Thanks to abstractions (called Bundles), it is easy 
+to elevate policies to a high-level language.</p>
+
+<h2><br>✔ A Mature and Enterprise ready Solution</h2>
+<p>CFEngine has been running in large-scale production environments for 
+more than 15 years. If you want a thoroughly tested solution that is 
+built on technology agnostic concepts to ensure your configuration 
+solution will continue to work tomorrow, CFEngine is a safe bet.</p>
+
+</td>
+</tr>
+</tbody>
+</table>                                                <div class="fclear"></div>  
+
+            </div>
+</div>
+
+
+
+</div>
+
+ 
+                    <div id="container">
+                        <!-- indexer::continue -->
+                        
+<div id="left_c">
+&nbsp;
+</div>
+                        
+<div id="right_c">
+&nbsp;
+</div>
+                        <!-- indexer::stop -->
+                        <div class="fclear"></div>
+                    </div>    
+                </div>
+             <div class="fclear"></div>
+            </div>            </div>
+    <div class="fclear"></div>
+    
+<div class="fclear"></div>        
+
+
+
+
+<!-- indexer::stop -->
+<div id="logoline">
+    <div class="wrapper">
+        <a id="contact_us_stamp" href="http://cfengine.com/contactUs">Contact us</a>
+        <div id="logoline_img"><a href="http://cfengine.com/use_cases"><img src="why-cfengine_fichiers/logo_line2.png" alt="Use cases"></a></div>
+    </div>
+</div>
+<div class="fclear"></div>
+<div id="footer">
+    <div class="wrapper">
+        <!-- indexer::stop -->
+<div class="mod_navigation block ">
+
+<a href="http://cfengine.com/why-cfengine#skipNavigation68" class="invisible">Skip navigation</a>
+<ul class="clearfix level_1">
+         
+<li class="level_1 
+    active_first  first   "><span class="level_1 active first">Why CFEngine</span> </li>
+         
+<li id="products" class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/products" class="level_1 submenu sibling">
+        Products &amp; Services    </a>
+   <ul class="clearfix level_2">
+         
+<li class=" level_2 first">
+    <a href="http://cfengine.com/what-is-cfengine" class="level_2 first">
+        What is CFEngine?    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/community">
+        Community Edition    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/enterprise">
+        Enterprise Edition    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/oem-cfengine">
+        Smart Infrastructure    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/cfengine-design-center">
+        CFEngine Design Center    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/training">
+        CFEngine Training    </a>
+   </li>
+         
+<li class=" level_2 last">
+    <a href="http://cfengine.com/consultancy" class="level_2 last">
+        CFEngine Consulting    </a>
+   </li>
+</ul>
+</li>
+         
+<li id="manuals" class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/manuals" class="level_1 submenu sibling">
+        Resources    </a>
+   <ul class="clearfix level_2">
+         
+<li class=" level_2 first">
+    <a href="http://cfengine.com/manuals" class="level_2 first">
+        User Manuals &amp; Docs    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="https://cfengine.com/forum/">
+        Community Forum    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/downloads">
+        CFEngine Downloads    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/support">
+        Help &amp; Support    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/demos">
+        Videos &amp; Webinars    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/solutions">
+        Solutions    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/upgrade-from-cfengine-2-to-cfengine-3">
+        CFEngine 2 to CFEngine 3    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/techFaq">
+        Technical FAQ    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="https://cfengine.com/manuals/cf3-solutions">
+        Code Examples    </a>
+   </li>
+         
+<li class=" level_2 last">
+    <a href="http://cfengine.com/science" class="level_2 last">
+        CFEngine Science    </a>
+   </li>
+</ul>
+</li>
+         
+<li id="company" class=" level_1 submenu sibling">
+    <a href="http://cfengine.com/company" class="level_1 submenu sibling">
+        Company    </a>
+   <ul class="clearfix level_2">
+         
+<li class=" level_2 first">
+    <a href="http://cfengine.com/news" class="level_2 first">
+        What's new?    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/events">
+        Upcoming Events    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/people">
+        Leadership    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/use_cases">
+        Customers    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/jobs">
+        Careers    </a>
+   </li>
+         
+<li class=" level_2 ">
+    <a href="http://cfengine.com/blog">
+        Blog    </a>
+   </li>
+         
+<li class=" level_2 last">
+    <a href="http://info.cfengine.com/ContactUs.html" class="level_2 last">
+        Contact Us    </a>
+   </li>
+</ul>
+</li>
+         
+<li id="events" class=" level_1 sibling">
+    <a href="http://cfengine.com/events" class="level_1 sibling">
+        Events    </a>
+   </li>
+    </ul>
+ 
+<a name="skipNavigation68" id="skipNavigation68" class="invisible">&nbsp;</a>
+
+</div>
+<!-- indexer::continue -->    
+    <div class="fclear"></div>
+
+
+    <div class="fclear"></div>
+    
+    </div>
+</div>
+<div id="copyright_line">
+    <div class="wrapper">
+    
+<div id="contact_us_footer">
+
+Contact us: USA  +1 650 257 0233, International: +47 21 39 94 50 - <a href="mailto:contact@cfengine.com">contact@cfengine.com</a><br>
+CFEngine AS - Borggata 1, 0650 Oslo, Norway. CFEngine, Inc. 251 High Street, Suite B
+Palo Alto, CA  94301
+<a id="cf_agent" href="http://cfengine.com/ContactUs">Contact Us</a>
+</div>
+    <div class="fclear"></div>
+        <p class="copyright">                  
+            Copyright 2008-2012 CFEngine AS - All rights reserved
+        </p>   
+    </div>
+</div>
+
+<a id="newsletter_btn_static" class="newsletter_left" href="http://info.cfengine.com/Subscribe.html" title="Subscribe to newsletter"></a>
+<script type="text/javascript">
+function changeNewsletterBtnPosition(){
+    if ($(document).width() < 1050) {
+        if ($("#newsletter_btn_static").hasClass('newsletter_left')) {
+            $("#newsletter_btn_static").removeClass('newsletter_left').addClass('newsletter_bottom');
+        }
+    }
+    else if ($("#newsletter_btn_static").hasClass('newsletter_bottom')) {
+            $("#newsletter_btn_static").removeClass('newsletter_bottom').addClass('newsletter_left');            
+        }
+}    
+
+function scrollPageWithFixedHeader(hash) {
+    hash = hash.replace('#', '');
+    if (hash != '') {
+        if ($("a[name='"+ hash +"']").length >0) {
+            var offset   = $("a[name='"+ hash +"']").offset();
+            var scrollto = offset.top-90;
+            $('html').scrollTop(scrollto);
+        }
+    }
+} 
+
+
+$(window).resize(function() {
+    changeNewsletterBtnPosition();
+});
+
+// scroll page if anchored
+$(document).ready(function(){
+        $("a[href*='#']").click( function() {
+            var page_url = window.location.pathname;
+            var link_url = $(this).attr('href').split('#')[0];
+
+            if (page_url != link_url) {
+                return true;
+            }
+            
+            var page_hash = window.location.hash.slice(1);
+            var link_hash = $(this).attr('href').substring($(this).attr('href').indexOf('#')+1); 
+            
+            //new hash is different and element exist on page
+            if(page_hash != link_hash && $("a[name='"+ link_hash +"']").length >0) {
+                    window.location.hash = link_hash;
+                    scrollPageWithFixedHeader(link_hash);
+                    return false;
+            } 
+        });        
+});
+
+$(window).scroll(function(){
+    if($(window).scrollTop() > 120) {
+        if (!$("#header").hasClass('header_short')) {
+            $('#login_block').fadeOut("slow", function () {
+                $('#header').addClass('header_short');
+               // scrollPageWithFixedHeader(window.location.hash);
+            });
+        }
+    }
+    else
+    {
+        if ($("#header").hasClass('header_short')) {
+            $('#header').removeClass('header_short');
+            $('#login_block').fadeIn("slow");
+        }
+    }
+});
+
+</script>    
+
+
+
+    <script src="why-cfengine_fichiers/munchkin.js" type="text/javascript"></script>
+        <script type="text/javascript">mktoMunchkin("205-ONE-981");</script> 
+
+
+
+
+</body></html>

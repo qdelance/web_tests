@@ -1,0 +1,38 @@
+#coverflow {
+/* In design mag, they are putting perspective and perspective-origin properties here ??? */
+}
+
+#coverflow ul {
+	margin: 0;
+	padding: 0;
+	height: 200px;
+	width: 2200px; /* 11 pictures of 200px */
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-perspective: 2500px;
+	-webkit-perspective-origin: 1100px 100px;
+	-moz-perspective: 2500px;
+	-moz-perspective-origin: 1100px 100px;
+	perspective: 2500px;
+	perspective-origin: 1100px 100px;
+}
+
+#coverflow ul li {
+	display: inline-block;
+	border: solid 3px black;
+}
+
+#coverflow ul li.left {
+	-webkit-transform: rotateY(45deg);
+	-webkit-transform-origin: 0px;
+	transform: scale(0.75, 0.75) translateY(-20px) rotateY(45deg);
+	transform-origin: 0px;
+}
+
+#coverflow ul li.right {
+	-webkit-transform: rotateY(-45deg);
+	-webkit-transform-origin: 200px;
+	transform: scale(0.75, 0.75) translateY(-20px) rotateY(-45deg);
+	transform-origin: 200px; /* right size of the image whose width = 200px */
+}

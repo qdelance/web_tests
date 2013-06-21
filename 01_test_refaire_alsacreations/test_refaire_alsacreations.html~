@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Alsacréations : Actualités et tutoriels HTML, HTML5, CSS, CSS3, standards du web</title>
+
+	<link href="http://www.alsacreations.com/favicon.ico" rel="shortcut icon">
+	<link href="http://www.alsacreations.com/favicon.ico" type="image/x-icon" rel="icon">
+	<link href="http://www.alsacreations.com/favicon.png" type="image/png" rel="icon">
+
+	<meta content="xhtml, html5, css, css3, feuilles de style, standards, web, internet, création, php, forum, quiz, concours, apprendre, cms, accessibilité" name="keywords">
+	<meta content="Alsacréations est une communauté dédiée à la conception de sites web de qualité, aux standards W3C, aux feuilles de styles CSS, aux langages HTML et XHTML, et à l'accessibilité" name="description">
+
+	<link href="css/styles.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="page">
+
+<div id="header">
+<h1 class="logo">
+	<a title="Alsacréations, apprentissage des standards web, accueil" href="http://full_url_pour_seo">
+	<img src="css/logo-alsacreations-com.png" />
+	</a>
+</h1>
+
+<ul id="menu">
+    <li id="menu-apprendre"><a title="Apprendre les langages du web : HTML, CSS, JavaScript" href="http://www.alsacreations.com/apprendre/"><img width="111" height="28" alt="Apprendre" src="css/menu-a-apprendre.png"></a></li>
+    <li id="menu-forum"><a title="Forum de la communauté Alsacreations" href="http://forum.alsacreations.com/"><img width="64" height="28" alt="Forum" src="css/menu-a-forum.png"></a></li>
+    <li id="menu-emploi"><a title="Offres et demandes d\'emploi web" href="http://emploi.alsacreations.com/"><img width="72" height="28" alt="Emploi" src="css/menu-a-emploi.png"></a></li>
+  </ul>
+
+<ul id="main-menu">
+<li class="home"><a href="#"><img src="css/picto-home.png" /></a></li>
+<li><a href="#">Tutoriels</a></li>
+<li><a href="#">Astuce</a></li>
+<li><a href="#">Outils</a></li>
+<li><a href="#">Livres</a></li>
+<li><a href="#">Quizz</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+	<div id="main">
+
+		<div class="news">
+			<h2>Livre : Typo & web</h2>
+			<div class="news-meta">par dew le 21 Août 2012 dans Webdesign </div>
+			<img src="img/news1.png" />
+			<div class="news-text">
+<p>
+Le web est désormais typographie. La liberté permise par les nouvelles techniques embarquant des polices, notamment grâce à CSS3, ajoute une nouvelle dimension à la création graphique. Ce livre est consacré à la lisibilité optimale de la typographie sur Internet. Il l'aborde de prime abord…
+</p>
+<a href="#">Lire la suite et commenter</a>
+			</div>
+
+		</div>
+
+		<div class="news">
+			<h2>Astuce : Prism - coloration syntaxique</h2>
+			<div class="news-meta">par jojaba le 20 Août 2012 dans Javascript </div>
+			<img src="img/news2.png" />
+			<div class="news-text">
+<p>
+Encore un outil de coloration syntaxique me direz-vous ! Il est vrai qu'on en trouve pas mal sur le Web : GeSHi (php), SyntaxHighlighter (JavaScript), Pygments (Python). Mais Prism (JavaScript et CSS) apporte d'indéniables avantages par rapport à ces concurrents : il est léger, très simple…
+</p>
+<a href="#">Lire la suite et commenter</a>
+			</div>
+
+		</div>
+
+		<div class="news">
+			<h2>dotJS, la plus grosse conférence JavaScript en France</h2>
+			<div class="news-meta"></div>
+			<img src="img/news3.png" />
+			<div class="news-text">
+<p>
+dotJS.eu est la plus grande conférence française sur le JavaScript. Elle aura lieu le 30 novembre 2012 au Théâtre des Variétés à Paris. De nombreux orateurs renommés sont annoncés dont : Jeremy Ashkenas, auteur de Backbone.js et Underscore.js Mr. doob, auteur de Three.js Fat, co-auteur de Twitter…
+</p>
+<a href="#">Lire la suite et commenter</a>
+			</div>
+
+		</div>
+
+		<div class="news">
+			<h2> Article : CSS3 : Transformations 2D</h2>
+			<div class="news-meta">par Geoffrey C.	le 14 Août 2012 dans CSS</div>
+			<img src="img/news4.png" />
+			<div class="news-text">
+<p>
+CSS3 apporte les transformations en 2 dimensions à travers la propriété transform et une liste de fonctions prédéfinies. Voyons ensemble la prise en charge actuelle de cette propriété et des fonctions qui l'accompagnent.
+</p>
+<a href="#">Lire la suite et commenter</a>
+			</div>
+
+		</div>
+
+	</div>
+
+<!-- Sidebar -->
+
+	<div id="sidebar">
+	Alsanaute ? connectez-vous
+
+	Emploi Annonces
+
+	<ul>
+	    <li>Développeur php symfony, wordpress, drupal,magento (Ile de France)</li>
+	    <li>Concepteur développeur php (Bretagne)</li>
+	    <li>Webmaster (Midi-Pyrénées)</li>
+	    <li>Développeur windev (Provence-Alpes-Côte d'Azur)</li>
+	    <li>Développeur javascript senior (Ile de France)</li>
+	</ul>
+
+
+	Forum Derniers sujets
+
+	<ul>
+	    <li>Changer une image en local (alekk)</li>
+	    <li>Déplacement non voulu au chargement de la page (osef_)</li>
+	    <li>2 petits détails sur le site (4/3)</li>
+	    <li>Apparition d’éléments en fondu (gabush)</li>
+	    <li>Permission denied Cron (powpowland)</li>
+	    <li>Height en % ne fonctionne pas (Gozu75)</li>
+	</ul>
+
+	</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

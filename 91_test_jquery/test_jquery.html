@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Tests jQuery</title>
+		<script src="js/jquery-1.8.3.js"></script>
+		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+		<link rel="stylesheet" href="css/smoothness/jquery-ui-1.9.2.custom.min.css">
+		<!-- 
+		Using CDN
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		-->
+		<style type="text/css">
+		.colored {
+			background-color: yellow;
+		}
+		</style>
+	</head>
+	<body>
+		<h1>Tests JQuery</h1>
+		
+		<h2>Plain old Javascript</h2>
+		
+		<a href="javascript:alert('Here is an alert')">Raise an alert !</a><br>
+		<a href="javascript:toggleDiv()">Click Me !</a>
+		
+		<div id="plainJSDiv" style="visibility: hidden">This is lorem ipsum content displayed via plain old JS</div>
+		
+		<!-- JS is using plainJSDiv, so the JS has to be moved AFTER the tag -->
+		<script>
+		//<![CDATA[
+		function toggleDiv() {
+			var div = document.getElementById('plainJSDiv');
+			if (div.style.visibility == 'hidden') {
+				div.style.visibility = 'visible';
+			} else {
+				div.style.visibility = 'hidden';
+			}
+		}
+		//]]>
+		</script>
+		
+		<h2>Tests jQuery alone</h2>
+		
+		<script>
+		//<![CDATA[
+			$(document).ready(function(){
+				$("#jQueryButton").click(function(event){
+					$("#jQueryDiv").toggle("slow");
+					event.preventDefault();
+				});
+				
+				$("#jQueryButton2").click(function(event){
+					$("#jQueryDiv2").css('border', '3px solid red');
+					$("#jQueryDiv2").addClass('colored');					
+					$("#jQueryDiv2").html("This is HIGHLIGHTED text");
+					event.preventDefault();
+				});				
+				
+			});
+		//]]>
+		</script>
+
+		<a href="" id="jQueryButton">Click Me !</a>
+		<div id="jQueryDiv" style="display:none">This is lorem ipsum content displayed via jQuery</div>
+		<br>
+		<a href="" id="jQueryButton2">Emphazise !</a>
+
+		<div id="jQueryDiv2" >This is simple text</div>
+		
+		<h2>Tests jQuery UI</h2>
+		
+		<script>
+		// Creating an object with the constructor:
+var person1 = new Object;
+ 
+person1.firstName = "John";
+person1.lastName = "Doe";
+ 
+console.log("First person: " + person1.firstName + " " + person1.lastName);
+ 
+// Creating an object with the object literal syntax:
+var person2 = {
+    firstName: "Jane",
+    lastName: "Doe"
+};
+ 
+console.log("... and a second one: " + person2.firstName + " " + person2.lastName);
+		</script>
+	
+		<script>
+$(document).ready(function(){
+	$( "#datepicker" ).datepicker();
+	$( "#accordion" ).accordion();
+});		
+		</script>
+	
+		A date picker to type a date: <input type="text" id="datepicker" /><br>
+
+		An accordion:
+		<div id="accordion">
+		<h3>A first pane</h3>
+		<p><strong>Clean URLs</strong>, RESTful URLs, user-friendly URLs or SEO-friendly URLs are purely structural URLs that do not contain a query string and instead contain only the path of the resource (after the scheme [e.g., http] and the authority [e.g., example.org]). This is often done for aesthetic, usability, or search engine optimization (SEO) purposes.[1] Other reasons for designing a clean URL structure for a website or web service include ensuring that individual resources remain under the same URL for years, which makes the World Wide Web a more stable and useful system,[2] and to make them memorable, logical, easy to type, human-centric, and long-lived.</p>
+		<h3>A second pane</h3>
+		<p>A <strong>slug</strong> is the part of a URL which identifies a page using human-readable keywords.[5][6] It is usually the end part of the URL, which can be interpreted as the name of the resource, similar to the basename in a filename or the title of a page. The name is based on the use of the word slug in the news media to indicate a short name given to an article for internal use.</p>
+		<h3>And a last one</h3>
+		<p>A <strong>permalink</strong> (portmanteau of permanent link) is a URL that points to a specific blog or forum entry after it has passed from the front page to the archives. Because a permalink remains unchanged indefinitely, it is less susceptible to link rot. Most modern weblogging and content-syndication software systems support such links. Other types of websites use the term permanent links, but the term permalink is most common within the blogosphere. Permalinks are often simply stated so as to be human-readable.</p>
+		</div>
+		Plus de démos dans le fichier <a href="index.html">index.html</a> fourni avec jQueryUI
+	</body>
+</html>

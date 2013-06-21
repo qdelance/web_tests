@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Alsacréations : Actualités et tutoriels HTML, HTML5, CSS, CSS3, standards du web</title>
+
+<link rel="shortcut icon" href="http://www.alsacreations.com/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://www.alsacreations.com/favicon.ico" />
+<link rel="icon" type="image/png" href="http://www.alsacreations.com/favicon.png" />
+
+<meta name="keywords" content="xhtml, html5, css, css3, feuilles de style, standards, web, internet, création, php, forum, quiz, concours, apprendre, cms, accessibilité" />
+<meta name="description" content="Alsacréations est une communauté dédiée à la conception de sites web de qualité, aux standards W3C, aux feuilles de styles CSS, aux langages HTML et XHTML, et à l'accessibilité" />
+<meta name="geo.placename" content="Strasbourg, Alsace, France" />
+
+<link rel="apple-touch-icon" href="http://www.alsacreations.com/apple-touch-icon.png" />
+<link rel="stylesheet" type="text/css" href="http://www.alsacreations.com/css/styles20120827.min.css" />
+<link rel="search" type="application/opensearchdescription+xml" title="Alsacreations" href="http://www.alsacreations.com/opensearch.xml" />
+
+<meta name="viewport" content="width=device-width" />
+
+<!--[if lte IE 6]><link type="text/css" rel="stylesheet" href="http://www.alsacreations.com/css/ie6fix.css" media="all" /><![endif]-->
+<!--[if lte IE 7]><style type="text/css">#footer, #page { zoom: 1; }</style><![endif]-->
+
+<link rel="alternate" type="application/rss+xml" href="/rss/actualites.xml" title="Actualités" />
+<link rel="alternate" type="application/rss+xml" href="/rss/commentaires.xml" title="Commentaires" />
+<link rel="alternate" type="application/rss+xml" href="/rss/apprendre.xml" title="Apprendre (dernières publications)" />
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1456483-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+
+
+<div role="navigation">
+
+<!-- Header : header-inside, evitement, logo, menu, sous-menu, rss, recherche -->  
+<div id="header"><div id="header-inside">
+  <ul id="evitement">
+    <li><a href="#menu">Aller au menu</a></li>
+    <li><a href="#content" accesskey="s">Aller au contenu</a></li>
+    <li><a href="#recherche" accesskey="4">Aller &agrave; la recherche</a></li>
+  </ul> <!-- /evitement -->
+    
+  <h1><a href="http://www.alsacreations.com/" accesskey="1" title="Alsacr&eacute;ations, apprentissage des standards web, accueil"><img id="logo" alt="Accueil - Alsacreations.com" src="http://www.alsacreations.com/css/img/logo-alsacreations-com.png" width="290" height="80" /></a></h1>
+  
+  <ul id="menu">
+    <li id="menu-apprendre"><a href="http://www.alsacreations.com/apprendre/" title="Apprendre les langages du web : HTML, CSS, JavaScript"><img src="http://www.alsacreations.com/css/img/menu-a-apprendre.png" alt="Apprendre" width="111" height="28" /></a></li>
+    <li id="menu-forum"><a href="http://forum.alsacreations.com/" title="Forum de la communauté Alsacreations"><img src="http://www.alsacreations.com/css/img/menu-a-forum.png" alt="Forum" width="64" height="28" /></a></li>
+    <li id="menu-emploi"><a href="http://emploi.alsacreations.com/" title="Offres et demandes d\'emploi web"><img src="http://www.alsacreations.com/css/img/menu-a-emploi.png" alt="Emploi" width="72" height="28" /></a></li>
+  </ul>
+</div></div> <!-- /header -->
+
+<!-- Sous-menu -->
+<div id="sous-menu" >
+    <a id="rss" title="Suivez les fils RSS" href="http://www.alsacreations.com/rss/"><img src="http://www.alsacreations.com/css/img/sous-menu-rss.png" alt="Suivez les fils RSS" width="30" height="30" /></a>
+    
+        <form id="recherche" role="search" action="/search/" method="post">
+       <div>
+         <label for="recherche-texte"><input id="recherche-texte" name="q" placeholder="recherche" value="" title="recherche" type="text" onfocus="if(value=='recherche') this.value='';" /></label>
+         <input value="OK" name="recherche-submit" id="recherche-submit" type="submit" />
+       </div>
+    </form>
+    
+    <ul>
+      <li class="homeitem"><a href="/"><img src="http://www.alsacreations.com/css/img/picto-home.png" alt="Accueil de la section" width="10" height="10" /></a></li>
+      <li class="item "><span><a href="/tutoriels/">Tutoriels</a></span></li><li class="item "><span><a href="/astuces/">Astuces</a></span></li><li class="item "><span><a href="/web/">Outils</a></span></li><li class="item "><span><a href="/livres/">Livres</a></span></li><li class="item "><span><a href="/quiz/">Quiz</a></span></li>    </ul>
+</div>
+<!-- /sous-menu -->
+
+</div>
+
+<div id="header-sep"><div class="inside">&nbsp;</div></div>
+
+<div id="global">
+
+<!-- Page : content, sidebar -->
+
+<div id="page" >
+
+
+<div id="content" role="main">
+
+		<div class="newsblock first">
+	
+	<h2 class="titre">
+		<span class="hometype">Livre :</span> <a href="http://www.alsacreations.com/livres/lire/1479-typo-web.html" title="Typo & web">Typo & web</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/2-dew.html" title="profil de dew">dew</a>	  le 21 Août 2012	  dans Webdesign	  </span>
+	  
+	  <a class="hometip comc comc" title="2 commentaires pour Typo & web" href="http://www.alsacreations.com/livres/lire/1479-typo-web.html#commentaires">2 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/livre-typo-web.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Le web est désormais typographie. La liberté permise par les nouvelles techniques embarquant des polices, notamment grâce à CSS3, ajoute une nouvelle dimension à la création graphique. Ce livre est consacré à la lisibilité optimale de la typographie sur Internet. Il l'aborde de prime abord&#8230;<br /><a href="http://www.alsacreations.com/livres/lire/1479-typo-web.html" class="readnext" title="Lire la suite de Typo & web">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Astuce :</span> <a href="http://www.alsacreations.com/astuce/lire/1476-prism-coloration-syntaxique.html" title="Prism - coloration syntaxique">Prism - coloration syntaxique</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/3069-jojaba.html" title="profil de jojaba">jojaba</a>	  le 20 Août 2012	  dans Javascript	  </span>
+	  
+	  <a class="hometip comc comc" title="2 commentaires pour Prism - coloration syntaxique" href="http://www.alsacreations.com/astuce/lire/1476-prism-coloration-syntaxique.html#commentaires">2 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/logo-prism.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Encore un outil de coloration syntaxique me direz-vous ! Il est vrai qu'on en trouve pas mal sur le Web&nbsp;: GeSHi (php), SyntaxHighlighter (JavaScript), Pygments (Python). Mais Prism (JavaScript et CSS) apporte d'indéniables avantages par rapport à ces concurrents&nbsp;: il est léger, très simple&#8230;<br /><a href="http://www.alsacreations.com/astuce/lire/1476-prism-coloration-syntaxique.html" class="readnext" title="Lire la suite de Prism - coloration syntaxique">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<a href="http://www.alsacreations.com/actu/lire/1477-dotjs-la-plus-grosse-confrence-javascript-en-france.html" title="dotJS, la plus grosse conférence JavaScript en France">dotJS, la plus grosse conférence JavaScript en France</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/358-thomasb.html" title="profil de ThomasB">ThomasB</a>	  le 17 Août 2012	  dans Javascript	  </span>
+	  
+	  <a class="hometip comc comc0" title="0 commentaire pour dotJS, la plus grosse conférence JavaScript en France" href="http://www.alsacreations.com/actu/lire/1477-dotjs-la-plus-grosse-confrence-javascript-en-france.html#commentaires">0 commentaire</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/dotjs-logo.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>dotJS.eu est la plus grande conférence française sur le JavaScript. Elle aura lieu le 30 novembre 2012 au Théâtre des Variétés à Paris. De nombreux orateurs renommés sont annoncés dont : Jeremy Ashkenas, auteur de Backbone.js et Underscore.js Mr. doob, auteur de Three.js Fat, co-auteur de Twitter&#8230;<br /><a href="http://www.alsacreations.com/actu/lire/1477-dotjs-la-plus-grosse-confrence-javascript-en-france.html" class="readnext" title="Lire la suite de dotJS, la plus grosse conférence JavaScript en France">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Article :</span> <a href="http://www.alsacreations.com/article/lire/1418-css3-transformations-2d.html" title="CSS3 : Transformations 2D">CSS3 : Transformations 2D</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/25140-geoffrey-c.html" title="profil de Geoffrey C.">Geoffrey C.</a>	  le 14 Août 2012	  dans CSS	  </span>
+	  
+	  <a class="hometip comc comc" title="4 commentaires pour CSS3 : Transformations 2D" href="http://www.alsacreations.com/article/lire/1418-css3-transformations-2d.html#commentaires">4 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/rotate-css3.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>CSS3 apporte les transformations en 2 dimensions à travers la propriété transform et une liste de fonctions prédéfinies. Voyons ensemble la prise en charge actuelle de cette propriété et des fonctions qui l'accompagnent.<br /><a href="http://www.alsacreations.com/article/lire/1418-css3-transformations-2d.html" class="readnext" title="Lire la suite de CSS3 : Transformations 2D">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Livre :</span> <a href="http://www.alsacreations.com/livres/lire/1475-css-maintenables.html" title="CSS maintenables">CSS maintenables</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/1-raphael.html" title="profil de Raphael">Raphael</a>	  le 05 Août 2012	  dans CSS	  </span>
+	  
+	  <a class="hometip comc comc" title="10 commentaires pour CSS maintenables" href="http://www.alsacreations.com/livres/lire/1475-css-maintenables.html#commentaires">10 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/css-maintenables.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Encore un nouveau livre sur CSS me direz-vous ! Certes, mais celui-ci capte enfin un public différent. Il se pose en quelque sorte comme un chaînon manquant entre les livres de CSS purement dédiés aux designers et les autres plus techniques. Celui-ci s'adresse vraiment aux intégrateurs confrontés&#8230;<br /><a href="http://www.alsacreations.com/livres/lire/1475-css-maintenables.html" class="readnext" title="Lire la suite de CSS maintenables">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Outil :</span> <a href="http://www.alsacreations.com/web/lire/1474-less.html" title="LESS">LESS</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/1-raphael.html" title="profil de Raphael">Raphael</a>	  le 03 Août 2012	  dans CSS	  </span>
+	  
+	  <a class="hometip comc comc" title="8 commentaires pour LESS" href="http://www.alsacreations.com/web/lire/1474-less.html#commentaires">8 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/less.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>La principale lacune de CSS est… sa simplicité : à trop vouloir en faire un langage intuitif et facile à interpréter, il en devient répétitif, fastidieux et parfois réducteur. Less est ce que l'on appelle un "Préprocesseur CSS", basé sur le langage JavaScript et peut s’apparenter à une&#8230;<br /><a href="http://www.alsacreations.com/web/lire/1474-less.html" class="readnext" title="Lire la suite de LESS">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<a href="http://www.alsacreations.com/actu/lire/1472-microformats-2.html" title="Microformats 2">Microformats 2</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/3069-jojaba.html" title="profil de jojaba">jojaba</a>	  le 02 Août 2012	  dans HTML	  </span>
+	  
+	  <a class="hometip comc comc" title="9 commentaires pour Microformats 2" href="http://www.alsacreations.com/actu/lire/1472-microformats-2.html#commentaires">9 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/microformats.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Les Microformats vous sont familiers ? Sinon, rendez-vous au tutoriel parlant des Microformats, vous pourrez combler cette lacune ;p (d'ailleurs pour être sûr d'avoir bien compris ce que vous avez appris, allez donc vous faire les dents sur le quiz Microformats).&nbsp;Pour expliquer de manière très&#8230;<br /><a href="http://www.alsacreations.com/actu/lire/1472-microformats-2.html" class="readnext" title="Lire la suite de Microformats 2">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Outil :</span> <a href="http://www.alsacreations.com/web/lire/1467-opquast-desktop.html" title="Opquast Desktop">Opquast Desktop</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/2-dew.html" title="profil de dew">dew</a>	  le 26 Juillet 2012	  dans Accessibilité	  </span>
+	  
+	  <a class="hometip comc comc" title="7 commentaires pour Opquast Desktop" href="http://www.alsacreations.com/web/lire/1467-opquast-desktop.html#commentaires">7 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/opquast-desktop.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Opquast Desktop est une extension conçue pour Firefox qui analyse une page web selon plusieurs listes de critères de qualité et d'accessibilité : Référentiel Général d'Accessibilité pour les Administrations (RGAA) Opquast Bonnes pratiques Qualité Web Accessiweb déployée Opquast Accessibility&#8230;<br /><a href="http://www.alsacreations.com/web/lire/1467-opquast-desktop.html" class="readnext" title="Lire la suite de Opquast Desktop">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<span class="hometype">Outil :</span> <a href="http://www.alsacreations.com/web/lire/1471-knacss.html" title="KNACSS">KNACSS</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/1-raphael.html" title="profil de Raphael">Raphael</a>	  le 25 Juillet 2012	  dans CSS	  </span>
+	  
+	  <a class="hometip comc comc10" title="17 commentaires pour KNACSS" href="http://www.alsacreations.com/web/lire/1471-knacss.html#commentaires">17 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/knacss.PNG" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>KNACSS est une feuille de style CSS minimaliste et extensible pour débuter une intégration. Ce projet se situe entre un reset CSS et un framework CSS, et cumule les avantages de chacun tout en étant complètement extensible et modulable selon les projets. Son but est de servir de base commune à&#8230;<br /><a href="http://www.alsacreations.com/web/lire/1471-knacss.html" class="readnext" title="Lire la suite de KNACSS">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+  	<div class="newsblock">
+	
+	<h2 class="titre">
+		<a href="http://www.alsacreations.com/actu/lire/1465-adobe-brackets-editeur-html-css.html" title="Brackets: un éditeur de code révolutionnaire pour le Web">Brackets: un éditeur de code révolutionnaire pour le Web</a>	</h2>  
+	
+	<div class="meta">
+	  <span class="metafirst">
+	  par <a href="http://www.alsacreations.com/profil/lire/11703-bouchon.html" title="profil de Bouchon">Bouchon</a>	  le 10 Juillet 2012	  dans HTML	  </span>
+	  
+	  <a class="hometip comc comc10" title="11 commentaires pour Brackets: un éditeur de code révolutionnaire pour le Web" href="http://www.alsacreations.com/actu/lire/1465-adobe-brackets-editeur-html-css.html#commentaires">11 commentaires</a>	  </div>
+	  
+	  <img src="/xmedia/doc/medium/brackets_logo.png" alt="" class="illustration" />
+	  <div class="texte">
+		
+		<p>Note préliminaire : Cet article est une traduction de l'article "Brackets: a Revolutionary Code Editor for the Web", publié sur Sitepoint.&nbsp;La traduction a été grossièrement entamée via GoogleTranslate, et affinée par votre serviteur. Quand il s'agit de choisir un outil de développement,&#8230;<br /><a href="http://www.alsacreations.com/actu/lire/1465-adobe-brackets-editeur-html-css.html" class="readnext" title="Lire la suite de Brackets: un éditeur de code révolutionnaire pour le Web">Lire la suite et commenter &raquo;</a></p>	  </div>
+	  
+	  
+	</div>
+
+    <p class="pagination">&nbsp;<b>1</b>&nbsp;<a href="http://www.alsacreations.com/home/10" title="Page 2">2</a>&nbsp;<a href="http://www.alsacreations.com/home/20" title="Page 3">3</a>&nbsp;<a href="http://www.alsacreations.com/home/30" title="Page 4">4</a>&nbsp;<a href="http://www.alsacreations.com/home/40" title="Page 5">5</a>&nbsp;<a href="http://www.alsacreations.com/home/50" title="Page 6">6</a>&nbsp;<a href="http://www.alsacreations.com/home/60" title="Page 7">7</a>&nbsp;<a href="http://www.alsacreations.com/home/70" title="Page 8">8</a>&nbsp;<a href="http://www.alsacreations.com/home/80" title="Page 9">9</a>&nbsp;<a href="http://www.alsacreations.com/home/90" title="Page 10">10</a>&nbsp;<a href="http://www.alsacreations.com/home/100" title="Page 11">11</a>&nbsp;<a href="http://www.alsacreations.com/home/10" title="Page suivante">&gt;</a>&nbsp;<span><a href="http://www.alsacreations.com/home/1040" title="Dernière page">Fin</a></span></p>
+    <p class="suggest"><a href="/actu/add/" class="awesome blue">Suggérer une actualité</a></p>
+
+</div> <!-- content -->
+  
+  <div id="sidebar" role="complementary">
+
+      <div id="login">
+      <h2>Alsanaute ? <span>connectez-vous</span></h2>
+      <form id="login-form" action="/ident/login/" method="post">
+        <div id="login-first">
+  		  <label for="login-name"><span>Pseudo :</span><input id="login-name" class="input-mini" name="name" value="" title="pseudo" type="text" /></label>
+  		  <label for="login-pass"><span>Mot de passe :</span><input id="login-pass" class="input-mini" name="password" value="" title="mot de passe" type="password" /></label>
+  		  </div>
+  		  <div id="login-second">
+  		  <input value="Connexion" name="login-submit" id="login-submit" class="awesome green" type="submit" />
+		    <p class="getlink"><a href="/ident/lost/" id="login-lost-link">Identifiants oubliés&nbsp;?</a></p>
+		    <p class="getlink"><a href="/ident/register/">Devenez Alsanaute !</a></p>
+		    </div>
+		  </form>
+    </div> <!-- login -->
+    
+    <div class="bloc newmember-intro">
+      <img src="/css/img/picto-star.png" alt="" class="illust" />
+      <h2>Alsacréations, <span>C'est quoi ?</span></h2>
+      <p>Alsacréations est une communauté dédiée à l'apprentissage des standards web (W3C, HTML, XHTML, CSS) ainsi qu'à l'accessibilité numérique <a href="/page/about/" accesskey="0">(en savoir plus...)</a></p>
+    </div>
+
+		 <div class="adsense">
+	   <script type="text/javascript"><!--
+      google_ad_client = "pub-3398519973649277";
+      google_ad_slot = "0505218965";
+      google_ad_width = 336;
+      google_ad_height = 280;
+      //-->
+      </script>
+      <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+	 </div>
+	<div><a href="http://www.amazon.fr/gp/product/2212129823/ref=as_li_tf_tl?ie=UTF8&amp;tag=alsacreatio09-21&amp;linkCode=as2&amp;camp=1642&amp;creative=6746&amp;creativeASIN=2212129823"><img src="/xmedia/pubs/livre-html5.png" alt="Livre HTML5" /></a></div>
+	    <div class="bloc apprendre">
+      <img src="/css/img/picto-aide.png" class="illust" alt="" />
+      <h2><a href="/apprendre/">Apprendre</a> Nouveautés</h2>
+      
+            <p class="dernier"><img src="/css/img/doc-astuce.png" alt="astuce" title="astuce" /> <a href="http://www.alsacreations.com/astuce/lire/1476-prism-coloration-syntaxique.html">Prism - coloration syntaxique</a></p>
+            <p class="description">
+
+      
+	Encore un outil de coloration syntaxique me direz-vous ! Il est vrai qu'on en trouve pas mal sur le Web&nbsp;: GeSHi (php), SyntaxHighlighter (JavaScript), Pygments (Python). Mais Prism (JavaScript&hellip; <a href="http://www.alsacreations.com/astuce/lire/1476-prism-coloration-syntaxique.html">Lire la suite &raquo;</a>      
+
+      </p>
+      
+      <ul>
+              <li><abbr title="article"><img src="/css/img/doc-article.png" alt="article" /></abbr> <a href="http://www.alsacreations.com/article/lire/1418-css3-transformations-2d.html">CSS3 : Transformations 2D</a></li>
+              <li><abbr title="article"><img src="/css/img/doc-article.png" alt="article" /></abbr> <a href="http://www.alsacreations.com/article/lire/1464-web-mobile-introduction-et-glossaire.html">Web mobile : introduction et glossaire</a></li>
+              <li><abbr title="article"><img src="/css/img/doc-article.png" alt="article" /></abbr> <a href="http://www.alsacreations.com/article/lire/1445-dom-queryselector-queryselectorall-selectors-api.html">DOM : querySelector et querySelectorAll</a></li>
+              <li><abbr title="article"><img src="/css/img/doc-article.png" alt="article" /></abbr> <a href="http://www.alsacreations.com/article/lire/1439-data-uri-schema.html">Le schéma Data-URI</a></li>
+            </ul>
+     
+      <div class="clear"></div>
+    </div>
+	
+
+	    <div class="bloc emploi">
+      <img src="/css/img/picto-emploi.png" alt="" class="illust" width="40" height="40" />
+      <h2><a href="http://emploi.alsacreations.com/">Emploi</a> Annonces</h2>
+      <ul>
+			        <li><a href="http://emploi.alsacreations.com/offre-JIT1668534-IngEnieur-Etudes-net-.html" title="Offre d\'emploi de Page Personnel">IngÉnieur Études .net </a> <span class="description">(Nord-Pas de Calais)</span></li>
+			        <li><a href="http://emploi.alsacreations.com/offre-JIT1668515-Web-editeurtrice-.html" title="Offre d\'emploi de Page Personnel">Web editeur(trice) </a> <span class="description">(Aquitaine)</span></li>
+			        <li><a href="http://emploi.alsacreations.com/offre-JIT1514536-Developpeur-php-en-alternance-.html" title="Offre d\'emploi de INSTA">Developpeur php en alternance </a> <span class="description"></span></li>
+			        <li><a href="http://emploi.alsacreations.com/offre-496151-Developpeur-php-symfony-wordpress-drupalmagento.html" title="Offre d\'emploi de Pixel Cookers">Développeur php symfony, wordpress, drupal,magento</a> <span class="description">(Ile de France)</span></li>
+			        <li><a href="http://emploi.alsacreations.com/offre-497231-Concepteur-developpeur-php.html" title="Offre d\'emploi de Oopartners Solutions">Concepteur développeur php</a> <span class="description">(Bretagne)</span></li>
+			      </ul>
+      <div class="clear"></div>
+    </div>
+	
+
+		    <div class="bloc forum">
+      <img src="/css/img/picto-chat.png" alt="" class="illust" width="46" height="43" />
+      <h2><a href="http://forum.alsacreations.com/">Forum</a> Derniers sujets</h2>
+      <ul>
+			        <li><a href="http://forum.alsacreations.com/topic-1-63471-1-Changer-une-image-en-local.html">Changer une image en local</a> <span class="description">(alekk)</span></li>
+			        <li><a href="http://forum.alsacreations.com/topic-4-63470-1-Deplacement-non-voulu-au-chargement-de-la-page.html">Déplacement non voulu au chargement de la page</a> <span class="description">(osef_)</span></li>
+			        <li><a href="http://forum.alsacreations.com/topic-9-63469-1-2-petits-details-sur-le-site.html">2 petits détails sur le site</a> <span class="description">(4/3)</span></li>
+			        <li><a href="http://forum.alsacreations.com/topic-5-63468-1-Apparition-delements-en-fondu.html">Apparition d’éléments en fondu</a> <span class="description">(gabush)</span></li>
+			        <li><a href="http://forum.alsacreations.com/topic-20-63467-1-Permission-denied-Cron.html">Permission denied Cron</a> <span class="description">(powpowland)</span></li>
+			        <li><a href="http://forum.alsacreations.com/topic-1-63466-1-Height-en--ne-fonctionne-pas.html">Height en % ne fonctionne pas</a> <span class="description">(Gozu75)</span></li>
+			      </ul>
+      <div class="clear"></div>
+    </div>
+
+		
+
+		<p style="color:#666;text-align:center;padding:10px;" class="bloc">Plateforme pour  <a href="http://www.weonea.com/" style="color:#666">créer un site</a> en ligne avec Weonea</p>
+	
+		<p style="color: rgb(102, 102, 102); text-align: center; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; " class="bloc">
+		Novaway: <a style="color:#666" href="http://www.novaway.fr/">Experts et développeurs Symfony2</a>.
+		</p>
+	    
+  </div> <!-- fin de sidebar -->
+
+<!-- Bloc Footer, contient footer, footer-inside, footer-links, citation --> 
+<div role="contentinfo">
+<div id="footer">
+
+  <ul id="footer-links">
+     <li><a href="http://www.alsacreations.com/page/plan/" accesskey="3" title="Plan du site">Plan&nbsp;du&nbsp;site</a></li>
+    <li>R&eacute;alisation : <a href="http://www.alsacreations.fr">Alsacreations.fr</a></li>
+    <li>H&eacute;bergement : <a href="http://www.nikozen.com/">Nikozen</a></li>
+     <li><a href="http://www.alsacreations.com/page/about/" accesskey="0" title="&Agrave; propos">&Agrave;&nbsp;propos et mentions légales</a></li>
+  	<li><a href="http://www.alsacreations.com/contact/" accesskey="7" title="Contactez-nous">Contactez-nous</a></li>
+    <!--
+    <li lang="en"><img src="http://www.alsacreations.com/css/img/ico-coche.png" alt="" /><a href="http://validator.w3.org/check/referer">HTML Best Effort Valid</a></li>
+    <li lang="en"><img src="http://www.alsacreations.com/css/img/ico-coche.png" alt="" /><a href="http://jigsaw.w3.org/css-validator/check/referer/">CSS 3 Might Become Valid</a></li>
+	-->
+  </ul>
+  
+  <p id="citation">
+    <q>&nbsp;Il nous faut des vacances aux Mal&lt;div&gt;es !&nbsp;</q> <span>(Groucha)</span>    <br /><span class="suggestion"><a href="http://www.alsacreations.com/contact/citation/">Sugg&eacute;rer une citation best-of</a></span>
+  </p>
+
+</div> <!-- fin de footer -->
+
+<div id="footer-menu">
+  <ul>
+    <li><a href="https://plus.google.com/b/115569141679958180998/" title="Alsacreations sur Google+">Google+</a></li>  
+    <li><a href="http://www.facebook.com/alsacreations" title="Alsacreations sur Facebook">Facebook</a></li>  
+    <li><a href="http://twitter.com/alsacreations" title="Alsacreations sur Twitter">Twitter</a></li>  
+    <li><a href="http://www.alsacreations.com/rss/" title="Flux RSS">RSS</a></li>  
+    <li><a href="http://alsacreations.spreadshirt.net" title="Boutique Alsacreations">Boutique</a></li>  
+    <li><a href="http://formations.alsacreations.fr" title="Formations web professionnelles">Formations</a></li>  
+     <li class="gopagetop"><a href="#evitement">Haut&nbsp;de&nbsp;page <img src="http://www.alsacreations.com/css/img/ico-up.png" alt="" /></a></li>
+    </ul>
+</div>
+
+<!-- Footer-end : logo, presentation -->
+<div id="footer-end">
+  <div id="presentation"><p>Alsacr&eacute;ations est une communaut&eacute; d&eacute;di&eacute;e &agrave; la conception de sites web de qualit&eacute;, gr&acirc;ce aux standards W3C, aux feuilles de styles CSS, aux langages HTML et JavaScript, et &agrave; l'accessibilit&eacute; <a href="http://www.alsacreations.com/page/about/" title="En savoir plus sur Alsacr&eacute;ations">(en savoir plus...)</a></p></div>
+  <img src="http://www.alsacreations.com/css/img/footer-logo.png" alt="Alsacreations" width="154" height="29" />
+  <div id="print">
+    <p>http://www.alsacreations.com/</p>
+  </div>
+  <div class="spacer"></div>
+</div> <!-- fin de footer-end -->
+</div>
+
+<div id="footer-mobile">
+    <form id="recherche-mobile" action="/search/" method="post">
+      <div>
+          <label for="recherche-texte-mobile"><input id="recherche-texte-mobile" name="q" value="recherche" title="recherche" type="text" /></label>
+          <input value="OK" name="recherche-submit-mobile" id="recherche-submit-mobile" type="submit" />
+          </div>
+	</form>
+</div>
+
+</div> <!-- fin de page -->
+
+</div> <!-- fin de global -->
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.alsacreations.com/js/global20120111.js"></script>
+
+</body>
+</html>
+
+<!--
+CPU : 0.0377s
+MEM : 2.4MB
+-->
