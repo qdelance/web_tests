@@ -9,6 +9,7 @@
 	<!-- TODO: One could use tabindex attribute on form elements -->
 	<!-- TODO: CSS to add red "*" close to required attributes -->
 	<!-- TODO: fix label focus on associated form -->
+	<!-- TODO: check size VS length below on input texts -->
 	
 	<h1>HTML Forms</h1>
 	
@@ -23,27 +24,27 @@
 	<h2>Here come the tests !</h2>
 	
 	<form action="test_forms.php" method="POST" autocomplete="on">
-		<label for="login">Login:</label><input type="text" id="name" name="name" length="20" placeholder="Type name here" autofocus required/><br />
+		<label for="login">Login:</label><input type="text" id="login" name="login" length="20" placeholder="Type name here" autofocus required/><br />
 		
-		<label for="password">Password:</label><input type="password" name="password" length="20" required/><br />
-		<label for="password2">Retype Password:</label><input type="password2" name="password2" length="20" required/><br />
+		<label for="password">Password:</label><input type="password" id="password" name="password" length="20" required/><br />
+		<label for="password2">Retype Password:</label><input type="password2" id="password2" name="password2" length="20" required/><br />
 		
-		Trigram: <input type="text" name="trigram" pattern="[A-Za-z]{3}" title="Three letter shortcut" length="3"><br />
+		<label for="trigram">Trigram:</label><input type="text" id="trigram" name="trigram" pattern="[A-Za-z]{3}" title="Three letter shortcut" length="3"><br />
 		
-		Avatar:<input type="file" name="avatar"><br />
+		<label for="avatar">Avatar:</label><input type="file" id="avatar" name="avatar"><br />
 		
 		<label for="sex">Sex:</label><br />
-		<input type="radio" name="sex" value="male">Male<br />
-		<input type="radio" name="sex" value="female">Female<br />
+		<input type="radio" name="sex" id="male" value="male"><label for="male">Male</label><br />
+		<input type="radio" name="sex" id="female" value="female"><label for="female">Female</label><br />
 		
 		<label for="interests">Interests:</label><br />
-		<input type="checkbox" name="interests" value="science">Science</input><br />
-		<input type="checkbox" name="interests" value="music">Music</input><br />
-		<input type="checkbox" name="interests" value="nature">Nature</input><br />
-		<input type="checkbox" name="interests" value="sport">Sport</input><br />
+		<input type="checkbox" id="science" name="interests" value="science"><label for="science">Science</label></input><br />
+		<input type="checkbox" id="music" name="interests" value="music"><label for="music">Music</label></input><br />
+		<input type="checkbox" id="nature" name="interests" value="nature"><label for="nature">Nature</label></input><br />
+		<input type="checkbox" id="sport" name="interests" value="sport"><label for="sport">Sport</label></input><br />
 		
 		<label for="region">World region:</label>
-		<select name="region">
+		<select id="region" name="region">
 			<option>Asia</option>
 			<option>Europe</option>
 			<option>Middle East</option>
@@ -53,7 +54,7 @@
 		</select><br />
 
 		<label for="colors">Favorite colors:</label>
-		<select multiple size="4" name="colors">
+		<select multiple size="4" id="colors" name="colors">
 			<option selected>White</option>
 			<option>Black</option>
 			<option selected>Yellow</option>
@@ -67,15 +68,15 @@
 			<option>Purple</option>
 		</select><br />
 		
-		<label for="comments">Comments:</label><br />
-		<textarea name="comment" rows="10" cols="50"></textarea>
+		<label for="comment">Comments:</label><br />
+		<textarea id="comment" name="comment" rows="10" cols="50"></textarea>
 		
 		<fieldset>
 			<legend>HTML 5 forms</legend>
-			<label for="email">E-mail:</label><input type="email" name="email" length="30" /><br />
-			<label for="tel">Phone number:</label><input type="tel" name="tel" length="20" /><br />
-			<label for="dob">Date of birth:</label><input type="date" name="dob"/><br />
-			<label for="guess">Guess a number between 1 and 5:</label><input type="number" name="guess" min="1" max="5"/><br />
+			<label for="email">E-mail:</label><input type="email" id="email" name="email" length="30" /><br />
+			<label for="tel">Phone number:</label><input type="tel" id="tel" name="tel" length="20" /><br />
+			<label for="dob">Date of birth:</label><input type="date" id="dob" name="dob"/><br />
+			<label for="guess">Guess a number between 1 and 5:</label><input type="number" id="guess" name="guess" min="1" max="5"/><br />
 			Select (multiple) images:<input type="file" name="img" multiple><br />
 
 			Favorite browsers: <input type="text" name="browser" list="browsers" /><br />
