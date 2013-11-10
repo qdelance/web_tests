@@ -3,6 +3,12 @@
 	padding: 0;
 }
 
+div {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 a img {
     border: 0 none;
 }
@@ -19,7 +25,92 @@ body {
 	color: #444444;
 }
 
+#header {
+	height: 150px;
+	background-color: red;
+	position: relative;
+}
 
+#footer {
+	clear: both;
+	height: 200px;
+	background-color: green;
+}
+
+#main {
+	background-color: yellow;
+	padding: 20px;
+}
+
+.news {
+	background-color: orange;
+	height: 100px;
+	margin: 0px 0 20px 0;
+}
+
+#aside {
+	background-color: #cccccc;
+	padding: 20px;
+}
+
+.block {
+	background-color: #dddddd;
+	height: 100px;
+	margin: 0px 0 20px 0;
+}
+
+#navigation {
+	position: absolute;
+	/**
+     * QDE: FIXME, there seem to be a problem mixing height/font-size/line-height 
+	 * I think line-height must not exceed (height - padding)
+	 */
+	bottom: 0;
+	list-style: none outside none;
+}
+
+#navigation li {
+	float: left;
+}
+
+#navigation a {
+	color: white;
+	text-decoration: none;
+	display: block;
+	height: 35px;
+	font-size: 20px;
+	padding: 5px 5px 0px 5px;
+	margin-left: 5px;
+	background: #eeeeee;
+	background: linear-gradient(to bottom, #cccccc 0%,#eeeeee 100%); /* W3C */
+	background: -moz-linear-gradient(top, #cccccc 0%,#eeeeee 100%); /* FF */
+	background: -webkit-linear-gradient(top, #cccccc 0%,#eeeeee 100%); /* Chrome */
+	border-radius: 5px 5px 0px 0px;
+}	
+
+#navigation a.selected {
+	color: grey;
+	background: #bbbbbb;
+	background: linear-gradient(to bottom, #aaaaaa 0%,#bbbbbb 100%); /* W3C */
+	background: -moz-linear-gradient(top, #aaaaaa 0%,#bbbbbb 100%); /* FF */
+	background: -webkit-linear-gradient(top, #aaaaaa 0%,#bbbbbb 100%); /* Chrome */
+	
+}	
+
+#pager {
+	text-align: center;
+}
+
+#pager a {
+	background-color: green;
+	text-decoration: none;
+	/* font-size: 20px; */
+	padding: 3px 3px 3px 3px;
+	margin: 2px;
+	border-radius: 1px 1px 1px 1px;
+}	
+
+/* smartphones */
 @media screen and (max-width: 800px) {
 
 	/*#content {
@@ -31,13 +122,34 @@ body {
 		width: 100%
 	}
 
-	#sidebar {
+	#aside {
 		float: none;
 		width: 100%	
 	}*/
 
+	body {
+		min-width: 400px;	
+	}
+	
+	#navigation {
+		width: 100%;
+	}	
+	
+	#navigation li {
+		float: none;
+	}
+	
+	#navigation a {
+		border-radius: 0px;
+		margin-left: 0px;
+	}
+	#header {
+		height: auto;
+	}	
+	
 }
 
+/* tablets/small desk screens */
 @media screen and (min-width: 800px) and (max-width: 1024px) {
 	#content {
 		width: 100%;
@@ -48,14 +160,16 @@ body {
 		width: 60%;
 	}
 
-	#sidebar {
+	#aside {
 		float: right;
 		width: 40%;
 	}
 
 }
 
+/* large desk screens */
 @media screen and (min-width: 1024px) {
+
 	#content {
 		width: 80%;
 		margin: 0 auto;
@@ -66,50 +180,12 @@ body {
 		width: 60%;
 	}
 
-	#sidebar {
+	#aside {
 		float: right;
 		width: 40%;
 	}
+	
+	#navigation {
+		padding-left: 40px;
+	}
 }
-
-
-
-#header {
-	height: 150px;
-	background-color: red;
-}
-
-#footer {
-	clear: both;
-	height: 200px;
-	background-color: green;
-}
-
-#main {
-	background-color: yellow;
-	/* Magie CSS by Pierre Yves */
-	/*border-top: 1px solid blue;
-	border-bottom: 1px solid blue;	*/
-	/* overflow: auto; */
-}
-
-.news {
-	background-color: orange;
-	height: 100px;
-	margin: 20px
-}
-
-#sidebar {
-	background-color: #cccccc;
-	/*border-top: 1px solid blue;
-	border-bottom: 1px solid blue; */
-	/*overflow: auto;	*/
-}
-
-.block {
-	background-color: #dddddd;
-	height: 100px;
-	margin: 20px
-
-}
-

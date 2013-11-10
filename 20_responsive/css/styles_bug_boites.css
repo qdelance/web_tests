@@ -1,0 +1,156 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a img {
+    border: 0 none;
+}
+
+fieldset {
+    border: 0 none;
+}
+textarea {
+    font: inherit;
+}
+body {
+	background-color: #f1f1f1;
+	font: 80% "Trebuchet MS",Verdana,"Lucida Grande",Tahoma,Helvetica,Sans-Serif;
+	color: #444444;
+}
+
+
+@media screen and (max-width: 800px) {
+
+	/*#content {
+		width: 100%;	
+	}
+
+	#main {
+		float: none;
+		width: 100%
+	}
+
+	#sidebar {
+		float: none;
+		width: 100%	
+	}*/
+
+}
+
+@media screen and (min-width: 800px) and (max-width: 1024px) {
+	#content {
+		width: 100%;
+	}
+
+	#main {
+		float: left;
+		width: 60%;
+	}
+
+	#sidebar {
+		float: right;
+		width: 40%;
+	}
+
+}
+
+@media screen and (min-width: 1024px) {
+	#content {
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	#main {
+		float: left;
+		width: 60%;
+	}
+
+	#sidebar {
+		float: right;
+		width: 40%;
+	}
+	
+	#navigation {
+		position: absolute;
+		/* QDE: both lines have the same problem, 1 or 2 pixels below that appear in FF or Chrome */
+		/* bottom: 0; */
+		top: 125px; /* 150px - 25px */
+		list-style: none outside none;
+		padding-left: 40px;
+	}
+	
+	#navigation li {
+		float: left;
+		height: 25px;
+	}
+
+	#navigation a {
+		color: white;
+		text-decoration: none;
+		/* text-transform: uppercase; */
+		line-height: 25px;
+		font-size: 17px;
+		
+		padding: 5px 5px 0px 5px;
+		margin-left: 5px;
+		background: #eeeeee;
+		background: linear-gradient(to bottom, #cccccc 0%,#eeeeee 100%); /* W3C */
+		background: -moz-linear-gradient(top, #cccccc 0%,#eeeeee 100%); /* FF */
+		background: -webkit-linear-gradient(top, #cccccc 0%,#eeeeee 100%); /* Chrome */
+		border-radius: 5px 5px 0px 0px;
+	}	
+	
+	#navigation a.selected {
+		color: grey;
+		background: #bbbbbb;
+		background: linear-gradient(to bottom, #aaaaaa 0%,#bbbbbb 100%); /* W3C */
+		background: -moz-linear-gradient(top, #aaaaaa 0%,#bbbbbb 100%); /* FF */
+		background: -webkit-linear-gradient(top, #aaaaaa 0%,#bbbbbb 100%); /* Chrome */
+		
+	}	
+	
+}
+
+
+
+#header {
+	height: 150px;
+	background-color: red;
+	position: relative;
+}
+
+#footer {
+	clear: both;
+	height: 200px;
+	background-color: green;
+}
+
+#main {
+	background-color: yellow;
+	/* Magie CSS by Pierre Yves */
+	/*border-top: 1px solid blue;
+	border-bottom: 1px solid blue;	*/
+	/* overflow: auto; */
+}
+
+.news {
+	background-color: orange;
+	height: 100px;
+	margin: 20px
+}
+
+#sidebar {
+	background-color: #cccccc;
+	/*border-top: 1px solid blue;
+	border-bottom: 1px solid blue; */
+	/*overflow: auto;	*/
+}
+
+.block {
+	background-color: #dddddd;
+	height: 100px;
+	margin: 20px
+
+}
+
