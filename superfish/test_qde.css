@@ -16,19 +16,19 @@ margin:0 0 0 200px;
 
 /* Theming the menu */
 
-/*
-ul#theme1 {
+
+/*ul#theme1 {
 float:left;
 font-size:120%;
 border:solid red;
 border-width:0 5px 0 5px;
-}
-*/
+}*/
 
-ul#theme1 ul {
+
+/*ul#theme1 ul {
 border-bottom:5px solid red;
 background:yellow;
-}
+}*/
 
 ul#theme1 li a {
 //padding:20px 30px;
@@ -53,6 +53,11 @@ background:#FDC458;
 
 }
 
+ul#theme1 li.green a{
+background:green;
+
+}
+
 ul#theme1 li a:hover
 ,ul#theme1 li a:focus {
 color:white;
@@ -66,7 +71,7 @@ color:black;
 ul#theme1 span.sf-arrow {
 top:28px;
 right:6px;
-//background-image:url(images/arrows-white.png);
+/*background-image:url(images/arrows-white.png);*/
 }
 
 ul#theme1 ul span.sf-arrow {
