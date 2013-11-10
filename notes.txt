@@ -1,10 +1,27 @@
-Toujours mettre un h1, si possible avec du texte qu'on ne fait pas apparaître avec text-indent:-9999em (http://peol.github.com/960gridder/, https://drupal.org/)
+﻿Toujours mettre un h1, à défaut de compatibilité avec la maquette, l'implémenter du texte qu'on ne fait pas apparaître grâce à text-indent:-9999em (http://peol.github.com/960gridder/, https://drupal.org/)
 
-Mettre des liens d'accessibilité (http://www.alsacreations.com/, http://www.alsacreations.com/article/lire/572-Les-liens-d-evitement.html)
+I think the power of using background images is amazing. Whenever you need to display text as an image due to fonts or for something like a logo, it’s easy to make it work and keep it 100% accessible. This is not rocket science, but it’s important. For instance, if I wanted to display a logo. The wrong way: <img src="logo.gif" alt="Company Logo" /> The right way:
+01	XHTML:
+02	 
+03	<h1 id="logo">Company Name</h1>
+04	 
+05	CSS:
+06	 
+07	h1 {
+08	height:100px /* height of logo */
+09	width:100px /* width of logo */
+10	background:url(logo.gif) no-repeat;
+11	text-indent:-9000px;
+12	}
+
+===================
+
+Mettre des liens d'accessibilité "skip links" (http://www.alsacreations.com/, http://www.alsacreations.com/article/lire/572-Les-liens-d-evitement.html). Possible de les cacher avec text-indent, ou via couleur identique au fond ou via clip: rect(1px, 1px, 1px, 1px);
 
 Si grille fixe (pas fluide), partir sur width: X% & margin: 0 auto, attention : http://blog.studiovitamine.com/actualite,107,fr/css-margin,304,fr.html?id=186
 
-Menu déroulant, une bonne méthode semble être d'utiliser superfish (http://users.tpg.com.au/j_birch/plugins/superfish/#examples), attention le module Drupal associé semble charger une version modifiée (améliorée, en particulier pour les tablettes ?). Se soucier de l'accessibilité : http://staff.washington.edu/tft/tests/menus/
+Menu déroulant, une bonne méthode semble être d'utiliser superfish (http://users.tpg.com.au/j_birch/plugins/superfish/#examples), attention le module Drupal associé semble charger une version modifiée (améliorée, en particulier pour les tablettes ?). 
+Se soucier de l'accessibilité : http://staff.washington.edu/tft/tests/menus/ (déplier le contenu des menus en mode sans JS ?)
 
 ===================
 Alsa : 
@@ -56,9 +73,21 @@ Privilégier <input type="button" ... à <button (meilleur support dans IE)
 <html lang="en"> et <meta charset="utf-8">
 
 ======
-Width = X px => ne tient pas compte du padding ni du border (sauf si box-sizing: boder-box;) !!!
-Overflow: auto = "has layout" sous FF sur le test 20_responsive (en cours de debug par Pierre Yves)
-Notion d'em : http://www.alsacreations.com/article/lire/563-gerer-la-taille-du-texte-avec-les-em.html
+Width = X px => ne tient pas compte du padding ni du border (sauf si box-sizing: border-box; + versions avec prefix) !!! => gros soucis cf cas de test 20_responsive (width = 60% pour colonne1 et width = 40% pour colonne2)
+Overflow: auto = "has layout" sous FF sur le test 20_responsive (en cours de debug par Pierre Yves) => voir le fichier style copié styles_bug_boites.css
+Notion d'em (et de rem) : http://www.alsacreations.com/article/lire/563-gerer-la-taille-du-texte-avec-les-em.html
 Polices : http://www.alsacreations.com/article/lire/631-quelles-polices-pour-un-site-web.html
 
 
+======
+Lecture livre "intégration web" de Corinne Schillinger
+
+Notion d'outline pour les border sans impacter width
+Cacher des éléments avec clip: rect() 
+Attributs data-* pour les exploiter en javascript (cas d'une dic image avec plusieurs noms de fichiers stockés dans data-small et data-large page 88 et 159)
+Utilisation d'ARIA
+Utilisation de Schema.org
+Gestion du mode sans JS : utilisation d'une classe "no-js" transformée en "js" via un appel JS (dans le header => éviter le reflow qu'on aurait si on le chargeait à la fin de la page ?), page 115
+height: auto qui ne marche pas ?
+possible de sérialiser les images pour optimiser les perfs
+gestion du mode sans JS : 
