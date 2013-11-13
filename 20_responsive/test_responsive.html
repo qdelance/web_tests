@@ -14,14 +14,18 @@
 	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 	
 	<link href="css/styles.css" type="text/css" rel="stylesheet">
-
+	
+	<!-- responsive nav bits below -->
+    <link rel="stylesheet" href="responsive-nav/styles.css">
+    <!--[if lte IE 8]><script src="responsive-nav/respond.js"></script><![endif]-->
+    <script src="responsive-nav/responsive-nav.js"></script>	
+	
 </head>
 <body>
 
 <div id="page">
 
 <div id="header">
-Header
 <ul id="navigation">
 <li><a href="#">Home</a></li>
 <li><a href="#" class="selected">News</a></li>
@@ -74,10 +78,13 @@ Bloc 2
 </div>
 
 <div id="footer">
-Footer
 </div>
 
 </div>
+
+<script>
+  var navigation = responsiveNav("#navigation");
+</script>
 
 </body>
 </html>

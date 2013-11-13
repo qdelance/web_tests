@@ -60,13 +60,8 @@ body {
 }
 
 #navigation {
-	position: absolute;
-	/**
-     * QDE: FIXME, there seem to be a problem mixing height/font-size/line-height 
-	 * I think line-height must not exceed (height - padding)
-	 */
-	bottom: 0;
 	list-style: none outside none;
+	padding-top: 115px; /* 150 px header - 35 px nav menu, padding and not margin here otherwise header does not stick at the top of the browser window*/
 }
 
 #navigation li {
@@ -133,6 +128,7 @@ body {
 	
 	#navigation {
 		width: 100%;
+		padding-top: 0px;
 	}	
 	
 	#navigation li {
