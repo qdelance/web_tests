@@ -1,0 +1,22 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 15
+    nom Char (40) ;
+    num_station Integer ;
+    nb_bornettes Integer ;
+    En_service Char (5) ;
+    M_en_S_16_nov_07 Char (1) ;
+    street Char (40) ;
+    Mot_Directeur Char (60) ;
+    No Char (5) ;
+    Nrivoli Char (15) ;
+    commune Char (40) ;
+    code_insee Char (5) ;
+    X_CC43 Decimal (11, 3) ;
+    Y_CC43 Decimal (11, 3) ;
+    X_WGS84 Decimal (11, 8) ;
+    Y_WGS84 Decimal (11, 8) ;

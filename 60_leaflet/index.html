@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+<style>
+#map { 
+  border: solid 1px black;
+  height: 650px;
+  width: 80%;
+}
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+
+// Carte centrée sur Toulouse
+var map = L.map('map').setView([43.6007, 1.4329], 14);
+// possible de mettre un fitWorld();
+
+// Version OSM
+// L.tileLayer('http://tile.osm.org/{z}/{x}/{y}.png', {
+// Version MapQuest
+L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {
+// Version CloudMade (vu dans tutorial Leaflet)
+// L.tileLayer('http://{s}.tile.cloudmade.com/c4e28948627d448194dec8b2f050df2f/997/256/{z}/{x}/{y}.png', {
+    attribution: 'Insérer ici le remerciement sur le provider ;)',
+    maxZoom: 18
+}).addTo(map);
+
+// Marker du centrre ville
+var toulouseMarker = L.marker([43.6007, 1.4329]).addTo(map);
+
+// Deuxième partie du tuto, FIXME : plus bien placés
+/*var marker = L.marker([43.6007, 1.4329]).addTo(map);
+var circle = L.circle([43.508, -0.11], 500, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5
+}).addTo(map);
+var polygon = L.polygon([
+    [43.509, -0.08],
+    [43.503, -0.06],
+    [43.43 -0.047]
+]).addTo(map);
+
+marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+circle.bindPopup("I am a circle.");
+polygon.bindPopup("I am a polygon.");
+*/
+// var popup = L.popup()
+//     .setLatLng([43.5, 1.4329])
+//     .setContent("Test réalisé pour le Capitole du libre 2013.")
+//     .openOn(map);
+// 
+// var popup = L.popup();
+// 
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent("You clicked the map at " + e.latlng.toString())
+//         .openOn(map);
+// }
+// 
+// map.on('click', onMapClick);
+var infos = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hyper centre"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1.4279651641845703,
+              43.608301597268
+            ],
+            [
+              1.4386940002441406,
+              43.61171961774284
+            ],
+            [
+              1.4434146881103516,
+              43.61041457830366
+            ],
+            [
+              1.4520835876464844,
+              43.602459439867545
+            ],
+            [
+              1.4525985717773438,
+              43.59599511523506
+            ],
+            [
+              1.4421272277832031,
+              43.59201672410746
+            ],
+            [
+              1.434831619262695,
+              43.592887019640436
+            ],
+            [
+              1.427450180053711,
+              43.60196220878385
+            ],
+            [
+              1.4279651641845703,
+              43.608301597268
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canal du midi"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1.4151763916015625,
+              43.61109817392255
+            ],
+            [
+              1.4162063598632812,
+              43.60836374482855
+            ],
+            [
+              1.4198112487792969,
+              43.61091173952433
+            ],
+            [
+              1.4306259155273438,
+              43.612776057500426
+            ],
+            [
+              1.4349174499511719,
+              43.615137443973566
+            ],
+            [
+              1.4383506774902344,
+              43.61588312570113
+            ],
+            [
+              1.4426422119140625,
+              43.61457817660976
+            ],
+            [
+              1.4465904235839844,
+              43.61495102209688
+            ],
+            [
+              1.4514827728271484,
+              43.61246534185106
+            ],
+            [
+              1.4538002014160156,
+              43.60855018712496
+            ],
+            [
+              1.456632614135742,
+              43.6047590801731
+            ],
+            [
+              1.4555168151855469,
+              43.59630591596548
+            ],
+            [
+              1.4565467834472656,
+              43.592762692477685
+            ],
+            [
+              1.459207534790039,
+              43.590711257210515
+            ],
+            [
+              1.4579200744628906,
+              43.58859758410239
+            ],
+            [
+              1.4597225189208984,
+              43.58810023846606
+            ],
+            [
+              1.4610099792480467,
+              43.59064909141388
+            ],
+            [
+              1.4598083496093748,
+              43.59207888849147
+            ],
+            [
+              1.4575767517089844,
+              43.59512486464973
+            ],
+            [
+              1.4571475982666016,
+              43.5996624615655
+            ],
+            [
+              1.4580917358398435,
+              43.60531843884743
+            ],
+            [
+              1.45294189453125,
+              43.61296248611951
+            ],
+            [
+              1.448049545288086,
+              43.61582098591032
+            ],
+            [
+              1.4431571960449219,
+              43.61582098591032
+            ],
+            [
+              1.4386940002441406,
+              43.61675307602975
+            ],
+            [
+              1.4340591430664062,
+              43.61613168422215
+            ],
+            [
+              1.4296817779541016,
+              43.613583910675885
+            ],
+            [
+              1.4189529418945312,
+              43.61184390573632
+            ],
+            [
+              1.4151763916015625,
+              43.61109817392255
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+};
+
+
+
+var infos2 = L.geoJson(infos, {style: {color: 'red'}}).addTo(map);
+
+infos2.eachLayer(function (obj) {
+  if (obj.feature.properties.name == 'Canal du midi')
+     obj.setStyle({color: 'blue'});
+  });
+
+infos2.on('click', function (e) {
+            L.popup()
+             .setLatLng(e.latlng)
+             .setContent(e.layer.feature.properties.name)
+             .openOn(map);
+        });
+
+/* QDE : fails 
+XMLHttpRequest cannot load file:///home/qdelance/T%C3%A9l%C3%A9chargements/leaflet/Velo_Toulouse/Velo_Toulouse-WGS84.geojson. Cross origin requests are only supported for HTTP. index.html:1
+Uncaught NetworkError: A network error occurred. 
+
+var request = new XMLHttpRequest();
+request.open("GET", "./Velo_Toulouse/Velo_Toulouse-WGS84.geojson", false);
+request.send(null)
+var cycles = JSON.parse(request.responseText);
+alert (my_JSON_cycles.result[0]);
+*/
+
+var cycles = {
+"type": "FeatureCollection",
+                                                                                
+"features": [
+{ "type": "Feature", "id": 0, "properties": { "En_service": "O", "Y_CC43": 2267951.232, "Mot_Directeur": "CARNOT (BD LAZARE CARNOT)", "Nrivoli": "3105555132", "Y_WGS84": 43.601306974735103, "code_insee": "31555", "X_CC43": 1575029.8043, "M_en_S_16_nov_07": "O", "nom": "MONUMENT AUX COMBATTANTS", "X_WGS84": 1.45208030447654, "No": "6", "nb_bornettes": 24, "commune": "Toulouse", "street": "BD LAZARE CARNOT", "num_station": 23 }, "geometry": { "type": "Point", "coordinates": [ 1.452080304476543, 43.601306974711839 ] } }
+,
+{ "type": "Feature", "id": 1, "properties": { "En_service": "O", "Y_CC43": 2267717.4206, "Mot_Directeur": "TOUNIS (QU DE TOUNIS)", "Nrivoli": "3105558520", "Y_WGS84": 43.599045094129998, "code_insee": "31555", "X_CC43": 1574082.159, "M_en_S_16_nov_07": "O", "nom": "QUAI DE TOUNIS", "X_WGS84": 1.44039892005761, "No": "122B", "nb_bornettes": 22, "commune": "Toulouse", "street": "QU DE TOUNIS", "num_station": 27 }, "geometry": { "type": "Point", "coordinates": [ 1.440398920057609, 43.599045094106756 ] } }
+,
+{ "type": "Feature", "id": 2, "properties": { "En_service": "O", "Y_CC43": 2268358.2984, "Mot_Directeur": "LAFAYETTE (RUE LAFAYETTE)", "Nrivoli": "3105554920", "Y_WGS84": 43.604880314165399, "code_insee": "31555", "X_CC43": 1574488.5132, "M_en_S_16_nov_07": "O", "nom": "LAFAYETTE", "X_WGS84": 1.44528393189637, "No": "21", "nb_bornettes": 22, "commune": "Toulouse", "street": "RUE LAFAYETTE", "num_station": 2 }, "geometry": { "type": "Point", "coordinates": [ 1.44528393189637, 43.604880314142143 ] } }
+,
+{ "type": "Feature", "id": 3, "properties": { "En_service": "O", "Y_CC43": 2267818.8124, "Mot_Directeur": "ETIENNE (PL SAINT ETIENNE)", "Nrivoli": "3105557756", "Y_WGS84": 43.600077862482799, "code_insee": "31555", "X_CC43": 1574804.2979, "M_en_S_16_nov_07": "O", "nom": "PLACE SAINT ETIENNE", "X_WGS84": 1.44931801794139, "No": "14", "nb_bornettes": 20, "commune": "Toulouse", "street": "PL SAINT ETIENNE", "num_station": 24 }, "geometry": { "type": "Point", "coordinates": [ 1.449318017941391, 43.600077862459592 ] } }
+,
+{ "type": "Feature", "id": 4, "properties": { "En_service": "O", "Y_CC43": 2267762.8736, "Mot_Directeur": "TOURNEURS (RUE DES TOURNEURS)", "Nrivoli": "3105558536", "Y_WGS84": 43.599522626356602, "code_insee": "31555", "X_CC43": 1574492.7209, "M_en_S_16_nov_07": "O", "nom": "PLACE ROUAIX", "X_WGS84": 1.44547250449936, "No": "1", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DES TOURNEURS", "num_station": 25 }, "geometry": { "type": "Point", "coordinates": [ 1.445472504499364, 43.599522626333354 ] } }
+,
+{ "type": "Feature", "id": 5, "properties": { "En_service": "O", "Y_CC43": 2267202.3948, "Mot_Directeur": "SAUVEUR (PORT SAINT SAUVEUR)", "Nrivoli": "3105558066", "Y_WGS84": 43.5946166265784, "code_insee": "31555", "X_CC43": 1575323.6062, "M_en_S_16_nov_07": "N", "nom": "CAPTAINERIE PORT  - ST SAUVEUR", "X_WGS84": 1.4558890693693, "No": "5", "nb_bornettes": 20, "commune": "Toulouse", "street": "PORT SAINT SAUVEUR", "num_station": 101 }, "geometry": { "type": "Point", "coordinates": [ 1.455889069369297, 43.59461662655518 ] } }
+,
+{ "type": "Feature", "id": 6, "properties": { "En_service": "O", "Y_CC43": 2267959.8964, "Mot_Directeur": "DAURADE (PL DE LA DAURADE)", "Nrivoli": "3105552520", "Y_WGS84": 43.6012175389831, "code_insee": "31555", "X_CC43": 1574024.3628, "M_en_S_16_nov_07": "O", "nom": "PLACE DE LA DAURADE", "X_WGS84": 1.43962745298722, "No": "2", "nb_bornettes": 28, "commune": "Toulouse", "street": "PL DE LA DAURADE", "num_station": 11 }, "geometry": { "type": "Point", "coordinates": [ 1.439627452987221, 43.60121753895983 ] } }
+,
+{ "type": "Feature", "id": 7, "properties": { "En_service": "O", "Y_CC43": 2267821.5834, "Mot_Directeur": "DUPUY (PL DOMINIQUE MARTIN DUPUY)", "Nrivoli": "3105552828", "Y_WGS84": 43.600176098267497, "code_insee": "31555", "X_CC43": 1575246.2856, "M_en_S_16_nov_07": "O", "nom": "PLACE DUPUY", "X_WGS84": 1.45479063783504, "No": "14", "nb_bornettes": 22, "commune": "Toulouse", "street": "PL DOMINIQUE MARTIN DUPUY", "num_station": 43 }, "geometry": { "type": "Point", "coordinates": [ 1.454790637835038, 43.60017609824429 ] } }
+,
+{ "type": "Feature", "id": 8, "properties": { "En_service": "O", "Y_CC43": 2267981.2736, "Mot_Directeur": "ESCANDE (BD PR LEOPOLD ESCANDE)", "Nrivoli": "3105557151", "Y_WGS84": 43.601630930558201, "code_insee": "31555", "X_CC43": 1575353.45, "M_en_S_16_nov_07": "O", "nom": "DAURIAC - ESCANDE", "X_WGS84": 1.45608133922493, "No": "3", "nb_bornettes": 23, "commune": "Toulouse", "street": "BD PR LEOPOLD ESCANDE", "num_station": 42 }, "geometry": { "type": "Point", "coordinates": [ 1.456081339224931, 43.601630930534974 ] } }
+,
+{ "type": "Feature", "id": 9, "properties": { "En_service": "O", "Y_CC43": 2268179.0476, "Mot_Directeur": "POMME (RUE DE LA POMME)", "Nrivoli": "3105556988", "Y_WGS84": 43.603269650943901, "code_insee": "31555", "X_CC43": 1574503.2958, "M_en_S_16_nov_07": "O", "nom": "POMME", "X_WGS84": 1.44550808377576, "No": "62", "nb_bornettes": 19, "commune": "Toulouse", "street": "RUE DE LA POMME", "num_station": 3 }, "geometry": { "type": "Point", "coordinates": [ 1.445508083775764, 43.603269650920652 ] } }
+,
+{ "type": "Feature", "id": 10, "properties": { "En_service": "O", "Y_CC43": 2268262.0356, "Mot_Directeur": "CARNOT (BD LAZARE CARNOT)", "Nrivoli": "3105555132", "Y_WGS84": 43.604079118207103, "code_insee": "31555", "X_CC43": 1574879.9595, "M_en_S_16_nov_07": "O", "nom": "CARNOT - LABEDA", "X_WGS84": 1.45015368757085, "No": "63", "nb_bornettes": 22, "commune": "Toulouse", "street": "BD LAZARE CARNOT", "num_station": 21 }, "geometry": { "type": "Point", "coordinates": [ 1.450153687570846, 43.604079118183883 ] } }
+,
+{ "type": "Feature", "id": 11, "properties": { "En_service": "O", "Y_CC43": 2267455.5708, "Mot_Directeur": "VERDIER (ALL FORAIN FRANCOIS VERDIER)", "Nrivoli": "3105553396", "Y_WGS84": 43.596852541142702, "code_insee": "31555", "X_CC43": 1575067.0002, "M_en_S_16_nov_07": "O", "nom": "VERDIER - GRAND ROND", "X_WGS84": 1.45265398792774, "No": "2", "nb_bornettes": 27, "commune": "Toulouse", "street": "ALL FORAIN FRANCOIS VERDIER", "num_station": 65 }, "geometry": { "type": "Point", "coordinates": [ 1.452653987927735, 43.596852541119482 ] } }
+,
+{ "type": "Feature", "id": 12, "properties": { "En_service": "O", "Y_CC43": 2267414.2102, "Mot_Directeur": "MAI 1945 (RUE DU HUIT MAI 1945)", "Nrivoli": "3105554272", "Y_WGS84": 43.596457082810801, "code_insee": "31555", "X_CC43": 1574926.877, "M_en_S_16_nov_07": "O", "nom": "JARDIN ROYAL", "X_WGS84": 1.45092834304742, "No": "0", "nb_bornettes": 23, "commune": "Toulouse", "street": "RUE DU HUIT MAI 1945", "num_station": 66 }, "geometry": { "type": "Point", "coordinates": [ 1.450928343047423, 43.596457082787559 ] } }
+,
+{ "type": "Feature", "id": 13, "properties": { "En_service": "O", "Y_CC43": 2267004.1292, "Mot_Directeur": "FEUGA (ALL PAUL FEUGA)", "Nrivoli": "3105556620", "Y_WGS84": 43.5926608264324, "code_insee": "31555", "X_CC43": 1574290.8787, "M_en_S_16_nov_07": "O", "nom": "FEUGA", "X_WGS84": 1.44314720709442, "No": "11", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL PAUL FEUGA", "num_station": 69 }, "geometry": { "type": "Point", "coordinates": [ 1.44314720709442, 43.592660826409123 ] } }
+,
+{ "type": "Feature", "id": 14, "properties": { "En_service": "O", "Y_CC43": 2267400.8458, "Mot_Directeur": "OZENNE (RUE THEODORE OZENNE)", "Nrivoli": "3105556448", "Y_WGS84": 43.596285788691503, "code_insee": "31555", "X_CC43": 1574619.8059, "M_en_S_16_nov_07": "O", "nom": "OZENNE - NAZARETH", "X_WGS84": 1.447129091192, "No": "10", "nb_bornettes": 19, "commune": "Toulouse", "street": "RUE THEODORE OZENNE", "num_station": 45 }, "geometry": { "type": "Point", "coordinates": [ 1.447129091191995, 43.59628578866829 ] } }
+,
+{ "type": "Feature", "id": 15, "properties": { "En_service": "O", "Y_CC43": 2267658.3318, "Mot_Directeur": "LAGANNE (PL LAGANNE)", "Nrivoli": "3105554944", "Y_WGS84": 43.598463086278002, "code_insee": "31555", "X_CC43": 1573781.7638, "M_en_S_16_nov_07": "O", "nom": "CHATEAU D EAU", "X_WGS84": 1.43669274179426, "No": "12", "nb_bornettes": 21, "commune": "Toulouse", "street": "PL LAGANNE", "num_station": 75 }, "geometry": { "type": "Point", "coordinates": [ 1.436692741794255, 43.598463086254746 ] } }
+,
+{ "type": "Feature", "id": 16, "properties": { "En_service": "O", "Y_CC43": 2267459.548, "Mot_Directeur": "LAGANNE (RUE LAGANNE)", "Nrivoli": "3105554948", "Y_WGS84": 43.596667394203699, "code_insee": "31555", "X_CC43": 1573741.2674, "M_en_S_16_nov_07": "N", "nom": "LAGANNE - TEINTURIERS", "X_WGS84": 1.43623710387768, "No": "37", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE LAGANNE", "num_station": 74 }, "geometry": { "type": "Point", "coordinates": [ 1.436237103877684, 43.596667394180386 ] } }
+,
+{ "type": "Feature", "id": 17, "properties": { "En_service": "O", "Y_CC43": 2267828.0838, "Mot_Directeur": "FITTE (ALL CHARLES DE FITTE)", "Nrivoli": "3105551920", "Y_WGS84": 43.599893309691403, "code_insee": "31555", "X_CC43": 1573201.4498, "M_en_S_16_nov_07": "N", "nom": "JARDIN RAYMOND VI", "X_WGS84": 1.42946748828319, "No": "76", "nb_bornettes": 33, "commune": "Toulouse", "street": "ALL CHARLES DE FITTE", "num_station": 81 }, "geometry": { "type": "Point", "coordinates": [ 1.429467488283193, 43.599893309668133 ] } }
+,
+{ "type": "Feature", "id": 18, "properties": { "En_service": "O", "Y_CC43": 2268862.046, "Mot_Directeur": "LASCROSSES (BD LASCROSSES)", "Nrivoli": "3105555080", "Y_WGS84": 43.609236037741702, "code_insee": "31555", "X_CC43": 1573426.6496, "M_en_S_16_nov_07": "N", "nom": "LASCROSSES -  LECLERC", "X_WGS84": 1.43201717288516, "No": "47", "nb_bornettes": 26, "commune": "Toulouse", "street": "BD LASCROSSES", "num_station": 87 }, "geometry": { "type": "Point", "coordinates": [ 1.432017172885157, 43.609236037718453 ] } }
+,
+{ "type": "Feature", "id": 19, "properties": { "En_service": "O", "Y_CC43": 2269499.7194, "Mot_Directeur": "CHAUSSAS (RUE DE CHAUSSAS)", "Nrivoli": "3105551996", "Y_WGS84": 43.614988750553202, "code_insee": "31555", "X_CC43": 1573510.9345, "M_en_S_16_nov_07": "N", "nom": "HOTEL DE POLICE", "X_WGS84": 1.43291370930735, "No": "1", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE DE CHAUSSAS", "num_station": 123 }, "geometry": { "type": "Point", "coordinates": [ 1.432913709307345, 43.614988750529967 ] } }
+,
+{ "type": "Feature", "id": 20, "properties": { "En_service": "O", "Y_CC43": 2268436.8116, "Mot_Directeur": "BRIENNE (ALL DE BRIENNE)", "Nrivoli": "3105551424", "Y_WGS84": 43.605413351816502, "code_insee": "31555", "X_CC43": 1573451.0306, "M_en_S_16_nov_07": "N", "nom": "BRIENNE -  MANUFACTURE", "X_WGS84": 1.43241741661268, "No": "19T", "nb_bornettes": 24, "commune": "Toulouse", "street": "ALL DE BRIENNE", "num_station": 84 }, "geometry": { "type": "Point", "coordinates": [ 1.432417416612675, 43.605413351793217 ] } }
+,
+{ "type": "Feature", "id": 21, "properties": { "En_service": "O", "Y_CC43": 2269526.6306, "Mot_Directeur": "MARQUETTE (BD DE LA MARQUETTE)", "Nrivoli": "3105555716", "Y_WGS84": 43.6152600217765, "code_insee": "31555", "X_CC43": 1573684.3336, "M_en_S_16_nov_07": "N", "nom": "HOTEL DE DEPARTEMENT", "X_WGS84": 1.43505526159738, "No": "1", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DE LA MARQUETTE", "num_station": 109 }, "geometry": { "type": "Point", "coordinates": [ 1.435055261597384, 43.615260021753272 ] } }
+,
+{ "type": "Feature", "id": 22, "properties": { "En_service": "O", "Y_CC43": 2268468.9424, "Mot_Directeur": "SEJOURNE (AV PAUL SEJOURNE)", "Nrivoli": "3105556648", "Y_WGS84": 43.605642926712498, "code_insee": "31555", "X_CC43": 1573096.7767, "M_en_S_16_nov_07": "O", "nom": "SEJOURNE - CATALANS", "X_WGS84": 1.42802279230806, "No": "1", "nb_bornettes": 16, "commune": "Toulouse", "street": "AV PAUL SEJOURNE", "num_station": 82 }, "geometry": { "type": "Point", "coordinates": [ 1.428022792308055, 43.605642926689207 ] } }
+,
+{ "type": "Feature", "id": 23, "properties": { "En_service": "O", "Y_CC43": 2268469.913, "Mot_Directeur": "SEJOURNE (AV PAUL SEJOURNE)", "Nrivoli": "3105556648", "Y_WGS84": 43.605654715999897, "code_insee": "31555", "X_CC43": 1573114.9158, "M_en_S_16_nov_07": "O", "nom": "SEJOURNE  -  AMIDONNIERS", "X_WGS84": 1.428247207846, "No": "2", "nb_bornettes": 15, "commune": "Toulouse", "street": "AV PAUL SEJOURNE", "num_station": 83 }, "geometry": { "type": "Point", "coordinates": [ 1.428247207846002, 43.605654715976627 ] } }
+,
+{ "type": "Feature", "id": 24, "properties": { "En_service": "O", "Y_CC43": 2268601.7922, "Mot_Directeur": "LECLERC (BD DU MARECHAL LECLERC)", "Nrivoli": "3105555656", "Y_WGS84": 43.606875545690997, "code_insee": "31555", "X_CC43": 1573317.1017, "M_en_S_16_nov_07": "N", "nom": "LECLERC -  BARCELONE", "X_WGS84": 1.43072063282812, "No": "2", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DU MARECHAL LECLERC", "num_station": 85 }, "geometry": { "type": "Point", "coordinates": [ 1.430720632828122, 43.60687554566784 ] } }
+,
+{ "type": "Feature", "id": 25, "properties": { "En_service": "O", "Y_CC43": 2269078.0206, "Mot_Directeur": "LASCROSSES (BD LASCROSSES)", "Nrivoli": "3105555080", "Y_WGS84": 43.6112623008326, "code_insee": "31555", "X_CC43": 1573919.6666, "M_en_S_16_nov_07": "O", "nom": "LASCROSSES -  PLACE ARNAUD BERNARD", "X_WGS84": 1.43807348919807, "No": "3B", "nb_bornettes": 26, "commune": "Toulouse", "street": "BD LASCROSSES", "num_station": 90 }, "geometry": { "type": "Point", "coordinates": [ 1.438073489198071, 43.611262300809429 ] } }
+,
+{ "type": "Feature", "id": 26, "properties": { "En_service": "O", "Y_CC43": 2268392.2234, "Mot_Directeur": "VALADE (RUE VALADE)", "Nrivoli": "3105558676", "Y_WGS84": 43.605078252974202, "code_insee": "31555", "X_CC43": 1573845.5982, "M_en_S_16_nov_07": "O", "nom": "VALADE", "X_WGS84": 1.43731413300928, "No": "31", "nb_bornettes": 19, "commune": "Toulouse", "street": "RUE VALADE", "num_station": 29 }, "geometry": { "type": "Point", "coordinates": [ 1.437314133009273, 43.60507825295096 ] } }
+,
+{ "type": "Feature", "id": 27, "properties": { "En_service": "O", "Y_CC43": 2268526.8894, "Mot_Directeur": "FRANCE (PL ANATOLE FRANCE)", "Nrivoli": "3105550272", "Y_WGS84": 43.6063052572324, "code_insee": "31555", "X_CC43": 1573935.8954, "M_en_S_16_nov_07": "O", "nom": "PLACE ANATOLE FRANCE", "X_WGS84": 1.43840139062854, "No": "40", "nb_bornettes": 25, "commune": "Toulouse", "street": "PL ANATOLE FRANCE", "num_station": 30 }, "geometry": { "type": "Point", "coordinates": [ 1.43840139062854, 43.606305257209193 ] } }
+,
+{ "type": "Feature", "id": 28, "properties": { "En_service": "O", "Y_CC43": 2268666.7868, "Mot_Directeur": "RENARDS (RUE DES TROIS RENARDS)", "Nrivoli": "3105558616", "Y_WGS84": 43.607603863574099, "code_insee": "31555", "X_CC43": 1574173.0274, "M_en_S_16_nov_07": "N", "nom": "MUSEE ST RAYMOND", "X_WGS84": 1.44130600070616, "No": "8", "nb_bornettes": 12, "commune": "Toulouse", "street": "RUE DES TROIS RENARDS", "num_station": 32 }, "geometry": { "type": "Point", "coordinates": [ 1.441306000706162, 43.607603863550843 ] } }
+,
+{ "type": "Feature", "id": 29, "properties": { "En_service": "O", "Y_CC43": 2268965.6328, "Mot_Directeur": "LASCROSSES (BD LASCROSSES)", "Nrivoli": "3105555080", "Y_WGS84": 43.610209292337899, "code_insee": "31555", "X_CC43": 1573671.2751, "M_en_S_16_nov_07": "O", "nom": "DUPORTAL -  LASCROSSES", "X_WGS84": 1.43502297471373, "No": "17T", "nb_bornettes": 25, "commune": "Toulouse", "street": "BD LASCROSSES", "num_station": 88 }, "geometry": { "type": "Point", "coordinates": [ 1.435022974713734, 43.61020929231465 ] } }
+,
+{ "type": "Feature", "id": 30, "properties": { "En_service": "O", "Y_CC43": 2268974.372, "Mot_Directeur": "MERLY (RUE MERLY)", "Nrivoli": "3105555896", "Y_WGS84": 43.610396815361099, "code_insee": "31555", "X_CC43": 1574322.3325, "M_en_S_16_nov_07": "O", "nom": "MERLY -  ARCOLE", "X_WGS84": 1.44308450269496, "No": "15", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE MERLY", "num_station": 57 }, "geometry": { "type": "Point", "coordinates": [ 1.443084502694962, 43.610396815337836 ] } }
+,
+{ "type": "Feature", "id": 31, "properties": { "En_service": "O", "Y_CC43": 2269182.5336, "Mot_Directeur": "RAYMOND IV (RUE RAYMOND IV)", "Nrivoli": "3105557320", "Y_WGS84": 43.612382621017403, "code_insee": "31555", "X_CC43": 1574998.6571, "M_en_S_16_nov_07": "O", "nom": "RAYMOND IV", "X_WGS84": 1.45141348960701, "No": "00", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE RAYMOND IV", "num_station": 97 }, "geometry": { "type": "Point", "coordinates": [ 1.451413489607009, 43.612382620994225 ] } }
+,
+{ "type": "Feature", "id": 32, "properties": { "En_service": "O", "Y_CC43": 2268873.4062, "Mot_Directeur": "SCHUMAN (PL ROBERT SCHUMAN)", "Nrivoli": "3105557536", "Y_WGS84": 43.609572052810201, "code_insee": "31555", "X_CC43": 1574826.0672, "M_en_S_16_nov_07": "N", "nom": "PLACE SCHUMAN", "X_WGS84": 1.44934651482759, "No": "5", "nb_bornettes": 23, "commune": "Toulouse", "street": "PL ROBERT SCHUMAN", "num_station": 36 }, "geometry": { "type": "Point", "coordinates": [ 1.449346514827589, 43.609572052786966 ] } }
+,
+{ "type": "Feature", "id": 33, "properties": { "En_service": "O", "Y_CC43": 2268630.1346, "Mot_Directeur": "TROUBADOURS (RUE DES SEPT TROUBADOURS)", "Nrivoli": "3105558224", "Y_WGS84": 43.607447756442802, "code_insee": "31555", "X_CC43": 1575217.7613, "M_en_S_16_nov_07": "N", "nom": "PISCINE LEO LAGRANGE", "X_WGS84": 1.45425316479672, "No": "54", "nb_bornettes": 22, "commune": "Toulouse", "street": "RUE DES SEPT TROUBADOURS", "num_station": 63 }, "geometry": { "type": "Point", "coordinates": [ 1.454253164796719, 43.607447756419575 ] } }
+,
+{ "type": "Feature", "id": 34, "properties": { "En_service": "O", "Y_CC43": 2268451.3224, "Mot_Directeur": "DAMLOUP (PL DE DAMLOUP)", "Nrivoli": "3105552480", "Y_WGS84": 43.605819067476503, "code_insee": "31555", "X_CC43": 1575100.0073, "M_en_S_16_nov_07": "N", "nom": "PLACE DE DAMLOUP", "X_WGS84": 1.45283559934517, "No": "2", "nb_bornettes": 19, "commune": "Toulouse", "street": "PL DE DAMLOUP", "num_station": 39 }, "geometry": { "type": "Point", "coordinates": [ 1.452835599345174, 43.605819067453233 ] } }
+,
+{ "type": "Feature", "id": 35, "properties": { "En_service": "O", "Y_CC43": 2268775.0894, "Mot_Directeur": "BERALDI (RUE HENRI BERALDI)", "Nrivoli": "3105554120", "Y_WGS84": 43.608609811171497, "code_insee": "31555", "X_CC43": 1574360.6379, "M_en_S_16_nov_07": "O", "nom": "BERALDI", "X_WGS84": 1.44360465961975, "No": "11", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE HENRI BERALDI", "num_station": 33 }, "geometry": { "type": "Point", "coordinates": [ 1.443604659619751, 43.608609811148249 ] } }
+,
+{ "type": "Feature", "id": 36, "properties": { "En_service": "O", "Y_CC43": 2268789.8316, "Mot_Directeur": "CHAINE (RUE DE LA CHAINE)", "Nrivoli": "3105551844", "Y_WGS84": 43.608686489257103, "code_insee": "31555", "X_CC43": 1574025.2973, "M_en_S_16_nov_07": "O", "nom": "CHAINE", "X_WGS84": 1.43944808947861, "No": "10", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DE LA CHAINE", "num_station": 54 }, "geometry": { "type": "Point", "coordinates": [ 1.439448089478606, 43.608686489233875 ] } }
+,
+{ "type": "Feature", "id": 37, "properties": { "En_service": "O", "Y_CC43": 2268645.7968, "Mot_Directeur": "SALENQUES (RUE DES SALENQUES)", "Nrivoli": "3105558100", "Y_WGS84": 43.607390031640797, "code_insee": "31555", "X_CC43": 1574023.7783, "M_en_S_16_nov_07": "O", "nom": "SALENQUES", "X_WGS84": 1.43946241727089, "No": "7", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DES SALENQUES", "num_station": 31 }, "geometry": { "type": "Point", "coordinates": [ 1.439462417270891, 43.607390031617548 ] } }
+,
+{ "type": "Feature", "id": 38, "properties": { "En_service": "O", "Y_CC43": 2268794.903, "Mot_Directeur": "JULIEN (PL SAINT JULIEN)", "Nrivoli": "3105557864", "Y_WGS84": 43.608698170211603, "code_insee": "31555", "X_CC43": 1573822.3505, "M_en_S_16_nov_07": "O", "nom": "PLACE SAINT JULIEN", "X_WGS84": 1.43693343205179, "No": "0", "nb_bornettes": 24, "commune": "Toulouse", "street": "PL SAINT JULIEN", "num_station": 53 }, "geometry": { "type": "Point", "coordinates": [ 1.436933432051792, 43.608698170188418 ] } }
+,
+{ "type": "Feature", "id": 39, "properties": { "En_service": "O", "Y_CC43": 2268784.3248, "Mot_Directeur": "DUPORTAL (BD ARMAND DUPORTAL)", "Nrivoli": "3105550492", "Y_WGS84": 43.608573610696503, "code_insee": "31555", "X_CC43": 1573647.1216, "M_en_S_16_nov_07": "O", "nom": "DUPORTAL -  CITE ADMINISTRATIVE", "X_WGS84": 1.43476567041527, "No": "41", "nb_bornettes": 21, "commune": "Toulouse", "street": "BD ARMAND DUPORTAL", "num_station": 52 }, "geometry": { "type": "Point", "coordinates": [ 1.434765670415266, 43.608573610673318 ] } }
+,
+{ "type": "Feature", "id": 40, "properties": { "En_service": "O", "Y_CC43": 2268455.0412, "Mot_Directeur": "VILLENEUVE (RUE DU REMPART VILLENEUVE)", "Nrivoli": "3105557388", "Y_WGS84": 43.605767422548297, "code_insee": "31555", "X_CC43": 1574587.5807, "M_en_S_16_nov_07": "O", "nom": "PLACE VICTOR HUGO", "X_WGS84": 1.44648864765214, "No": "6", "nb_bornettes": 26, "commune": "Toulouse", "street": "RUE DU REMPART VILLENEUVE", "num_station": 7 }, "geometry": { "type": "Point", "coordinates": [ 1.44648864765214, 43.605767422525048 ] } }
+,
+{ "type": "Feature", "id": 41, "properties": { "En_service": "O", "Y_CC43": 2268510.6838, "Mot_Directeur": "STRASBOURG (BD DE STRASBOURG)", "Nrivoli": "3105558328", "Y_WGS84": 43.606291713503701, "code_insee": "31555", "X_CC43": 1574729.1487, "M_en_S_16_nov_07": "O", "nom": "STRASBOURG - JAURES", "X_WGS84": 1.44822915254322, "No": "4", "nb_bornettes": 24, "commune": "Toulouse", "street": "BD DE STRASBOURG", "num_station": 18 }, "geometry": { "type": "Point", "coordinates": [ 1.44822915254322, 43.606291713480459 ] } }
+,
+{ "type": "Feature", "id": 42, "properties": { "En_service": "O", "Y_CC43": 2268391.1662, "Mot_Directeur": "LOIS (RUE DES LOIS)", "Nrivoli": "3105555304", "Y_WGS84": 43.605135774452997, "code_insee": "31555", "X_CC43": 1574246.6443, "M_en_S_16_nov_07": "O", "nom": "LOIS", "X_WGS84": 1.44228102933692, "No": "5", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DES LOIS", "num_station": 6 }, "geometry": { "type": "Point", "coordinates": [ 1.442281029336916, 43.605135774429783 ] } }
+,
+{ "type": "Feature", "id": 43, "properties": { "En_service": "O", "Y_CC43": 2269109.7344, "Mot_Directeur": "ARCOLE (BD D ARCOLE)", "Nrivoli": "3105550428", "Y_WGS84": 43.611569321888403, "code_insee": "31555", "X_CC43": 1574048.9419, "M_en_S_16_nov_07": "O", "nom": "ARCOLE -  BALANCE", "X_WGS84": 1.43966733128761, "No": "48", "nb_bornettes": 23, "commune": "Toulouse", "street": "BD D ARCOLE", "num_station": 91 }, "geometry": { "type": "Point", "coordinates": [ 1.439667331287612, 43.611569321865126 ] } }
+,
+{ "type": "Feature", "id": 44, "properties": { "En_service": "O", "Y_CC43": 2268825.1854, "Mot_Directeur": "MERLY (RUE MERLY)", "Nrivoli": "3105555896", "Y_WGS84": 43.609048521449999, "code_insee": "31555", "X_CC43": 1574287.9975, "M_en_S_16_nov_07": "O", "nom": "SAINT SERNIN  -  MERLY", "X_WGS84": 1.44269350834486, "No": "1", "nb_bornettes": 14, "commune": "Toulouse", "street": "RUE MERLY", "num_station": 56 }, "geometry": { "type": "Point", "coordinates": [ 1.442693508344862, 43.609048521426786 ] } }
+,
+{ "type": "Feature", "id": 45, "properties": { "En_service": "O", "Y_CC43": 2268880.9332, "Mot_Directeur": "LAZARE (PETITE-RUE SAINT LAZARE)", "Nrivoli": "3105557876", "Y_WGS84": 43.609596056955702, "code_insee": "31555", "X_CC43": 1574563.094, "M_en_S_16_nov_07": "N", "nom": "SAINT LAZARE", "X_WGS84": 1.4460878230204, "No": "2", "nb_bornettes": 17, "commune": "Toulouse", "street": "PETITE-RUE SAINT LAZARE", "num_station": 34 }, "geometry": { "type": "Point", "coordinates": [ 1.446087823020402, 43.609596056932425 ] } }
+,
+{ "type": "Feature", "id": 46, "properties": { "En_service": "O", "Y_CC43": 2268524.7502, "Mot_Directeur": "STRASBOURG (BD DE STRASBOURG)", "Nrivoli": "3105558328", "Y_WGS84": 43.606411778454799, "code_insee": "31555", "X_CC43": 1574689.9228, "M_en_S_16_nov_07": "O", "nom": "STRASBOURG  - SARDANE", "X_WGS84": 1.44774013990381, "No": "7", "nb_bornettes": 25, "commune": "Toulouse", "street": "BD DE STRASBOURG", "num_station": 17 }, "geometry": { "type": "Point", "coordinates": [ 1.447740139903808, 43.606411778431557 ] } }
+,
+{ "type": "Feature", "id": 47, "properties": { "En_service": "O", "Y_CC43": 2269517.8692, "Mot_Directeur": "MINIMES (BD DES MINIMES)", "Nrivoli": "3105555960", "Y_WGS84": 43.615286770554398, "code_insee": "31555", "X_CC43": 1574315.7287, "M_en_S_16_nov_07": "N", "nom": "MINIMES -  PASSERELLE", "X_WGS84": 1.44287793090323, "No": "38B", "nb_bornettes": 22, "commune": "Toulouse", "street": "BD DES MINIMES", "num_station": 111 }, "geometry": { "type": "Point", "coordinates": [ 1.442877930903227, 43.615286770531156 ] } }
+,
+{ "type": "Feature", "id": 48, "properties": { "En_service": "O", "Y_CC43": 2270839.2164, "Mot_Directeur": "PARIS (BRE DE PARIS)", "Nrivoli": "310555B279", "Y_WGS84": 43.627062440914401, "code_insee": "31555", "X_CC43": 1573625.9858, "M_en_S_16_nov_07": "N", "nom": "BARRIERE DE PARIS", "X_WGS84": 1.43402945574573, "No": "00", "nb_bornettes": 20, "commune": "Toulouse", "street": "BRE DE PARIS", "num_station": 125 }, "geometry": { "type": "Point", "coordinates": [ 1.434029455745731, 43.627062440891244 ] } }
+,
+{ "type": "Feature", "id": 49, "properties": { "En_service": "O", "Y_CC43": 2266764.892, "Mot_Directeur": "DEMOISELLES (ALL DES DEMOISELLES)", "Nrivoli": "3105552584", "Y_WGS84": 43.590643794581602, "code_insee": "31555", "X_CC43": 1575108.5578, "M_en_S_16_nov_07": "N", "nom": "DEMOISELLES - MISTRAL", "X_WGS84": 1.45332605355888, "No": "8", "nb_bornettes": 16, "commune": "Toulouse", "street": "ALL DES DEMOISELLES", "num_station": 115 }, "geometry": { "type": "Point", "coordinates": [ 1.453326053558883, 43.590643794558375 ] } }
+,
+{ "type": "Feature", "id": 50, "properties": { "En_service": "O", "Y_CC43": 2266421.4122, "Mot_Directeur": "DEMOISELLES (ALL DES DEMOISELLES)", "Nrivoli": "3105552584", "Y_WGS84": 43.587638784801101, "code_insee": "31555", "X_CC43": 1575629.1366, "M_en_S_16_nov_07": "N", "nom": "PONT DES DEMOISELLES", "X_WGS84": 1.45984950519688, "No": "80", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL DES DEMOISELLES", "num_station": 98 }, "geometry": { "type": "Point", "coordinates": [ 1.459849505196884, 43.587638784777823 ] } }
+,
+{ "type": "Feature", "id": 51, "properties": { "En_service": "O", "Y_CC43": 2268826.712, "Mot_Directeur": "ARNOULT (RUE GATIEN ARNOULT)", "Nrivoli": "3105553780", "Y_WGS84": 43.609040782579498, "code_insee": "31555", "X_CC43": 1574159.3354, "M_en_S_16_nov_07": "O", "nom": "SAINT SERNIN -  GATIEN ARNOULT", "X_WGS84": 1.44109967115332, "No": "2", "nb_bornettes": 13, "commune": "Toulouse", "street": "RUE GATIEN ARNOULT", "num_station": 55 }, "geometry": { "type": "Point", "coordinates": [ 1.441099671153314, 43.609040782556299 ] } }
+,
+{ "type": "Feature", "id": 52, "properties": { "En_service": "O", "Y_CC43": 2268218.1866, "Mot_Directeur": "PIERRE (PL SAINT PIERRE)", "Nrivoli": "3105557948", "Y_WGS84": 43.6034948597108, "code_insee": "31555", "X_CC43": 1573742.9418, "M_en_S_16_nov_07": "O", "nom": "PLACE SAINT PIERRE", "X_WGS84": 1.43608294062241, "No": "6", "nb_bornettes": 22, "commune": "Toulouse", "street": "PL SAINT PIERRE", "num_station": 28 }, "geometry": { "type": "Point", "coordinates": [ 1.436082940622405, 43.603494859687508 ] } }
+,
+{ "type": "Feature", "id": 53, "properties": { "En_service": "O", "Y_CC43": 2268169.0088, "Mot_Directeur": "VIDAL (RUE PAUL VIDAL)", "Nrivoli": "3105556660", "Y_WGS84": 43.6032144995715, "code_insee": "31555", "X_CC43": 1574714.7777, "M_en_S_16_nov_07": "O", "nom": "ESPACE SAINT GEORGES", "X_WGS84": 1.44812935018756, "No": "19", "nb_bornettes": 24, "commune": "Toulouse", "street": "RUE PAUL VIDAL", "num_station": 8 }, "geometry": { "type": "Point", "coordinates": [ 1.448129350187564, 43.60321449954823 ] } }
+,
+{ "type": "Feature", "id": 54, "properties": { "En_service": "O", "Y_CC43": 2268131.1136, "Mot_Directeur": "CARNOT (BD LAZARE CARNOT)", "Nrivoli": "3105555132", "Y_WGS84": 43.602921598120403, "code_insee": "31555", "X_CC43": 1575004.5889, "M_en_S_16_nov_07": "O", "nom": "CARNOT ROLAND", "X_WGS84": 1.45172699115784, "No": "24", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD LAZARE CARNOT", "num_station": 22 }, "geometry": { "type": "Point", "coordinates": [ 1.45172699115784, 43.602921598097147 ] } }
+,
+{ "type": "Feature", "id": 55, "properties": { "En_service": "O", "Y_CC43": 2268329.5038, "Mot_Directeur": "CARNOT (BD LAZARE CARNOT)", "Nrivoli": "3105555132", "Y_WGS84": 43.604678102742, "code_insee": "31555", "X_CC43": 1574830.704, "M_en_S_16_nov_07": "O", "nom": "CARNOT -  TROIS JOURNEES", "X_WGS84": 1.44952828207061, "No": "69", "nb_bornettes": 27, "commune": "Toulouse", "street": "BD LAZARE CARNOT", "num_station": 20 }, "geometry": { "type": "Point", "coordinates": [ 1.449528282070611, 43.604678102718772 ] } }
+,
+{ "type": "Feature", "id": 56, "properties": { "En_service": "O", "Y_CC43": 2268384.1608, "Mot_Directeur": "CARNOT (BD LAZARE CARNOT)", "Nrivoli": "3105555132", "Y_WGS84": 43.6051683857795, "code_insee": "31555", "X_CC43": 1574821.1322, "M_en_S_16_nov_07": "O", "nom": "CARNOT  - PERI", "X_WGS84": 1.44939724813424, "No": "62", "nb_bornettes": 25, "commune": "Toulouse", "street": "BD LAZARE CARNOT", "num_station": 19 }, "geometry": { "type": "Point", "coordinates": [ 1.449397248134244, 43.605168385756272 ] } }
+,
+{ "type": "Feature", "id": 57, "properties": { "En_service": "O", "Y_CC43": 2267566.7374, "Mot_Directeur": "VERDIER (ALL FORAIN FRANCOIS VERDIER)", "Nrivoli": "3105553396", "Y_WGS84": 43.597839922459002, "code_insee": "31555", "X_CC43": 1574988.3636, "M_en_S_16_nov_07": "O", "nom": "PALAIS NIEL", "X_WGS84": 1.45165488885574, "No": "1", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL FORAIN FRANCOIS VERDIER", "num_station": 44 }, "geometry": { "type": "Point", "coordinates": [ 1.451654888855738, 43.597839922435796 ] } }
+,
+{ "type": "Feature", "id": 58, "properties": { "En_service": "O", "Y_CC43": 2267196.264, "Mot_Directeur": "HAURIOU (AV MAURICE HAURIOU)", "Nrivoli": "3105555804", "Y_WGS84": 43.594361052049798, "code_insee": "31555", "X_CC43": 1574118.0228, "M_en_S_16_nov_07": "O", "nom": "GARONNETTE", "X_WGS84": 1.44096279942018, "No": "1", "nb_bornettes": 23, "commune": "Toulouse", "street": "AV MAURICE HAURIOU", "num_station": 50 }, "geometry": { "type": "Point", "coordinates": [ 1.440962799420179, 43.594361052026514 ] } }
+,
+{ "type": "Feature", "id": 59, "properties": { "En_service": "O", "Y_CC43": 2267237.6992, "Mot_Directeur": "SALIN (PL DU SALIN)", "Nrivoli": "3105558116", "Y_WGS84": 43.594774991548199, "code_insee": "31555", "X_CC43": 1574364.0434, "M_en_S_16_nov_07": "O", "nom": "PLACE DU SALIN", "X_WGS84": 1.44399954163806, "No": "18", "nb_bornettes": 22, "commune": "Toulouse", "street": "PL DU SALIN", "num_station": 48 }, "geometry": { "type": "Point", "coordinates": [ 1.443999541638061, 43.594774991524886 ] } }
+,
+{ "type": "Feature", "id": 60, "properties": { "En_service": "O", "Y_CC43": 2267596.4468, "Mot_Directeur": "GORSSE (RUE HENRY DE GORSSE)", "Nrivoli": "3105554132", "Y_WGS84": 43.597989923119599, "code_insee": "31555", "X_CC43": 1574282.8469, "M_en_S_16_nov_07": "O", "nom": "DALBADE - DE GORSSE", "X_WGS84": 1.44291181172947, "No": "9", "nb_bornettes": 21, "commune": "Toulouse", "street": "RUE HENRY DE GORSSE", "num_station": 26 }, "geometry": { "type": "Point", "coordinates": [ 1.442911811729471, 43.597989923096343 ] } }
+,
+{ "type": "Feature", "id": 61, "properties": { "En_service": "O", "Y_CC43": 2267529.3296, "Mot_Directeur": "CARMES (PL DES CARMES)", "Nrivoli": "3105551708", "Y_WGS84": 43.597417561018702, "code_insee": "31555", "X_CC43": 1574472.6855, "M_en_S_16_nov_07": "O", "nom": "PLACE DES CARMES", "X_WGS84": 1.44527793081158, "No": "37", "nb_bornettes": 20, "commune": "Toulouse", "street": "PL DES CARMES", "num_station": 46 }, "geometry": { "type": "Point", "coordinates": [ 1.445277930811576, 43.597417560995432 ] } }
+,
+{ "type": "Feature", "id": 62, "properties": { "En_service": "O", "Y_CC43": 2267286.0472, "Mot_Directeur": "LANGUEDOC (RUE DU LANGUEDOC)", "Nrivoli": "3105555000", "Y_WGS84": 43.595228903839001, "code_insee": "31555", "X_CC43": 1574476.9569, "M_en_S_16_nov_07": "O", "nom": "NAZARETH -  LANGUEDOC", "X_WGS84": 1.44538657567543, "No": "12", "nb_bornettes": 25, "commune": "Toulouse", "street": "RUE DU LANGUEDOC", "num_station": 47 }, "geometry": { "type": "Point", "coordinates": [ 1.44538657567543, 43.595228903815745 ] } }
+,
+{ "type": "Feature", "id": 63, "properties": { "En_service": "O", "Y_CC43": 2268334.7396, "Mot_Directeur": "PARGAMINIERES (RUE PARGAMINIERES)", "Nrivoli": "3105556540", "Y_WGS84": 43.604602777323997, "code_insee": "31555", "X_CC43": 1574095.7334, "M_en_S_16_nov_07": "O", "nom": "PARGAMINIERES", "X_WGS84": 1.44042508491828, "No": "66", "nb_bornettes": 23, "commune": "Toulouse", "street": "RUE PARGAMINIERES", "num_station": 12 }, "geometry": { "type": "Point", "coordinates": [ 1.440425084918278, 43.604602777300713 ] } }
+,
+{ "type": "Feature", "id": 64, "properties": { "En_service": "O", "Y_CC43": 2267858.206, "Mot_Directeur": "ESQUIROL (PL ETIENNE ESQUIROL)", "Nrivoli": "3105553084", "Y_WGS84": 43.6003731780294, "code_insee": "31555", "X_CC43": 1574448.4704, "M_en_S_16_nov_07": "O", "nom": "PLACE ESQUIROL", "X_WGS84": 1.44490268995186, "No": "15", "nb_bornettes": 18, "commune": "Toulouse", "street": "PL ETIENNE ESQUIROL", "num_station": 10 }, "geometry": { "type": "Point", "coordinates": [ 1.444902689951856, 43.600373178006187 ] } }
+,
+{ "type": "Feature", "id": 65, "properties": { "En_service": "O", "Y_CC43": 2268687.0454, "Mot_Directeur": "STRASBOURG (BD DE STRASBOURG)", "Nrivoli": "3105558328", "Y_WGS84": 43.607858388690403, "code_insee": "31555", "X_CC43": 1574606.2112, "M_en_S_16_nov_07": "O", "nom": "STRASBOURG  -  BAYARD", "X_WGS84": 1.44666624291303, "No": "32", "nb_bornettes": 21, "commune": "Toulouse", "street": "BD DE STRASBOURG", "num_station": 16 }, "geometry": { "type": "Point", "coordinates": [ 1.446666242913034, 43.607858388667175 ] } }
+,
+{ "type": "Feature", "id": 66, "properties": { "En_service": "O", "Y_CC43": 2267295.3746, "Mot_Directeur": "FITTE (ALL CHARLES DE FITTE)", "Nrivoli": "3105551920", "Y_WGS84": 43.5951394322922, "code_insee": "31555", "X_CC43": 1573440.063, "M_en_S_16_nov_07": "O", "nom": "FITTE -  CUGNAUX", "X_WGS84": 1.43254537055656, "No": "23", "nb_bornettes": 18, "commune": "Toulouse", "street": "ALL CHARLES DE FITTE", "num_station": 72 }, "geometry": { "type": "Point", "coordinates": [ 1.432545370556561, 43.595139432268894 ] } }
+,
+{ "type": "Feature", "id": 67, "properties": { "En_service": "O", "Y_CC43": 2267949.2588, "Mot_Directeur": "LANGE (PL LANGE)", "Nrivoli": "3105554996", "Y_WGS84": 43.601047479982498, "code_insee": "31555", "X_CC43": 1573580.5159, "M_en_S_16_nov_07": "O", "nom": "PLACE LANGE", "X_WGS84": 1.4341335569623, "No": "1", "nb_bornettes": 19, "commune": "Toulouse", "street": "PL LANGE", "num_station": 79 }, "geometry": { "type": "Point", "coordinates": [ 1.434133556962295, 43.60104747995932 ] } }
+,
+{ "type": "Feature", "id": 68, "properties": { "En_service": "O", "Y_CC43": 2267629.5128, "Mot_Directeur": "CYPRIEN (PL INTERIEURE ST CYPRIEN)", "Nrivoli": "3105554336", "Y_WGS84": 43.598131983331697, "code_insee": "31555", "X_CC43": 1573354.0701, "M_en_S_16_nov_07": "N", "nom": "PLACE INT ST CYPRIEN DARRE", "X_WGS84": 1.43140332849084, "No": "14", "nb_bornettes": 17, "commune": "Toulouse", "street": "PL INTERIEURE ST CYPRIEN", "num_station": 78 }, "geometry": { "type": "Point", "coordinates": [ 1.431403328490838, 43.598131983308427 ] } }
+,
+{ "type": "Feature", "id": 69, "properties": { "En_service": "O", "Y_CC43": 2267590.178, "Mot_Directeur": "CYPRIEN (PL INTERIEURE ST CYPRIEN)", "Nrivoli": "3105554336", "Y_WGS84": 43.5977807803459, "code_insee": "31555", "X_CC43": 1573370.6195, "M_en_S_16_nov_07": "N", "nom": "PLACE INT SAINT CYPRIEN", "X_WGS84": 1.43161735088217, "No": "2", "nb_bornettes": 13, "commune": "Toulouse", "street": "PL INTERIEURE ST CYPRIEN", "num_station": 77 }, "geometry": { "type": "Point", "coordinates": [ 1.431617350882173, 43.597780780322616 ] } }
+,
+{ "type": "Feature", "id": 70, "properties": { "En_service": "O", "Y_CC43": 2267426.5368, "Mot_Directeur": "FITTE (ALL CHARLES DE FITTE)", "Nrivoli": "3105551920", "Y_WGS84": 43.596314759192403, "code_insee": "31555", "X_CC43": 1573410.075, "M_en_S_16_nov_07": "O", "nom": "FITTE - TEINTURIERS", "X_WGS84": 1.43214373954457, "No": "40", "nb_bornettes": 17, "commune": "Toulouse", "street": "ALL CHARLES DE FITTE", "num_station": 73 }, "geometry": { "type": "Point", "coordinates": [ 1.43214373954457, 43.596314759169154 ] } }
+,
+{ "type": "Feature", "id": 71, "properties": { "En_service": "O", "Y_CC43": 2267804.0956, "Mot_Directeur": "FITTE (ALL CHARLES DE FITTE)", "Nrivoli": "3105551920", "Y_WGS84": 43.599676052245002, "code_insee": "31555", "X_CC43": 1573193.2381, "M_en_S_16_nov_07": "O", "nom": "FITTE - VARSI", "X_WGS84": 1.42937135576231, "No": "89B", "nb_bornettes": 23, "commune": "Toulouse", "street": "ALL CHARLES DE FITTE", "num_station": 80 }, "geometry": { "type": "Point", "coordinates": [ 1.429371355762314, 43.599676052221739 ] } }
+,
+{ "type": "Feature", "id": 72, "properties": { "En_service": "O", "Y_CC43": 2267178.43, "Mot_Directeur": "GUESDE (ALL JULES GUESDE)", "Nrivoli": "3105554812", "Y_WGS84": 43.594306254023699, "code_insee": "31555", "X_CC43": 1574752.4244, "M_en_S_16_nov_07": "N", "nom": "MUSEUM", "X_WGS84": 1.4488220949579, "No": "35", "nb_bornettes": 28, "commune": "Toulouse", "street": "ALL JULES GUESDE", "num_station": 67 }, "geometry": { "type": "Point", "coordinates": [ 1.448822094957894, 43.594306254000394 ] } }
+,
+{ "type": "Feature", "id": 73, "properties": { "En_service": "O", "Y_CC43": 2267425.6524, "Mot_Directeur": "SABATIER (ALL PAUL SABATIER)", "Nrivoli": "3105556644", "Y_WGS84": 43.5966227092743, "code_insee": "31555", "X_CC43": 1575304.9771, "M_en_S_16_nov_07": "N", "nom": "SABATIER - PORT ST SAUVEUR", "X_WGS84": 1.45560757526394, "No": "16", "nb_bornettes": 19, "commune": "Toulouse", "street": "ALL PAUL SABATIER", "num_station": 100 }, "geometry": { "type": "Point", "coordinates": [ 1.455607575263944, 43.596622709251037 ] } }
+,
+{ "type": "Feature", "id": 74, "properties": { "En_service": "O", "Y_CC43": 2267672.0614, "Mot_Directeur": "REPUBLIQUE (RUE DE LA REPUBLIQUE)", "Nrivoli": "3105557428", "Y_WGS84": 43.598564455586803, "code_insee": "31555", "X_CC43": 1573649.3616, "M_en_S_16_nov_07": "N", "nom": "REPUBLIQUE - PLACE OLIVIER", "X_WGS84": 1.43505005326757, "No": "34", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE LA REPUBLIQUE", "num_station": 76 }, "geometry": { "type": "Point", "coordinates": [ 1.435050053267574, 43.598564455563576 ] } }
+,
+{ "type": "Feature", "id": 75, "properties": { "En_service": "O", "Y_CC43": 2268730.998, "Mot_Directeur": "BEARNAIS (RUE DU BEARNAIS)", "Nrivoli": "3105550948", "Y_WGS84": 43.608009935401299, "code_insee": "31555", "X_CC43": 1573148.5186, "M_en_S_16_nov_07": "O", "nom": "HERACLES - BEARNAIS", "X_WGS84": 1.42860286855771, "No": "23", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DU BEARNAIS", "num_station": 86 }, "geometry": { "type": "Point", "coordinates": [ 1.428602868557711, 43.608009935378099 ] } }
+,
+{ "type": "Feature", "id": 76, "properties": { "En_service": "O", "Y_CC43": 2268102.6818, "Mot_Directeur": "CAMICHEL (RUE CHARLES CAMICHEL)", "Nrivoli": "3105551560", "Y_WGS84": 43.602702065117398, "code_insee": "31555", "X_CC43": 1575223.8205, "M_en_S_16_nov_07": "N", "nom": "ST AUBIN  - CAMICHEL", "X_WGS84": 1.45444839892549, "No": "1", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE CHARLES CAMICHEL", "num_station": 41 }, "geometry": { "type": "Point", "coordinates": [ 1.454448398925483, 43.602702065094185 ] } }
+,
+{ "type": "Feature", "id": 77, "properties": { "En_service": "O", "Y_CC43": 2268310.9544, "Mot_Directeur": "COLOMBETTE (RUE DE LA COLOMBETTE)", "Nrivoli": "3105552192", "Y_WGS84": 43.604567225334598, "code_insee": "31555", "X_CC43": 1575168.6115, "M_en_S_16_nov_07": "N", "nom": "COLOMBETTE", "X_WGS84": 1.45371722346811, "No": "41", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DE LA COLOMBETTE", "num_station": 40 }, "geometry": { "type": "Point", "coordinates": [ 1.453717223468109, 43.604567225311385 ] } }
+,
+{ "type": "Feature", "id": 78, "properties": { "En_service": "O", "Y_CC43": 2268792.882, "Mot_Directeur": "JAURES (ALL JEAN JAURES)", "Nrivoli": "3105554600", "Y_WGS84": 43.6088961907693, "code_insee": "31555", "X_CC43": 1575120.1393, "M_en_S_16_nov_07": "N", "nom": "JAURES  -  STALINGRAD", "X_WGS84": 1.4530070197967, "No": "71T", "nb_bornettes": 23, "commune": "Toulouse", "street": "ALL JEAN JAURES", "num_station": 62 }, "geometry": { "type": "Point", "coordinates": [ 1.4530070197967, 43.608896190746123 ] } }
+,
+{ "type": "Feature", "id": 79, "properties": { "En_service": "O", "Y_CC43": 2268643.1534, "Mot_Directeur": "PERIGORD (RUE DE PERIGORD)", "Nrivoli": "3105556756", "Y_WGS84": 43.607436200983997, "code_insee": "31555", "X_CC43": 1574442.9159, "M_en_S_16_nov_07": "O", "nom": "PERIGORD", "X_WGS84": 1.44465392585666, "No": "26", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE PERIGORD", "num_station": 14 }, "geometry": { "type": "Point", "coordinates": [ 1.444653925856655, 43.607436200960819 ] } }
+,
+{ "type": "Feature", "id": 80, "properties": { "En_service": "O", "Y_CC43": 2268503.7018, "Mot_Directeur": "ESQUILE (RUE DE L ESQUILE)", "Nrivoli": "3105553080", "Y_WGS84": 43.606136318048101, "code_insee": "31555", "X_CC43": 1574173.6063, "M_en_S_16_nov_07": "O", "nom": "LOIS -  ESQUILE", "X_WGS84": 1.44135064794755, "No": "1", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE DE L ESQUILE", "num_station": 13 }, "geometry": { "type": "Point", "coordinates": [ 1.441350647947544, 43.606136318024902 ] } }
+,
+{ "type": "Feature", "id": 81, "properties": { "En_service": "O", "Y_CC43": 2268968.0126, "Mot_Directeur": "BONREPOS (BD DE BONREPOS)", "Nrivoli": "3105551256", "Y_WGS84": 43.610469412310003, "code_insee": "31555", "X_CC43": 1575103.0992, "M_en_S_16_nov_07": "O", "nom": "BONREPOS", "X_WGS84": 1.45275602509899, "No": "8T", "nb_bornettes": 25, "commune": "Toulouse", "street": "BD DE BONREPOS", "num_station": 61 }, "geometry": { "type": "Point", "coordinates": [ 1.45275602509899, 43.610469412286818 ] } }
+,
+{ "type": "Feature", "id": 82, "properties": { "En_service": "O", "Y_CC43": 2269216.2432, "Mot_Directeur": "ROQUELAINE (PL ROQUELAINE)", "Nrivoli": "3105557600", "Y_WGS84": 43.612646450932502, "code_insee": "31555", "X_CC43": 1574760.6116, "M_en_S_16_nov_07": "N", "nom": "ROQUELAINE", "X_WGS84": 1.44845740689087, "No": "32", "nb_bornettes": 21, "commune": "Toulouse", "street": "PL ROQUELAINE", "num_station": 60 }, "geometry": { "type": "Point", "coordinates": [ 1.44845740689087, 43.61264645090926 ] } }
+,
+{ "type": "Feature", "id": 83, "properties": { "En_service": "O", "Y_CC43": 2268887.1206, "Mot_Directeur": "RAYMOND IV (RUE RAYMOND IV)", "Nrivoli": "3105557320", "Y_WGS84": 43.609663388966297, "code_insee": "31555", "X_CC43": 1574633.0933, "M_en_S_16_nov_07": "O", "nom": "PLACE JEANNE D'ARC", "X_WGS84": 1.44695335978884, "No": "1", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE RAYMOND IV", "num_station": 35 }, "geometry": { "type": "Point", "coordinates": [ 1.446953359788838, 43.609663388943133 ] } }
+,
+{ "type": "Feature", "id": 84, "properties": { "En_service": "O", "Y_CC43": 2269005.2624, "Mot_Directeur": "CONCORDE (RUE DE LA CONCORDE)", "Nrivoli": "3105552256", "Y_WGS84": 43.6106821227918, "code_insee": "31555", "X_CC43": 1574366.2092, "M_en_S_16_nov_07": "O", "nom": "CONCORDE -  ARCOLE", "X_WGS84": 1.4436208412972, "No": "4", "nb_bornettes": 25, "commune": "Toulouse", "street": "RUE DE LA CONCORDE", "num_station": 58 }, "geometry": { "type": "Point", "coordinates": [ 1.443620841297196, 43.610682122768601 ] } }
+,
+{ "type": "Feature", "id": 85, "properties": { "En_service": "O", "Y_CC43": 2269306.887, "Mot_Directeur": "CONCORDE (RUE DE LA CONCORDE)", "Nrivoli": "3105552256", "Y_WGS84": 43.613434994973197, "code_insee": "31555", "X_CC43": 1574597.1973, "M_en_S_16_nov_07": "N", "nom": "CONCORDE -  PRINTEMPS", "X_WGS84": 1.44641262679589, "No": "61", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DE LA CONCORDE", "num_station": 59 }, "geometry": { "type": "Point", "coordinates": [ 1.446412626795891, 43.613434994950005 ] } }
+,
+{ "type": "Feature", "id": 86, "properties": { "En_service": "O", "Y_CC43": 2269440.2084, "Mot_Directeur": "PRINTEMPS (RUE DU PRINTEMPS)", "Nrivoli": "3105557140", "Y_WGS84": 43.614596526700197, "code_insee": "31555", "X_CC43": 1574367.5504, "M_en_S_16_nov_07": "N", "nom": "PRINTEMPS - INGRES", "X_WGS84": 1.4435376351212, "No": "57", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE DU PRINTEMPS", "num_station": 93 }, "geometry": { "type": "Point", "coordinates": [ 1.4435376351212, 43.614596526676984 ] } }
+,
+{ "type": "Feature", "id": 87, "properties": { "En_service": "O", "Y_CC43": 2269282.9054, "Mot_Directeur": "CHALETS (RUE DES CHALETS)", "Nrivoli": "3105551852", "Y_WGS84": 43.613150787548001, "code_insee": "31555", "X_CC43": 1574186.9658, "M_en_S_16_nov_07": "N", "nom": "CHALETS", "X_WGS84": 1.44133703617336, "No": "31", "nb_bornettes": 13, "commune": "Toulouse", "street": "RUE DES CHALETS", "num_station": 92 }, "geometry": { "type": "Point", "coordinates": [ 1.441337036173358, 43.613150787524773 ] } }
+,
+{ "type": "Feature", "id": 88, "properties": { "En_service": "O", "Y_CC43": 2269057.3112, "Mot_Directeur": "CAFFARELLI (ESP COMPANS CAFFARELLI)", "Nrivoli": "3105552251", "Y_WGS84": 43.611056867928603, "code_insee": "31555", "X_CC43": 1573805.7892, "M_en_S_16_nov_07": "N", "nom": "ESP COMPANS CAFFARELLI", "X_WGS84": 1.43666783604631, "No": "1", "nb_bornettes": 23, "commune": "Toulouse", "street": "ESP COMPANS CAFFARELLI", "num_station": 89 }, "geometry": { "type": "Point", "coordinates": [ 1.436667836046305, 43.611056867905361 ] } }
+,
+{ "type": "Feature", "id": 89, "properties": { "En_service": "O", "Y_CC43": 2268903.8196, "Mot_Directeur": "SEBASTOPOL (RUE DE SEBASTOPOL)", "Nrivoli": "3105558204", "Y_WGS84": 43.609590170379903, "code_insee": "31555", "X_CC43": 1573296.9599, "M_en_S_16_nov_07": "N", "nom": "SEBASTOPOL - LASCROSSES", "X_WGS84": 1.43040129111837, "No": "1", "nb_bornettes": 25, "commune": "Toulouse", "street": "RUE DE SEBASTOPOL", "num_station": 107 }, "geometry": { "type": "Point", "coordinates": [ 1.430401291118366, 43.609590170356661 ] } }
+,
+{ "type": "Feature", "id": 90, "properties": { "En_service": "O", "Y_CC43": 2269333.8122, "Mot_Directeur": "EMBOUCHURE (BD DE L EMBOUCHURE)", "Nrivoli": "3105552952", "Y_WGS84": 43.613458969226897, "code_insee": "31555", "X_CC43": 1573292.2335, "M_en_S_16_nov_07": "N", "nom": "EMBOUCHURE -  HAEDENS", "X_WGS84": 1.43024323237177, "No": "57", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DE L EMBOUCHURE", "num_station": 122 }, "geometry": { "type": "Point", "coordinates": [ 1.430243232371765, 43.613458969203649 ] } }
+,
+{ "type": "Feature", "id": 91, "properties": { "En_service": "O", "Y_CC43": 2268963.2936, "Mot_Directeur": "BRIENNE (ALL DE BRIENNE)", "Nrivoli": "3105551424", "Y_WGS84": 43.609978596281202, "code_insee": "31555", "X_CC43": 1572427.0027, "M_en_S_16_nov_07": "N", "nom": "CHAPOU", "X_WGS84": 1.41961292669824, "No": "129", "nb_bornettes": 24, "commune": "Toulouse", "street": "ALL DE BRIENNE", "num_station": 119 }, "geometry": { "type": "Point", "coordinates": [ 1.419612926698242, 43.609978596257946 ] } }
+,
+{ "type": "Feature", "id": 92, "properties": { "En_service": "O", "Y_CC43": 2268784.3968, "Mot_Directeur": "BRIENNE (ALL DE BRIENNE)", "Nrivoli": "3105551424", "Y_WGS84": 43.6084261192239, "code_insee": "31555", "X_CC43": 1572766.7771, "M_en_S_16_nov_07": "N", "nom": "BRIENNE  -  PASSERELLE", "X_WGS84": 1.42386267118139, "No": "99", "nb_bornettes": 15, "commune": "Toulouse", "street": "ALL DE BRIENNE", "num_station": 106 }, "geometry": { "type": "Point", "coordinates": [ 1.423862671181388, 43.60842611920063 ] } }
+,
+{ "type": "Feature", "id": 93, "properties": { "En_service": "O", "Y_CC43": 2269348.4072, "Mot_Directeur": "SEMARD (BD PIERRE SEMARD)", "Nrivoli": "3105556916", "Y_WGS84": 43.613876865043501, "code_insee": "31555", "X_CC43": 1575007.7382, "M_en_S_16_nov_07": "N", "nom": "SEMARD -  GARE ROUTIERE", "X_WGS84": 1.45148809225847, "No": "73", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD PIERRE SEMARD", "num_station": 94 }, "geometry": { "type": "Point", "coordinates": [ 1.45148809225847, 43.613876865020281 ] } }
+,
+{ "type": "Feature", "id": 94, "properties": { "En_service": "O", "Y_CC43": 2268893.8686, "Mot_Directeur": "DELMAS (ALL JACQUES CHABAN DELMAS)", "Nrivoli": "3105554399", "Y_WGS84": 43.609835698354601, "code_insee": "31555", "X_CC43": 1575305.5245, "M_en_S_16_nov_07": "N", "nom": "MEDIATHEQUE", "X_WGS84": 1.45528002554871, "No": "1", "nb_bornettes": 25, "commune": "Toulouse", "street": "ALL JACQUES CHABAN DELMAS", "num_station": 96 }, "geometry": { "type": "Point", "coordinates": [ 1.455280025548708, 43.60983569833143 ] } }
+,
+{ "type": "Feature", "id": 95, "properties": { "En_service": "O", "Y_CC43": 2268491.0016, "Mot_Directeur": "PERI (RUE GABRIEL PERI)", "Nrivoli": "3105553660", "Y_WGS84": 43.606204024163503, "code_insee": "31555", "X_CC43": 1575268.2761, "M_en_S_16_nov_07": "N", "nom": "PERI -  MERCADIER", "X_WGS84": 1.45491047373616, "No": "30", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE GABRIEL PERI", "num_station": 64 }, "geometry": { "type": "Point", "coordinates": [ 1.45491047373616, 43.606204024140247 ] } }
+,
+{ "type": "Feature", "id": 96, "properties": { "En_service": "O", "Y_CC43": 2268280.806, "Mot_Directeur": "HUILE (RUE DU POIDS DE L HUILE)", "Nrivoli": "3105556972", "Y_WGS84": 43.604184328769001, "code_insee": "31555", "X_CC43": 1574496.853, "M_en_S_16_nov_07": "O", "nom": "POIDS DE L'HUILE", "X_WGS84": 1.44540497477852, "No": "12", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DU POIDS DE L HUILE", "num_station": 1 }, "geometry": { "type": "Point", "coordinates": [ 1.445404974778518, 43.60418432874576 ] } }
+,
+{ "type": "Feature", "id": 97, "properties": { "En_service": "O", "Y_CC43": 2267082.8138, "Mot_Directeur": "LAGANNE (RUE LAGANNE)", "Nrivoli": "3105554948", "Y_WGS84": 43.593259987127297, "code_insee": "31555", "X_CC43": 1573639.3992, "M_en_S_16_nov_07": "N", "nom": "COURS DILLON", "X_WGS84": 1.43506262780464, "No": "3", "nb_bornettes": 24, "commune": "Toulouse", "street": "RUE LAGANNE", "num_station": 71 }, "geometry": { "type": "Point", "coordinates": [ 1.435062627804636, 43.593259987104013 ] } }
+,
+{ "type": "Feature", "id": 98, "properties": { "En_service": "O", "Y_CC43": 2268999.1736, "Mot_Directeur": "BARCELONE (ALL DE BARCELONE)", "Nrivoli": "3105550840", "Y_WGS84": 43.610312893762, "code_insee": "31555", "X_CC43": 1572494.3889, "M_en_S_16_nov_07": "N", "nom": "BARCELONE - PONT JUMEAUX", "X_WGS84": 1.42043916058349, "No": "152", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL DE BARCELONE", "num_station": 120 }, "geometry": { "type": "Point", "coordinates": [ 1.420439160583487, 43.610312893738786 ] } }
+,
+{ "type": "Feature", "id": 99, "properties": { "En_service": "O", "Y_CC43": 2268456.495, "Mot_Directeur": "DUPORTAL (BD ARMAND DUPORTAL)", "Nrivoli": "3105550492", "Y_WGS84": 43.605618671110904, "code_insee": "31555", "X_CC43": 1573618.9599, "M_en_S_16_nov_07": "O", "nom": "DUPORTAL - CANAL DE BRIENNE", "X_WGS84": 1.43449255911763, "No": "1", "nb_bornettes": 18, "commune": "Toulouse", "street": "BD ARMAND DUPORTAL", "num_station": 51 }, "geometry": { "type": "Point", "coordinates": [ 1.434492559117628, 43.605618671087633 ] } }
+,
+{ "type": "Feature", "id": 100, "properties": { "En_service": "O", "Y_CC43": 2266230.8138, "Mot_Directeur": "MICHEL (GRANDE-RUE SAINT MICHEL)", "Nrivoli": "3105557916", "Y_WGS84": 43.585756805907501, "code_insee": "31555", "X_CC43": 1574622.7977, "M_en_S_16_nov_07": "N", "nom": "MAISON D'ARRET ST MICHEL", "X_WGS84": 1.44743391704782, "No": "18B", "nb_bornettes": 20, "commune": "Toulouse", "street": "GRANDE-RUE SAINT MICHEL", "num_station": 128 }, "geometry": { "type": "Point", "coordinates": [ 1.447433917047822, 43.585756805884245 ] } }
+,
+{ "type": "Feature", "id": 101, "properties": { "En_service": "O", "Y_CC43": 2267016.0756, "Mot_Directeur": "CHEVAL (PL DU FER A CHEVAL)", "Nrivoli": "3105553240", "Y_WGS84": 43.5926435707213, "code_insee": "31555", "X_CC43": 1573545.0714, "M_en_S_16_nov_07": "N", "nom": "PLACE DU FER A CHEVAL", "X_WGS84": 1.43391008374255, "No": "5", "nb_bornettes": 18, "commune": "Toulouse", "street": "PL DU FER A CHEVAL", "num_station": 70 }, "geometry": { "type": "Point", "coordinates": [ 1.43391008374255, 43.592643570697994 ] } }
+,
+{ "type": "Feature", "id": 102, "properties": { "En_service": "O", "Y_CC43": 2266225.8082, "Mot_Directeur": "SEVERAC (BD DEODAT DE SEVERAC)", "Nrivoli": "3105552600", "Y_WGS84": 43.585453910297801, "code_insee": "31555", "X_CC43": 1573082.0809, "M_en_S_16_nov_07": "N", "nom": "CROIX DE PIERRE - DEODAT DE SEVERAC", "X_WGS84": 1.42836055660061, "No": "2", "nb_bornettes": 18, "commune": "Toulouse", "street": "BD DEODAT DE SEVERAC", "num_station": 129 }, "geometry": { "type": "Point", "coordinates": [ 1.428360556600613, 43.585453910274538 ] } }
+,
+{ "type": "Feature", "id": 103, "properties": { "En_service": "O", "Y_CC43": 2267565.0478, "Mot_Directeur": "BILLIERES (AV ETIENNE BILLIERES)", "Nrivoli": "3105553116", "Y_WGS84": 43.5975150929143, "code_insee": "31555", "X_CC43": 1573135.5532, "M_en_S_16_nov_07": "N", "nom": "BILLIERES  -  CHAMPETRE", "X_WGS84": 1.42871240964275, "No": "12", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV ETIENNE BILLIERES", "num_station": 105 }, "geometry": { "type": "Point", "coordinates": [ 1.428712409642751, 43.597515092891022 ] } }
+,
+{ "type": "Feature", "id": 104, "properties": { "En_service": "O", "Y_CC43": 2267502.1558, "Mot_Directeur": "BILLIERES (AV ETIENNE BILLIERES)", "Nrivoli": "3105553116", "Y_WGS84": 43.596915002366401, "code_insee": "31555", "X_CC43": 1572933.0894, "M_en_S_16_nov_07": "N", "nom": "BILLIERES - POSTE", "X_WGS84": 1.42621995844104, "No": "39", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV ETIENNE BILLIERES", "num_station": 117 }, "geometry": { "type": "Point", "coordinates": [ 1.426219958441037, 43.596915002343124 ] } }
+,
+{ "type": "Feature", "id": 105, "properties": { "En_service": "O", "Y_CC43": 2269686.7326, "Mot_Directeur": "BONNEFOY (RUE DU FAUBOURG BONNEFOY)", "Nrivoli": "3105553204", "Y_WGS84": 43.616959762055899, "code_insee": "31555", "X_CC43": 1575238.356, "M_en_S_16_nov_07": "N", "nom": "ECOLE BONNEFOY", "X_WGS84": 1.45426742657189, "No": "18", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DU FAUBOURG BONNEFOY", "num_station": 126 }, "geometry": { "type": "Point", "coordinates": [ 1.454267426571886, 43.616959762032664 ] } }
+,
+{ "type": "Feature", "id": 106, "properties": { "En_service": "O", "Y_CC43": 2268637.6628, "Mot_Directeur": "JAURES (ALL JEAN JAURES)", "Nrivoli": "3105554600", "Y_WGS84": 43.607481510839797, "code_insee": "31555", "X_CC43": 1575012.6564, "M_en_S_16_nov_07": "N", "nom": "JAURES -  BACHELIER", "X_WGS84": 1.45171127289372, "No": "60", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL JEAN JAURES", "num_station": 38 }, "geometry": { "type": "Point", "coordinates": [ 1.451711272893722, 43.607481510816598 ] } }
+,
+{ "type": "Feature", "id": 107, "properties": { "En_service": "O", "Y_CC43": 2269911.0196, "Mot_Directeur": "BONNEFOY (ALL DE L EGLISE BONNEFOY)", "Nrivoli": "3105552912", "Y_WGS84": 43.619012743255098, "code_insee": "31555", "X_CC43": 1575447.2759, "M_en_S_16_nov_07": "N", "nom": "EGLISE BONNEFOY", "X_WGS84": 1.45680421484667, "No": "8", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL DE L EGLISE BONNEFOY", "num_station": 134 }, "geometry": { "type": "Point", "coordinates": [ 1.456804214846673, 43.619012743231913 ] } }
+,
+{ "type": "Feature", "id": 108, "properties": { "En_service": "O", "Y_CC43": 2270130.9758, "Mot_Directeur": "MINIMES (AV DES MINIMES)", "Nrivoli": "3105555956", "Y_WGS84": 43.620708161501398, "code_insee": "31555", "X_CC43": 1573741.1085, "M_en_S_16_nov_07": "N", "nom": "MINIMES - MARCHE AU COCHONS", "X_WGS84": 1.43561908265263, "No": "71", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DES MINIMES", "num_station": 133 }, "geometry": { "type": "Point", "coordinates": [ 1.435619082652628, 43.62070816147822 ] } }
+,
+{ "type": "Feature", "id": 109, "properties": { "En_service": "O", "Y_CC43": 2270384.478, "Mot_Directeur": "MINIMES (AV DES MINIMES)", "Nrivoli": "3105555956", "Y_WGS84": 43.6229744495121, "code_insee": "31555", "X_CC43": 1573651.491, "M_en_S_16_nov_07": "N", "nom": "MINIMES - BAQUE", "X_WGS84": 1.43445042874469, "No": "101", "nb_bornettes": 15, "commune": "Toulouse", "street": "AV DES MINIMES", "num_station": 132 }, "geometry": { "type": "Point", "coordinates": [ 1.434450428744692, 43.622974449488879 ] } }
+,
+{ "type": "Feature", "id": 110, "properties": { "En_service": "O", "Y_CC43": 2267482.456, "Mot_Directeur": "BILLIERES (AV ETIENNE BILLIERES)", "Nrivoli": "3105553116", "Y_WGS84": 43.596711555917203, "code_insee": "31555", "X_CC43": 1572778.0114, "M_en_S_16_nov_07": "N", "nom": "BILLIERES -  PATTE D OIE", "X_WGS84": 1.42430427460646, "No": "66T", "nb_bornettes": 16, "commune": "Toulouse", "street": "AV ETIENNE BILLIERES", "num_station": 130 }, "geometry": { "type": "Point", "coordinates": [ 1.424304274606458, 43.596711555893904 ] } }
+,
+{ "type": "Feature", "id": 111, "properties": { "En_service": "O", "Y_CC43": 2269206.4362, "Mot_Directeur": "SEBASTOPOL (RUE DE SEBASTOPOL)", "Nrivoli": "3105558204", "Y_WGS84": 43.612293090719398, "code_insee": "31555", "X_CC43": 1573175.7647, "M_en_S_16_nov_07": "N", "nom": "SEBASTOPOL -  RITAY", "X_WGS84": 1.42883016991754, "No": "9", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE SEBASTOPOL", "num_station": 108 }, "geometry": { "type": "Point", "coordinates": [ 1.428830169917536, 43.61229309069617 ] } }
+,
+{ "type": "Feature", "id": 112, "properties": { "En_service": "O", "Y_CC43": 2269229.143, "Mot_Directeur": "SERRES (AV HONORE SERRES)", "Nrivoli": "3105554256", "Y_WGS84": 43.612625209300496, "code_insee": "31555", "X_CC43": 1573937.1421, "M_en_S_16_nov_07": "N", "nom": "SERRES -  ARNAUD BERNARD", "X_WGS84": 1.43825513212718, "No": "33", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV HONORE SERRES", "num_station": 121 }, "geometry": { "type": "Point", "coordinates": [ 1.438255132127178, 43.612625209277283 ] } }
+,
+{ "type": "Feature", "id": 113, "properties": { "En_service": "O", "Y_CC43": 2266958.0894, "Mot_Directeur": "DUMERIL (RUE ALFRED DUMERIL)", "Nrivoli": "3105550184", "Y_WGS84": 43.592326119429202, "code_insee": "31555", "X_CC43": 1574769.1411, "M_en_S_16_nov_07": "N", "nom": "MUSEUM  -  DUMERIL", "X_WGS84": 1.44907945575499, "No": "58", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE ALFRED DUMERIL", "num_station": 113 }, "geometry": { "type": "Point", "coordinates": [ 1.449079455754986, 43.592326119405911 ] } }
+,
+{ "type": "Feature", "id": 114, "properties": { "En_service": "O", "Y_CC43": 2266958.0498, "Mot_Directeur": "MONPLAISIR (BD MONPLAISIR)", "Nrivoli": "3105556016", "Y_WGS84": 43.592444169817, "code_insee": "31555", "X_CC43": 1575483.7949, "M_en_S_16_nov_07": "N", "nom": "BD MONTPLAISIR -  CANAL", "X_WGS84": 1.45792809520708, "No": "8", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD MONPLAISIR", "num_station": 114 }, "geometry": { "type": "Point", "coordinates": [ 1.457928095207076, 43.592444169793758 ] } }
+,
+{ "type": "Feature", "id": 115, "properties": { "En_service": "O", "Y_CC43": 2267086.0524, "Mot_Directeur": "MISTRAL (ALL FREDERIC MISTRAL)", "Nrivoli": "3105553584", "Y_WGS84": 43.593531204022597, "code_insee": "31555", "X_CC43": 1575091.5702, "M_en_S_16_nov_07": "N", "nom": "MISTRAL -  FLEURANCE", "X_WGS84": 1.45304249390177, "No": "18", "nb_bornettes": 20, "commune": "Toulouse", "street": "ALL FREDERIC MISTRAL", "num_station": 102 }, "geometry": { "type": "Point", "coordinates": [ 1.453042493901774, 43.593531203999312 ] } }
+,
+{ "type": "Feature", "id": 116, "properties": { "En_service": "O", "Y_CC43": 2266771.333, "Mot_Directeur": "MICHEL (GRANDE-RUE SAINT MICHEL)", "Nrivoli": "3105557916", "Y_WGS84": 43.590593996564202, "code_insee": "31555", "X_CC43": 1574459.907, "M_en_S_16_nov_07": "N", "nom": "ST MICHEL - STE CATHERINE", "X_WGS84": 1.44529342011539, "No": "139", "nb_bornettes": 20, "commune": "Toulouse", "street": "GRANDE-RUE SAINT MICHEL", "num_station": 103 }, "geometry": { "type": "Point", "coordinates": [ 1.445293420115388, 43.590593996540953 ] } }
+,
+{ "type": "Feature", "id": 117, "properties": { "En_service": "O", "Y_CC43": 2266501.7154, "Mot_Directeur": "MICHEL (GRANDE-RUE SAINT MICHEL)", "Nrivoli": "3105557916", "Y_WGS84": 43.588182254073701, "code_insee": "31555", "X_CC43": 1574547.7766, "M_en_S_16_nov_07": "N", "nom": "ST MICHEL -  NOTRE DAME", "X_WGS84": 1.44644310150788, "No": "50", "nb_bornettes": 15, "commune": "Toulouse", "street": "GRANDE-RUE SAINT MICHEL", "num_station": 116 }, "geometry": { "type": "Point", "coordinates": [ 1.446443101507884, 43.588182254050444 ] } }
+,
+{ "type": "Feature", "id": 118, "properties": { "En_service": "N", "Y_CC43": 2266544.771, "Mot_Directeur": "BUSCA (PL DU BUSCA)", "Nrivoli": "3105551464", "Y_WGS84": 43.588626372515201, "code_insee": "31555", "X_CC43": 1574888.5835, "M_en_S_16_nov_07": "N", "nom": "PLACE DU BUSCA", "X_WGS84": 1.4506527457179, "No": "2", "nb_bornettes": 17, "commune": "Toulouse", "street": "PL DU BUSCA", "num_station": 118 }, "geometry": { "type": "Point", "coordinates": [ 1.450652745717901, 43.588626372491923 ] } }
+,
+{ "type": "Feature", "id": 119, "properties": { "En_service": "O", "Y_CC43": 2266185.2508, "Mot_Directeur": "BRANLY (ALL EDOUARD BRANLY)", "Nrivoli": "3105552896", "Y_WGS84": 43.585421486529398, "code_insee": "31555", "X_CC43": 1575072.8046, "M_en_S_16_nov_07": "N", "nom": "PLACE RUSSEL -  BRANLY", "X_WGS84": 1.4530155515505, "No": "47", "nb_bornettes": 18, "commune": "Toulouse", "street": "ALL EDOUARD BRANLY", "num_station": 112 }, "geometry": { "type": "Point", "coordinates": [ 1.453015551550499, 43.585421486506085 ] } }
+,
+{ "type": "Feature", "id": 120, "properties": { "En_service": "O", "Y_CC43": 2266657.181, "Mot_Directeur": "DAVID (RUE BEGUE DAVID)", "Nrivoli": "3105550980", "Y_WGS84": 43.589709240972802, "code_insee": "31555", "X_CC43": 1575318.5865, "M_en_S_16_nov_07": "N", "nom": "DEMOISELLES - BEGUE", "X_WGS84": 1.45595100742675, "No": "1", "nb_bornettes": 16, "commune": "Toulouse", "street": "RUE BEGUE DAVID", "num_station": 127 }, "geometry": { "type": "Point", "coordinates": [ 1.455951007426745, 43.589709240949531 ] } }
+,
+{ "type": "Feature", "id": 121, "properties": { "En_service": "O", "Y_CC43": 2267909.1662, "Mot_Directeur": "ETIENNE (RUE DU REMPART ST ETIENNE)", "Nrivoli": "3105557384", "Y_WGS84": 43.6009101182525, "code_insee": "31555", "X_CC43": 1574919.5368, "M_en_S_16_nov_07": "N", "nom": "METZ  - REMPART ST ETIENNE", "X_WGS84": 1.45072441425512, "No": "5", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DU REMPART ST ETIENNE", "num_station": 99 }, "geometry": { "type": "Point", "coordinates": [ 1.450724414255121, 43.600910118229294 ] } }
+,
+{ "type": "Feature", "id": 122, "properties": { "En_service": "O", "Y_CC43": 2266718.9488, "Mot_Directeur": "MURET (AV DE MURET)", "Nrivoli": "3105556160", "Y_WGS84": 43.589945438499598, "code_insee": "31555", "X_CC43": 1573400.8882, "M_en_S_16_nov_07": "N", "nom": "MURET -  BARTHERE", "X_WGS84": 1.43219351658613, "No": "223B", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE MURET", "num_station": 104 }, "geometry": { "type": "Point", "coordinates": [ 1.432193516586128, 43.589945438476278 ] } }
+,
+{ "type": "Feature", "id": 123, "properties": { "En_service": "O", "Y_CC43": 2267775.3792, "Mot_Directeur": "COUTELIERS (RUE DES COUTELIERS)", "Nrivoli": "3105552372", "Y_WGS84": 43.599580372185997, "code_insee": "31555", "X_CC43": 1574164.136, "M_en_S_16_nov_07": "N", "nom": "COUTELIERS -  METZ", "X_WGS84": 1.4414007259998, "No": "52", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DES COUTELIERS", "num_station": 49 }, "geometry": { "type": "Point", "coordinates": [ 1.441400725999804, 43.599580372162798 ] } }
+,
+{ "type": "Feature", "id": 124, "properties": { "En_service": "O", "Y_CC43": 2268123.522, "Mot_Directeur": "URSULE (RUE SAINTE URSULE)", "Nrivoli": "3105558076", "Y_WGS84": 43.6027229937675, "code_insee": "31555", "X_CC43": 1574221.5906, "M_en_S_16_nov_07": "N", "nom": "SAINTE URSULE", "X_WGS84": 1.44203223440706, "No": "19", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE SAINTE URSULE", "num_station": 4 }, "geometry": { "type": "Point", "coordinates": [ 1.442032234407059, 43.602722993744266 ] } }
+,
+{ "type": "Feature", "id": 125, "properties": { "En_service": "O", "Y_CC43": 2269407.479, "Mot_Directeur": "CABANEL (RUE ALEXANDRE CABANEL)", "Nrivoli": "3105550148", "Y_WGS84": 43.614227786750497, "code_insee": "31555", "X_CC43": 1573923.3528, "M_en_S_16_nov_07": "N", "nom": "SERRES -  CABANEL", "X_WGS84": 1.43804326830089, "No": "16", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE ALEXANDRE CABANEL", "num_station": 110 }, "geometry": { "type": "Point", "coordinates": [ 1.438043268300888, 43.614227786727341 ] } }
+,
+{ "type": "Feature", "id": 126, "properties": { "En_service": "O", "Y_CC43": 2268103.3442, "Mot_Directeur": "EAU (AV DU CHATEAU D EAU)", "Nrivoli": "3105551976", "Y_WGS84": 43.602317841425602, "code_insee": "31555", "X_CC43": 1572889.2134, "M_en_S_16_nov_07": "N", "nom": "THEATRE GARONNE", "X_WGS84": 1.42553712890393, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DU CHATEAU D EAU", "num_station": 95 }, "geometry": { "type": "Point", "coordinates": [ 1.425537128903929, 43.602317841402389 ] } }
+,
+{ "type": "Feature", "id": 127, "properties": { "En_service": "O", "Y_CC43": 2267118.7936, "Mot_Directeur": "LUCIE (RUE SAINTE LUCIE)", "Nrivoli": "3105558040", "Y_WGS84": 43.593515110350801, "code_insee": "31555", "X_CC43": 1573230.4886, "M_en_S_16_nov_07": "N", "nom": "SAINTE LUCIE", "X_WGS84": 1.429991245708, "No": "38", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE SAINTE LUCIE", "num_station": 37 }, "geometry": { "type": "Point", "coordinates": [ 1.429991245708002, 43.593515110327537 ] } }
+,
+{ "type": "Feature", "id": 128, "properties": { "En_service": "O", "Y_CC43": 2267970.1594, "Mot_Directeur": "BRUNHES (BD JEAN BRUNHES)", "Nrivoli": "3105554524", "Y_WGS84": 43.601048057246899, "code_insee": "31555", "X_CC43": 1572467.6636, "M_en_S_16_nov_07": "N", "nom": "BRUNHES FONTAINES", "X_WGS84": 1.4203478301998, "No": "45", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD JEAN BRUNHES", "num_station": 137 }, "geometry": { "type": "Point", "coordinates": [ 1.420347830199796, 43.601048057223615 ] } }
+,
+{ "type": "Feature", "id": 129, "properties": { "En_service": "O", "Y_CC43": 2268084.3996, "Mot_Directeur": "FONTAINES (RUE DES FONTAINES)", "Nrivoli": "3105553380", "Y_WGS84": 43.602001133237302, "code_insee": "31555", "X_CC43": 1572025.286, "M_en_S_16_nov_07": null, "nom": "FONTAINES MILHES", "X_WGS84": 1.41484301583495, "No": "190", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DES FONTAINES", "num_station": 136 }, "geometry": { "type": "Point", "coordinates": [ 1.414843015834944, 43.602001133214095 ] } }
+,
+{ "type": "Feature", "id": 130, "properties": { "En_service": "O", "Y_CC43": 2267357.0086, "Mot_Directeur": "LOMBEZ (AV DE LOMBEZ)", "Nrivoli": "3105555308", "Y_WGS84": 43.595502126899397, "code_insee": "31555", "X_CC43": 1572302.0492, "M_en_S_16_nov_07": null, "nom": "BARRIERE DE LOMBEZ", "X_WGS84": 1.41843992755058, "No": "39", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE LOMBEZ", "num_station": 139 }, "geometry": { "type": "Point", "coordinates": [ 1.418439927550584, 43.595502126876113 ] } }
+,
+{ "type": "Feature", "id": 131, "properties": { "En_service": "O", "Y_CC43": 2266936.4968, "Mot_Directeur": "MALE (PL EMILE MALE)", "Nrivoli": "3105552988", "Y_WGS84": 43.591719099531801, "code_insee": "31555", "X_CC43": 1572309.4916, "M_en_S_16_nov_07": null, "nom": "EMILE MALE", "X_WGS84": 1.41863010579351, "No": "4", "nb_bornettes": 18, "commune": "Toulouse", "street": "PL EMILE MALE", "num_station": 140 }, "geometry": { "type": "Point", "coordinates": [ 1.418630105793509, 43.591719099508595 ] } }
+,
+{ "type": "Feature", "id": 132, "properties": { "En_service": "O", "Y_CC43": 2266606.6732, "Mot_Directeur": "SEVERAC (BD DEODAT DE SEVERAC)", "Nrivoli": "3105552600", "Y_WGS84": 43.588810621230898, "code_insee": "31555", "X_CC43": 1572662.3063, "M_en_S_16_nov_07": null, "nom": "DEODAT DE SEVERAC", "X_WGS84": 1.42307513890988, "No": "52", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DEODAT DE SEVERAC", "num_station": 142 }, "geometry": { "type": "Point", "coordinates": [ 1.42307513890988, 43.588810621207649 ] } }
+,
+{ "type": "Feature", "id": 133, "properties": { "En_service": "O", "Y_CC43": 2266451.972, "Mot_Directeur": "DESBALS (RUE HENRI DESBALS)", "Nrivoli": "3105554140", "Y_WGS84": 43.587347249127099, "code_insee": "31555", "X_CC43": 1572241.7029, "M_en_S_16_nov_07": null, "nom": "METRO FONTAINE LESTANG", "X_WGS84": 1.41790377357183, "No": "239", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE HENRI DESBALS", "num_station": 141 }, "geometry": { "type": "Point", "coordinates": [ 1.417903773571822, 43.587347249103871 ] } }
+,
+{ "type": "Feature", "id": 134, "properties": { "En_service": "O", "Y_CC43": 2265828.0808, "Mot_Directeur": "DESBALS (RUE HENRI DESBALS)", "Nrivoli": "3105554140", "Y_WGS84": 43.5816721747006, "code_insee": "31555", "X_CC43": 1571885.1852, "M_en_S_16_nov_07": "N", "nom": "DESBALS SAINTONGE", "X_WGS84": 1.41363575469533, "No": "145", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE HENRI DESBALS", "num_station": 143 }, "geometry": { "type": "Point", "coordinates": [ 1.413635754695334, 43.581672174677365 ] } }
+,
+{ "type": "Feature", "id": 135, "properties": { "En_service": "O", "Y_CC43": 2269626.0904, "Mot_Directeur": "SUISSE (BD DE SUISSE)", "Nrivoli": "3105558336", "Y_WGS84": 43.615972636788499, "code_insee": "31555", "X_CC43": 1572600.8085, "M_en_S_16_nov_07": "N", "nom": "SUISSE LAUSANNE", "X_WGS84": 1.42161129479221, "No": "62", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DE SUISSE", "num_station": 144 }, "geometry": { "type": "Point", "coordinates": [ 1.421611294792215, 43.615972636765335 ] } }
+,
+{ "type": "Feature", "id": 136, "properties": { "En_service": "O", "Y_CC43": 2269390.2542, "Mot_Directeur": "GOUNOD (RUE CHARLES GOUNOD)", "Nrivoli": "3105551940", "Y_WGS84": 43.6138959450846, "code_insee": "31555", "X_CC43": 1572871.0113, "M_en_S_16_nov_07": null, "nom": "GOUNOD GARROS", "X_WGS84": 1.4250129089726, "No": "27", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE CHARLES GOUNOD", "num_station": 145 }, "geometry": { "type": "Point", "coordinates": [ 1.425012908972599, 43.61389594506138 ] } }
+,
+{ "type": "Feature", "id": 137, "properties": { "En_service": "O", "Y_CC43": 2269574.77, "Mot_Directeur": "SERP (CHE DU SANG DE SERP)", "Nrivoli": "3105558132", "Y_WGS84": 43.615602620053998, "code_insee": "31555", "X_CC43": 1573144.9976, "M_en_S_16_nov_07": null, "nom": "SANG DE SERP DAGNAUX", "X_WGS84": 1.42836374212097, "No": "57", "nb_bornettes": 20, "commune": "Toulouse", "street": "CHE DU SANG DE SERP", "num_station": 146 }, "geometry": { "type": "Point", "coordinates": [ 1.428363742120965, 43.615602620030842 ] } }
+,
+{ "type": "Feature", "id": 138, "properties": { "En_service": "O", "Y_CC43": 2270028.9324, "Mot_Directeur": "CHAUSSAS (RUE DE CHAUSSAS)", "Nrivoli": "3105551996", "Y_WGS84": 43.619702155565498, "code_insee": "31555", "X_CC43": 1573218.9183, "M_en_S_16_nov_07": null, "nom": "CHAUSSAS DAUDET", "X_WGS84": 1.42917415172569, "No": "96", "nb_bornettes": 19, "commune": "Toulouse", "street": "RUE DE CHAUSSAS", "num_station": 147 }, "geometry": { "type": "Point", "coordinates": [ 1.429174151725691, 43.619702155542313 ] } }
+,
+{ "type": "Feature", "id": 139, "properties": { "En_service": "O", "Y_CC43": 2269658.029, "Mot_Directeur": "COLLIGNON (AV FRANCOIS COLLIGNON)", "Nrivoli": "3105552178", "Y_WGS84": 43.616565072372303, "code_insee": "31555", "X_CC43": 1574417.5108, "M_en_S_16_nov_07": "N", "nom": "COLLIGNON", "X_WGS84": 1.44410648029787, "No": "0000", "nb_bornettes": 19, "commune": "Toulouse", "street": "AV FRANCOIS COLLIGNON", "num_station": 148 }, "geometry": { "type": "Point", "coordinates": [ 1.444106480297866, 43.616565072349083 ] } }
+,
+{ "type": "Feature", "id": 140, "properties": { "En_service": "O", "Y_CC43": 2270554.5206, "Mot_Directeur": "CURIE (BD PIERRE ET MARIE CURIE)", "Nrivoli": "3105556880", "Y_WGS84": 43.624622264559498, "code_insee": "31555", "X_CC43": 1574354.4128, "M_en_S_16_nov_07": "N", "nom": "CURIE NEGRENEYS", "X_WGS84": 1.44311909742902, "No": "27", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD PIERRE ET MARIE CURIE", "num_station": 151 }, "geometry": { "type": "Point", "coordinates": [ 1.443119097429021, 43.624622264536256 ] } }
+,
+{ "type": "Feature", "id": 141, "properties": { "En_service": "O", "Y_CC43": 2270507.1524, "Mot_Directeur": "MAZADES (AV DES MAZADES)", "Nrivoli": "3105555848", "Y_WGS84": 43.624133320638201, "code_insee": "31555", "X_CC43": 1573979.2485, "M_en_S_16_nov_07": null, "nom": "THEATRE DES MAZADES", "X_WGS84": 1.43848239495471, "No": "10", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DES MAZADES", "num_station": 152 }, "geometry": { "type": "Point", "coordinates": [ 1.438482394954704, 43.624133320615073 ] } }
+,
+{ "type": "Feature", "id": 142, "properties": { "En_service": "O", "Y_CC43": 2269521.546, "Mot_Directeur": "RAISIN (CHE DU RAISIN)", "Nrivoli": "3105557248", "Y_WGS84": 43.615396546625803, "code_insee": "31555", "X_CC43": 1574776.2727, "M_en_S_16_nov_07": null, "nom": "RAISIN", "X_WGS84": 1.44858154177121, "No": "2", "nb_bornettes": 22, "commune": "Toulouse", "street": "CHE DU RAISIN", "num_station": 149 }, "geometry": { "type": "Point", "coordinates": [ 1.44858154177121, 43.615396546602618 ] } }
+,
+{ "type": "Feature", "id": 143, "properties": { "En_service": "O", "Y_CC43": 2266702.7518, "Mot_Directeur": "GALLOIS (RUE DES GALLOIS)", "Nrivoli": "3105553688", "Y_WGS84": 43.589929027721901, "code_insee": "31555", "X_CC43": 1574173.341, "M_en_S_16_nov_07": null, "nom": "HOTEL DE REGION", "X_WGS84": 1.44176111027581, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DES GALLOIS", "num_station": 154 }, "geometry": { "type": "Point", "coordinates": [ 1.441761110275805, 43.589929027698609 ] } }
+,
+{ "type": "Feature", "id": 144, "properties": { "En_service": "O", "Y_CC43": 2266015.4872, "Mot_Directeur": "RECOLLETS (BD DES RECOLLETS)", "Nrivoli": "3105557344", "Y_WGS84": 43.583763299822301, "code_insee": "31555", "X_CC43": 1574288.3006, "M_en_S_16_nov_07": null, "nom": "RECOLLETS", "X_WGS84": 1.4433421345913, "No": "34", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DES RECOLLETS", "num_station": 155 }, "geometry": { "type": "Point", "coordinates": [ 1.4433421345913, 43.58376329979901 ] } }
+,
+{ "type": "Feature", "id": 145, "properties": { "En_service": "O", "Y_CC43": 2265550.4432, "Mot_Directeur": "MOULIN (AV JEAN MOULIN)", "Nrivoli": "3105554616", "Y_WGS84": 43.579557984090798, "code_insee": "31555", "X_CC43": 1574167.0459, "M_en_S_16_nov_07": "N", "nom": "METRO EMPALOT", "X_WGS84": 1.4419477974753, "No": "38", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV JEAN MOULIN", "num_station": 156 }, "geometry": { "type": "Point", "coordinates": [ 1.4419477974753, 43.579557984067478 ] } }
+,
+{ "type": "Feature", "id": 146, "properties": { "En_service": "O", "Y_CC43": 2265913.5674, "Mot_Directeur": "URSS (AV DE L URSS)", "Nrivoli": "3105558660", "Y_WGS84": 43.582916436523497, "code_insee": "31555", "X_CC43": 1574710.8248, "M_en_S_16_nov_07": null, "nom": "URSS RECOLLETS", "X_WGS84": 1.44859626279089, "No": "16B", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV DE L URSS", "num_station": 157 }, "geometry": { "type": "Point", "coordinates": [ 1.448596262790888, 43.582916436500248 ] } }
+,
+{ "type": "Feature", "id": 147, "properties": { "En_service": "O", "Y_CC43": 2265686.9496, "Mot_Directeur": "URSS (AV DE L URSS)", "Nrivoli": "3105558660", "Y_WGS84": 43.580883897741799, "code_insee": "31555", "X_CC43": 1574752.1794, "M_en_S_16_nov_07": null, "nom": "URSS ST THOMAS D AQUIN", "X_WGS84": 1.44916001924709, "No": "55", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE L URSS", "num_station": 158 }, "geometry": { "type": "Point", "coordinates": [ 1.449160019247092, 43.580883897718557 ] } }
+,
+{ "type": "Feature", "id": 148, "properties": { "En_service": "O", "Y_CC43": 2265432.2438, "Mot_Directeur": "JULIEN (AV JULES JULIEN)", "Nrivoli": "3105554816", "Y_WGS84": 43.5786057009906, "code_insee": "31555", "X_CC43": 1574836.4104, "M_en_S_16_nov_07": null, "nom": "JULES JULIEN DEVIC", "X_WGS84": 1.45026091780773, "No": "96", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV JULES JULIEN", "num_station": 159 }, "geometry": { "type": "Point", "coordinates": [ 1.450260917807729, 43.57860570096728 ] } }
+,
+{ "type": "Feature", "id": 149, "properties": { "En_service": "O", "Y_CC43": 2264839.293, "Mot_Directeur": "JULIEN (AV DES ECOLES JULES JULIEN)", "Nrivoli": "3105552860", "Y_WGS84": 43.573297451501098, "code_insee": "31555", "X_CC43": 1575004.7611, "M_en_S_16_nov_07": "N", "nom": "THEATRE JULES JULIEN", "X_WGS84": 1.45248014104867, "No": "21", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV DES ECOLES JULES JULIEN", "num_station": 160 }, "geometry": { "type": "Point", "coordinates": [ 1.452480141048673, 43.573297451477856 ] } }
+,
+{ "type": "Feature", "id": 150, "properties": { "En_service": "O", "Y_CC43": 2265207.3616, "Mot_Directeur": "RANGUEIL (AV DE RANGUEIL)", "Nrivoli": "3105557268", "Y_WGS84": 43.576642628240897, "code_insee": "31555", "X_CC43": 1575202.6868, "M_en_S_16_nov_07": "N", "nom": "RANGUEIL BEDOUCE", "X_WGS84": 1.45484622844191, "No": "35", "nb_bornettes": 16, "commune": "Toulouse", "street": "AV DE RANGUEIL", "num_station": 161 }, "geometry": { "type": "Point", "coordinates": [ 1.454846228441907, 43.57664262821757 ] } }
+,
+{ "type": "Feature", "id": 151, "properties": { "En_service": "O", "Y_CC43": 2265546.7308, "Mot_Directeur": "BEDOUCE (AV ALBERT BEDOUCE)", "Nrivoli": "3105550112", "Y_WGS84": 43.579766766905898, "code_insee": "31555", "X_CC43": 1575626.429, "M_en_S_16_nov_07": "N", "nom": "METRO SAOUZELONG", "X_WGS84": 1.46001451740789, "No": "77", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV ALBERT BEDOUCE", "num_station": 164 }, "geometry": { "type": "Point", "coordinates": [ 1.46001451740789, 43.579766766882571 ] } }
+,
+{ "type": "Feature", "id": 152, "properties": { "En_service": "O", "Y_CC43": 2265743.7526, "Mot_Directeur": "BEDOUCE (AV ALBERT BEDOUCE)", "Nrivoli": "3105550112", "Y_WGS84": 43.581572470724502, "code_insee": "31555", "X_CC43": 1575824.3666, "M_en_S_16_nov_07": null, "nom": "BEDOUCE CANAL DU MIDI", "X_WGS84": 1.46242017598854, "No": "115", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV ALBERT BEDOUCE", "num_station": 163 }, "geometry": { "type": "Point", "coordinates": [ 1.462420175988542, 43.581572470701254 ] } }
+,
+{ "type": "Feature", "id": 153, "properties": { "En_service": "O", "Y_CC43": 2265611.743, "Mot_Directeur": "ITALIE (AV D ITALIE)", "Nrivoli": "3105554364", "Y_WGS84": 43.580283256719397, "code_insee": "31555", "X_CC43": 1575211.4627, "M_en_S_16_nov_07": "N", "nom": "ITALIE", "X_WGS84": 1.45486278450323, "No": "49", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV D ITALIE", "num_station": 162 }, "geometry": { "type": "Point", "coordinates": [ 1.454862784503227, 43.580283256696163 ] } }
+,
+{ "type": "Feature", "id": 154, "properties": { "En_service": "O", "Y_CC43": 2265224.3072, "Mot_Directeur": "AVIONS (AV DES AVIONS)", "Nrivoli": "3105550732", "Y_WGS84": 43.576865802014098, "code_insee": "31555", "X_CC43": 1575630.3455, "M_en_S_16_nov_07": null, "nom": "AVIONS LIBELLULES", "X_WGS84": 1.4601361685833, "No": "35", "nb_bornettes": 15, "commune": "Toulouse", "street": "AV DES AVIONS", "num_station": 165 }, "geometry": { "type": "Point", "coordinates": [ 1.460136168583298, 43.576865801990799 ] } }
+,
+{ "type": "Feature", "id": 155, "properties": { "En_service": "O", "Y_CC43": 2270362.3552, "Mot_Directeur": "BONNEFOY (RUE DU FAUBOURG BONNEFOY)", "Nrivoli": "3105553204", "Y_WGS84": 43.623101362715801, "code_insee": "31555", "X_CC43": 1575610.3563, "M_en_S_16_nov_07": "N", "nom": "BONNEFOY LEMAITRE", "X_WGS84": 1.45872172860384, "No": "183", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DU FAUBOURG BONNEFOY", "num_station": 135 }, "geometry": { "type": "Point", "coordinates": [ 1.458721728603837, 43.623101362692658 ] } }
+,
+{ "type": "Feature", "id": 156, "properties": { "En_service": "O", "Y_CC43": 2270749.422, "Mot_Directeur": "BILA (PL BILA)", "Nrivoli": "3105551168", "Y_WGS84": 43.626586535744103, "code_insee": "31555", "X_CC43": 1575621.6977, "M_en_S_16_nov_07": "N", "nom": "BILA", "X_WGS84": 1.4587742473841, "No": "1", "nb_bornettes": 15, "commune": "Toulouse", "street": "PL BILA", "num_station": 168 }, "geometry": { "type": "Point", "coordinates": [ 1.4587742473841, 43.626586535720918 ] } }
+,
+{ "type": "Feature", "id": 157, "properties": { "En_service": "O", "Y_CC43": 2272555.0238, "Mot_Directeur": "LAFFORGUE (RPT DE L ABBE G. LAFFORGUE)", "Nrivoli": "3105550011", "Y_WGS84": 43.642871980418597, "code_insee": "31555", "X_CC43": 1575842.8403, "M_en_S_16_nov_07": "N", "nom": "RPT POINT LAFFORGUE", "X_WGS84": 1.46110410307354, "No": "0", "nb_bornettes": 20, "commune": "Toulouse", "street": "RPT DE L ABBE G. LAFFORGUE", "num_station": 172 }, "geometry": { "type": "Point", "coordinates": [ 1.461104103073536, 43.642871980395519 ] } }
+,
+{ "type": "Feature", "id": 158, "properties": { "En_service": "O", "Y_CC43": 2272234.2956, "Mot_Directeur": "MAUNOURY (AV MAURICE BOURGES MAUNOURY)", "Nrivoli": "3105555789", "Y_WGS84": 43.639867049921598, "code_insee": "31555", "X_CC43": 1575125.2563, "M_en_S_16_nov_07": "N", "nom": "METRO BOURGES MAUNOURY", "X_WGS84": 1.45228507175573, "No": "00", "nb_bornettes": 30, "commune": "Toulouse", "street": "AV MAURICE BOURGES MAUNOURY", "num_station": 175 }, "geometry": { "type": "Point", "coordinates": [ 1.452285071755725, 43.639867049898442 ] } }
+,
+{ "type": "Feature", "id": 159, "properties": { "En_service": "O", "Y_CC43": 2271906.4128, "Mot_Directeur": "MAUNOURY (AV MAURICE BOURGES MAUNOURY)", "Nrivoli": "3105555789", "Y_WGS84": 43.636920634953199, "code_insee": "31555", "X_CC43": 1575150.9309, "M_en_S_16_nov_07": "N", "nom": "BOURGES MAUNOURY MELAT", "X_WGS84": 1.45267805538874, "No": "41", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV MAURICE BOURGES MAUNOURY", "num_station": 174 }, "geometry": { "type": "Point", "coordinates": [ 1.452678055388736, 43.636920634930043 ] } }
+,
+{ "type": "Feature", "id": 160, "properties": { "En_service": "O", "Y_CC43": 2271498.0022, "Mot_Directeur": "MAUNOURY (AV MAURICE BOURGES MAUNOURY)", "Nrivoli": "3105555789", "Y_WGS84": 43.633218052345597, "code_insee": "31555", "X_CC43": 1574986.8054, "M_en_S_16_nov_07": "N", "nom": "BOURGES MAUNOURY SEGLA", "X_WGS84": 1.45073775462181, "No": "25", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV MAURICE BOURGES MAUNOURY", "num_station": 173 }, "geometry": { "type": "Point", "coordinates": [ 1.450737754621806, 43.633218052322384 ] } }
+,
+{ "type": "Feature", "id": 161, "properties": { "En_service": "O", "Y_CC43": 2270480.0376, "Mot_Directeur": "LAPUJADE (CHE DE LAPUJADE)", "Nrivoli": "3105555028", "Y_WGS84": 43.624106813373501, "code_insee": "31555", "X_CC43": 1575286.1786, "M_en_S_16_nov_07": "N", "nom": "LAPUJADE FLANDRES", "X_WGS84": 1.45467901611775, "No": "98", "nb_bornettes": 18, "commune": "Toulouse", "street": "CHE DE LAPUJADE", "num_station": 167 }, "geometry": { "type": "Point", "coordinates": [ 1.454679016117745, 43.62410681335033 ] } }
+,
+{ "type": "Feature", "id": 162, "properties": { "En_service": "O", "Y_CC43": 2270985.9178, "Mot_Directeur": "MAUNOURY (AV MAURICE BOURGES MAUNOURY)", "Nrivoli": "3105555789", "Y_WGS84": 43.628574111787202, "code_insee": "31555", "X_CC43": 1574772.5032, "M_en_S_16_nov_07": null, "nom": "MAUNOURY PISAN", "X_WGS84": 1.44819976763299, "No": "9", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV MAURICE BOURGES MAUNOURY", "num_station": 153 }, "geometry": { "type": "Point", "coordinates": [ 1.448199767632985, 43.628574111764024 ] } }
+,
+{ "type": "Feature", "id": 163, "properties": { "En_service": "O", "Y_CC43": 2267034.6264, "Mot_Directeur": "GUESDE (ALL JULES GUESDE)", "Nrivoli": "3105554812", "Y_WGS84": 43.592964433982701, "code_insee": "31555", "X_CC43": 1574465.7919, "M_en_S_16_nov_07": null, "nom": "GUESDE TRENTE SIX  PONTS", "X_WGS84": 1.44530594719119, "No": "3", "nb_bornettes": 18, "commune": "Toulouse", "street": "ALL JULES GUESDE", "num_station": 68 }, "geometry": { "type": "Point", "coordinates": [ 1.445305947191189, 43.592964433959395 ] } }
+,
+{ "type": "Feature", "id": 164, "properties": { "En_service": "O", "Y_CC43": 2269057.014, "Mot_Directeur": "LEDUC (RUE RENE LEDUC)", "Nrivoli": "3105557413", "Y_WGS84": 43.611324675222399, "code_insee": "31555", "X_CC43": 1575431.2011, "M_en_S_16_nov_07": "N", "nom": "LEDUC", "X_WGS84": 1.45679944035559, "No": "5", "nb_bornettes": 19, "commune": "Toulouse", "street": "RUE RENE LEDUC", "num_station": 5 }, "geometry": { "type": "Point", "coordinates": [ 1.456799440355592, 43.611324675199192 ] } }
+,
+{ "type": "Feature", "id": 165, "properties": { "En_service": "O", "Y_CC43": 2268557.1342, "Mot_Directeur": "COMPANS (RUE DU GEN JEAN COMPANS)", "Nrivoli": "3105552250", "Y_WGS84": 43.606841289392698, "code_insee": "31555", "X_CC43": 1575522.9837, "M_en_S_16_nov_07": "N", "nom": "GENERAL COMPANS", "X_WGS84": 1.45804986995685, "No": "1", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DU GEN JEAN COMPANS", "num_station": 176 }, "geometry": { "type": "Point", "coordinates": [ 1.458049869956854, 43.606841289369477 ] } }
+,
+{ "type": "Feature", "id": 166, "properties": { "En_service": "O", "Y_CC43": 2269724.1712, "Mot_Directeur": "BAILLAUD (RUE BENJAMIN BAILLAUD)", "Nrivoli": "3105551044", "Y_WGS84": 43.6174462077025, "code_insee": "31555", "X_CC43": 1576144.576, "M_en_S_16_nov_07": null, "nom": "BAILLAUD BRUNAUD", "X_WGS84": 1.46548404807038, "No": "64", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE BENJAMIN BAILLAUD", "num_station": 177 }, "geometry": { "type": "Point", "coordinates": [ 1.465484048070371, 43.617446207679258 ] } }
+,
+{ "type": "Feature", "id": 167, "properties": { "En_service": "O", "Y_CC43": 2269926.6132, "Mot_Directeur": "BRUNAUD (AV YVES BRUNAUD)", "Nrivoli": "3105558972", "Y_WGS84": 43.619311659560303, "code_insee": "31555", "X_CC43": 1576410.2085, "M_en_S_16_nov_07": "N", "nom": "PLACE DE LA ROSERAIE", "X_WGS84": 1.46872867951541, "No": "98", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV YVES BRUNAUD", "num_station": 178 }, "geometry": { "type": "Point", "coordinates": [ 1.468728679515408, 43.619311659537068 ] } }
+,
+{ "type": "Feature", "id": 168, "properties": { "En_service": "O", "Y_CC43": 2269657.1282, "Mot_Directeur": "CASSAING (CHE CASSAING)", "Nrivoli": "3105551744", "Y_WGS84": 43.616950375686201, "code_insee": "31555", "X_CC43": 1576800.2464, "M_en_S_16_nov_07": "N", "nom": "CASSAING PLANA", "X_WGS84": 1.47362082289602, "No": "4", "nb_bornettes": 17, "commune": "Toulouse", "street": "CHE CASSAING", "num_station": 179 }, "geometry": { "type": "Point", "coordinates": [ 1.47362082289602, 43.616950375663038 ] } }
+,
+{ "type": "Feature", "id": 169, "properties": { "En_service": "O", "Y_CC43": 2269127.0062, "Mot_Directeur": "SOUPETARD (PL DE SOUPETARD)", "Nrivoli": "3105558300", "Y_WGS84": 43.612229853037597, "code_insee": "31555", "X_CC43": 1577107.6143, "M_en_S_16_nov_07": "N", "nom": "PLACE SOUPETARD", "X_WGS84": 1.4775471262401, "No": "3", "nb_bornettes": 15, "commune": "Toulouse", "street": "PL DE SOUPETARD", "num_station": 180 }, "geometry": { "type": "Point", "coordinates": [ 1.477547126240095, 43.612229853014355 ] } }
+,
+{ "type": "Feature", "id": 170, "properties": { "En_service": "O", "Y_CC43": 2268792.8488, "Mot_Directeur": "PLANA (RUE LOUIS PLANA)", "Nrivoli": "3105555396", "Y_WGS84": 43.609253384367399, "code_insee": "31555", "X_CC43": 1577296.0851, "M_en_S_16_nov_07": "N", "nom": "PLANA GARNIER", "X_WGS84": 1.47995638245109, "No": "27", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE LOUIS PLANA", "num_station": 181 }, "geometry": { "type": "Point", "coordinates": [ 1.479956382451087, 43.609253384344157 ] } }
+,
+{ "type": "Feature", "id": 171, "properties": { "En_service": "O", "Y_CC43": 2268424.564, "Mot_Directeur": "CHAUBET (AV JEAN CHAUBET)", "Nrivoli": "3105554540", "Y_WGS84": 43.605961537527797, "code_insee": "31555", "X_CC43": 1577434.1265, "M_en_S_16_nov_07": "N", "nom": "CHAUBET", "X_WGS84": 1.48174849521764, "No": "158", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV JEAN CHAUBET", "num_station": 182 }, "geometry": { "type": "Point", "coordinates": [ 1.481748495217635, 43.605961537504527 ] } }
+,
+{ "type": "Feature", "id": 172, "properties": { "En_service": "O", "Y_CC43": 2270806.6788, "Mot_Directeur": "MICHOUN (CHE MICHOUN)", "Nrivoli": "3105555932", "Y_WGS84": 43.6272417141926, "code_insee": "31555", "X_CC43": 1576471.945, "M_en_S_16_nov_07": "N", "nom": "MICHOUN LIPPMAN", "X_WGS84": 1.46929476648627, "No": "70", "nb_bornettes": 18, "commune": "Toulouse", "street": "CHE MICHOUN", "num_station": 184 }, "geometry": { "type": "Point", "coordinates": [ 1.469294766486273, 43.627241714169386 ] } }
+,
+{ "type": "Feature", "id": 173, "properties": { "En_service": "O", "Y_CC43": 2270806.9592, "Mot_Directeur": "ROUBICHOU (RUE ROUBICHOU)", "Nrivoli": "3105557648", "Y_WGS84": 43.627195343937402, "code_insee": "31555", "X_CC43": 1576174.1545, "M_en_S_16_nov_07": "N", "nom": "ROUBICHOU ARLES", "X_WGS84": 1.46560543398029, "No": "30", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE ROUBICHOU", "num_station": 185 }, "geometry": { "type": "Point", "coordinates": [ 1.465605433980293, 43.627195343914266 ] } }
+,
+{ "type": "Feature", "id": 174, "properties": { "En_service": "O", "Y_CC43": 2267631.3226, "Mot_Directeur": "BAYONNE (BRE DE BAYONNE)", "Nrivoli": "3105550924", "Y_WGS84": 43.5979952377904, "code_insee": "31555", "X_CC43": 1572446.6902, "M_en_S_16_nov_07": "N", "nom": "BARRIERE DE BAYONNE", "X_WGS84": 1.4201670248656, "No": "2", "nb_bornettes": 20, "commune": "Toulouse", "street": "BRE DE BAYONNE", "num_station": 138 }, "geometry": { "type": "Point", "coordinates": [ 1.420167024865603, 43.597995237767194 ] } }
+,
+{ "type": "Feature", "id": 175, "properties": { "En_service": "O", "Y_CC43": 2265562.8406, "Mot_Directeur": "BOUALAM (IMP DU BACHAGA BOUALAM)", "Nrivoli": "3105550793", "Y_WGS84": 43.579246690362197, "code_insee": "31555", "X_CC43": 1571658.7611, "M_en_S_16_nov_07": "N", "nom": "DESBALS BACHAGA BOUALAM", "X_WGS84": 1.41089487522502, "No": "1", "nb_bornettes": 18, "commune": "Toulouse", "street": "IMP DU BACHAGA BOUALAM", "num_station": 186 }, "geometry": { "type": "Point", "coordinates": [ 1.410894875225018, 43.57924669033892 ] } }
+,
+{ "type": "Feature", "id": 176, "properties": { "En_service": "O", "Y_CC43": 2266147.5304, "Mot_Directeur": "DESBALS (RUE HENRI DESBALS)", "Nrivoli": "3105554140", "Y_WGS84": 43.584576425864398, "code_insee": "31555", "X_CC43": 1572058.5087, "M_en_S_16_nov_07": "N", "nom": "DESBALS MONT DORE", "X_WGS84": 1.41570681317561, "No": "187", "nb_bornettes": 15, "commune": "Toulouse", "street": "RUE HENRI DESBALS", "num_station": 187 }, "geometry": { "type": "Point", "coordinates": [ 1.415706813175604, 43.584576425841092 ] } }
+,
+{ "type": "Feature", "id": 177, "properties": { "En_service": "O", "Y_CC43": 2266098.0928, "Mot_Directeur": "MURET (AV DE MURET)", "Nrivoli": "3105556160", "Y_WGS84": 43.584293243071698, "code_insee": "31555", "X_CC43": 1573014.8732, "M_en_S_16_nov_07": "N", "nom": "MURET LAFAGE", "X_WGS84": 1.42755810865503, "No": "121", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV DE MURET", "num_station": 188 }, "geometry": { "type": "Point", "coordinates": [ 1.427558108655031, 43.584293243048357 ] } }
+,
+{ "type": "Feature", "id": 178, "properties": { "En_service": "O", "Y_CC43": 2265794.2378, "Mot_Directeur": "MURET (AV DE MURET)", "Nrivoli": "3105556160", "Y_WGS84": 43.581529240876002, "code_insee": "31555", "X_CC43": 1572839.75, "M_en_S_16_nov_07": "N", "nom": "MURET BOUTINON", "X_WGS84": 1.42546059831496, "No": "44", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE MURET", "num_station": 189 }, "geometry": { "type": "Point", "coordinates": [ 1.425460598314955, 43.581529240852724 ] } }
+,
+{ "type": "Feature", "id": 179, "properties": { "En_service": "O", "Y_CC43": 2265326.9986, "Mot_Directeur": "ESPAGNE (RTE D ESPAGNE)", "Nrivoli": "3105553064", "Y_WGS84": 43.577302925850098, "code_insee": "31555", "X_CC43": 1572712.4242, "M_en_S_16_nov_07": "N", "nom": "OUSTALOUS", "X_WGS84": 1.42399290177347, "No": "39", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE D ESPAGNE", "num_station": 190 }, "geometry": { "type": "Point", "coordinates": [ 1.423992901773471, 43.577302925826793 ] } }
+,
+{ "type": "Feature", "id": 180, "properties": { "En_service": "O", "Y_CC43": 2266752.7682, "Mot_Directeur": "SIMON (RTE DE SAINT SIMON)", "Nrivoli": "3105557988", "Y_WGS84": 43.590018134614603, "code_insee": "31555", "X_CC43": 1572029.1591, "M_en_S_16_nov_07": "N", "nom": "ST SIMON QUATORZE JUILLET", "X_WGS84": 1.41520209844015, "No": "395", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE SAINT SIMON", "num_station": 191 }, "geometry": { "type": "Point", "coordinates": [ 1.415202098440149, 43.590018134591361 ] } }
+,
+{ "type": "Feature", "id": 181, "properties": { "En_service": "O", "Y_CC43": 2266512.45, "Mot_Directeur": "SIMON (RTE DE SAINT SIMON)", "Nrivoli": "3105557988", "Y_WGS84": 43.587777108999802, "code_insee": "31555", "X_CC43": 1571568.5619, "M_en_S_16_nov_07": "N", "nom": "ST SIMON PRADO", "X_WGS84": 1.40955573437537, "No": "355", "nb_bornettes": 18, "commune": "Toulouse", "street": "RTE DE SAINT SIMON", "num_station": 192 }, "geometry": { "type": "Point", "coordinates": [ 1.40955573437537, 43.587777108976525 ] } }
+,
+{ "type": "Feature", "id": 182, "properties": { "En_service": "O", "Y_CC43": 2267293.953, "Mot_Directeur": "LOMBEZ (AV DE LOMBEZ)", "Nrivoli": "3105555308", "Y_WGS84": 43.594888485085299, "code_insee": "31555", "X_CC43": 1572029.7366, "M_en_S_16_nov_07": "N", "nom": "LOMBEZ PETITE VITESSE", "X_WGS84": 1.41508282242247, "No": "59", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE LOMBEZ", "num_station": 193 }, "geometry": { "type": "Point", "coordinates": [ 1.415082822422465, 43.594888485062086 ] } }
+,
+{ "type": "Feature", "id": 183, "properties": { "En_service": "O", "Y_CC43": 2268001.1564, "Mot_Directeur": "GOUJON (RUE JEAN GOUJON)", "Nrivoli": "3105554584", "Y_WGS84": 43.601835744921402, "code_insee": "31555", "X_CC43": 1575510.0295, "M_en_S_16_nov_07": "N", "nom": "GOUJON PUJOL", "X_WGS84": 1.45801583559386, "No": "10", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE JEAN GOUJON", "num_station": 196 }, "geometry": { "type": "Point", "coordinates": [ 1.458015835593863, 43.601835744898125 ] } }
+,
+{ "type": "Feature", "id": 184, "properties": { "En_service": "O", "Y_CC43": 2267498.4748, "Mot_Directeur": "RIEUX (AV JEAN RIEUX)", "Nrivoli": "3105554652", "Y_WGS84": 43.597323043642902, "code_insee": "31555", "X_CC43": 1575577.1413, "M_en_S_16_nov_07": "N", "nom": "LAROUSSE RIEUX", "X_WGS84": 1.45896112630866, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV JEAN RIEUX", "num_station": 195 }, "geometry": { "type": "Point", "coordinates": [ 1.458961126308663, 43.59732304361961 ] } }
+,
+{ "type": "Feature", "id": 185, "properties": { "En_service": "O", "Y_CC43": 2267821.7724, "Mot_Directeur": "BLERIOT (AV LOUIS BLERIOT)", "Nrivoli": "3105555360", "Y_WGS84": 43.600301197821899, "code_insee": "31555", "X_CC43": 1575993.9304, "M_en_S_16_nov_07": "N", "nom": "CASERNE PERIGNON", "X_WGS84": 1.46404891285115, "No": "6", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV LOUIS BLERIOT", "num_station": 197 }, "geometry": { "type": "Point", "coordinates": [ 1.464048912851146, 43.600301197798629 ] } }
+,
+{ "type": "Feature", "id": 186, "properties": { "En_service": "O", "Y_CC43": 2266834.1472, "Mot_Directeur": "DELTOUR (BD DELTOUR)", "Nrivoli": "3105552580", "Y_WGS84": 43.5914894287774, "code_insee": "31555", "X_CC43": 1576457.8953, "M_en_S_16_nov_07": "N", "nom": "DELTOUR RIEUX", "X_WGS84": 1.47001711408819, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD DELTOUR", "num_station": 199 }, "geometry": { "type": "Point", "coordinates": [ 1.470017114088185, 43.59148942875418 ] } }
+,
+{ "type": "Feature", "id": 187, "properties": { "En_service": "O", "Y_CC43": 2265431.0402, "Mot_Directeur": "RIEUX (AV JEAN RIEUX)", "Nrivoli": "3105554652", "Y_WGS84": 43.579037596654501, "code_insee": "31555", "X_CC43": 1577531.9403, "M_en_S_16_nov_07": "N", "nom": "PLACE DE L ORMEAU", "X_WGS84": 1.48362912378026, "No": "345", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV JEAN RIEUX", "num_station": 200 }, "geometry": { "type": "Point", "coordinates": [ 1.483629123780257, 43.57903759663116 ] } }
+,
+{ "type": "Feature", "id": 188, "properties": { "En_service": "O", "Y_CC43": 2265514.1336, "Mot_Directeur": "EXUPERY (AV ANTOINE DE ST EXUPERY)", "Nrivoli": "3105557772", "Y_WGS84": 43.5797488883169, "code_insee": "31555", "X_CC43": 1577307.4713, "M_en_S_16_nov_07": "N", "nom": "POTEZ SAINT EXUPERY", "X_WGS84": 1.48083180350815, "No": "256", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV ANTOINE DE ST EXUPERY", "num_station": 201 }, "geometry": { "type": "Point", "coordinates": [ 1.480831803508152, 43.579748888293636 ] } }
+,
+{ "type": "Feature", "id": 189, "properties": { "En_service": "O", "Y_CC43": 2265735.2502, "Mot_Directeur": "EXUPERY (AV ANTOINE DE ST EXUPERY)", "Nrivoli": "3105557772", "Y_WGS84": 43.581673901362002, "code_insee": "31555", "X_CC43": 1576909.3428, "M_en_S_16_nov_07": "N", "nom": "SAINT EXUPERIY ECOLE COURREGE", "X_WGS84": 1.47585362474565, "No": "165", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV ANTOINE DE ST EXUPERY", "num_station": 202 }, "geometry": { "type": "Point", "coordinates": [ 1.475853624745652, 43.581673901338704 ] } }
+,
+{ "type": "Feature", "id": 190, "properties": { "En_service": "O", "Y_CC43": 2265951.413, "Mot_Directeur": "PRINCE (AV DU PETIT PRINCE)", "Nrivoli": "3105556790", "Y_WGS84": 43.5835433232293, "code_insee": "31555", "X_CC43": 1576445.3422, "M_en_S_16_nov_07": "N", "nom": "PETIT PRINCE SAINT EXUPERY", "X_WGS84": 1.47006075484635, "No": "2", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DU PETIT PRINCE", "num_station": 203 }, "geometry": { "type": "Point", "coordinates": [ 1.470060754846353, 43.583543323206008 ] } }
+,
+{ "type": "Feature", "id": 191, "properties": { "En_service": "O", "Y_CC43": 2266203.5494, "Mot_Directeur": "COTTAGES (AV DES COTTAGES)", "Nrivoli": "3105552340", "Y_WGS84": 43.585878521821101, "code_insee": "31555", "X_CC43": 1576849.4305, "M_en_S_16_nov_07": "N", "nom": "COTTAGES RIEUX", "X_WGS84": 1.47500668599737, "No": "58", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV DES COTTAGES", "num_station": 205 }, "geometry": { "type": "Point", "coordinates": [ 1.475006685997373, 43.585878521797824 ] } }
+,
+{ "type": "Feature", "id": 192, "properties": { "En_service": "O", "Y_CC43": 2266329.7522, "Mot_Directeur": "ARNAUD (PL ROGER ARNAUD)", "Nrivoli": "3105557568", "Y_WGS84": 43.5868580251217, "code_insee": "31555", "X_CC43": 1575896.8173, "M_en_S_16_nov_07": "N", "nom": "PL ROGER ARNAUD", "X_WGS84": 1.46318435934578, "No": "1", "nb_bornettes": 18, "commune": "Toulouse", "street": "PL ROGER ARNAUD", "num_station": 204 }, "geometry": { "type": "Point", "coordinates": [ 1.463184359345778, 43.586858025098429 ] } }
+,
+{ "type": "Feature", "id": 193, "properties": { "En_service": "O", "Y_CC43": 2267126.3204, "Mot_Directeur": "LEYGUE (AV ARMAND LEYGUE)", "Nrivoli": "3105550496", "Y_WGS84": 43.594054345501299, "code_insee": "31555", "X_CC43": 1576065.3332, "M_en_S_16_nov_07": "N", "nom": "LEYGUE RIEUX", "X_WGS84": 1.4650904833343, "No": "20", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV ARMAND LEYGUE", "num_station": 206 }, "geometry": { "type": "Point", "coordinates": [ 1.465090483334295, 43.594054345478042 ] } }
+,
+{ "type": "Feature", "id": 194, "properties": { "En_service": "O", "Y_CC43": 2265913.068, "Mot_Directeur": "AUDE (RUE DE L AUDE)", "Nrivoli": "3105550616", "Y_WGS84": 43.583354906534801, "code_insee": "31555", "X_CC43": 1577404.8623, "M_en_S_16_nov_07": "N", "nom": "CHRIST ROI", "X_WGS84": 1.48194817911874, "No": "25", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DE L AUDE", "num_station": 207 }, "geometry": { "type": "Point", "coordinates": [ 1.481948179118739, 43.583354906511481 ] } }
+,
+{ "type": "Feature", "id": 195, "properties": { "En_service": "O", "Y_CC43": 2266785.1276, "Mot_Directeur": "LIMAYRAC (ALL DE LIMAYRAC)", "Nrivoli": "3105555273", "Y_WGS84": 43.591181032173303, "code_insee": "31555", "X_CC43": 1577270.4308, "M_en_S_16_nov_07": "N", "nom": "LIMAYRAC DARASSE", "X_WGS84": 1.48008857920214, "No": null, "nb_bornettes": 18, "commune": "Toulouse", "street": "ALL DE LIMAYRAC", "num_station": 208 }, "geometry": { "type": "Point", "coordinates": [ 1.480088579202143, 43.59118103214999 ] } }
+,
+{ "type": "Feature", "id": 196, "properties": { "En_service": "O", "Y_CC43": 2266605.7998, "Mot_Directeur": "BAROUX (AV LUCIEN BAROUX)", "Nrivoli": "3105555446", "Y_WGS84": 43.589550847656398, "code_insee": "31555", "X_CC43": 1577170.0851, "M_en_S_16_nov_07": "N", "nom": "BAROUX DARASSE", "X_WGS84": 1.47888635352404, "No": "4", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV LUCIEN BAROUX", "num_station": 209 }, "geometry": { "type": "Point", "coordinates": [ 1.478886353524036, 43.589550847633099 ] } }
+,
+{ "type": "Feature", "id": 197, "properties": { "En_service": "O", "Y_CC43": 2266215.3092, "Mot_Directeur": "TERRASSE (CHE DE LA TERRASSE)", "Nrivoli": "3105558436", "Y_WGS84": 43.586088819239997, "code_insee": "31555", "X_CC43": 1577490.5017, "M_en_S_16_nov_07": "N", "nom": "FIRMIS", "X_WGS84": 1.48294081415045, "No": "42", "nb_bornettes": 18, "commune": "Toulouse", "street": "CHE DE LA TERRASSE", "num_station": 210 }, "geometry": { "type": "Point", "coordinates": [ 1.482940814150449, 43.586088819216677 ] } }
+,
+{ "type": "Feature", "id": 198, "properties": { "En_service": "O", "Y_CC43": 2265918.3498, "Mot_Directeur": "DORMEUR (RUE LE DORMEUR)", "Nrivoli": "3105552746", "Y_WGS84": 43.583478732283503, "code_insee": "31555", "X_CC43": 1577874.8591, "M_en_S_16_nov_07": "N", "nom": "LE DORMEUR LA TERRASSE", "X_WGS84": 1.48776554499091, "No": "9", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE LE DORMEUR", "num_station": 211 }, "geometry": { "type": "Point", "coordinates": [ 1.487765544990906, 43.583478732260239 ] } }
+,
+{ "type": "Feature", "id": 199, "properties": { "En_service": "O", "Y_CC43": 2267355.434, "Mot_Directeur": "LAFILAIRE (CHE DE LAFILAIRE)", "Nrivoli": "3105554932", "Y_WGS84": 43.596227670233603, "code_insee": "31555", "X_CC43": 1576744.9499, "M_en_S_16_nov_07": "N", "nom": "LAFILAIRE DELTOUR", "X_WGS84": 1.47345400582045, "No": "25", "nb_bornettes": 20, "commune": "Toulouse", "street": "CHE DE LAFILAIRE", "num_station": 198 }, "geometry": { "type": "Point", "coordinates": [ 1.473454005820444, 43.596227670210389 ] } }
+,
+{ "type": "Feature", "id": 200, "properties": { "En_service": "O", "Y_CC43": 2272347.0304, "Mot_Directeur": "ALBI (RTE D ALBI)", "Nrivoli": "3105550124", "Y_WGS84": 43.641070931609299, "code_insee": "31555", "X_CC43": 1576272.5444, "M_en_S_16_nov_07": "N", "nom": "ALBI PELET", "X_WGS84": 1.46647604379252, "No": "191", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE D ALBI", "num_station": 171 }, "geometry": { "type": "Point", "coordinates": [ 1.46647604379252, 43.641070931586114 ] } }
+,
+{ "type": "Feature", "id": 201, "properties": { "En_service": "O", "Y_CC43": 2269476.6694, "Mot_Directeur": "CHAUMIERE (RUE DE LA CHAUMIERE)", "Nrivoli": "3105551989", "Y_WGS84": 43.615217796789203, "code_insee": "31555", "X_CC43": 1576138.0254, "M_en_S_16_nov_07": "N", "nom": "CRETES CHAUMIERES", "X_WGS84": 1.46545891345278, "No": "0", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DE LA CHAUMIERE", "num_station": 212 }, "geometry": { "type": "Point", "coordinates": [ 1.465458913452782, 43.615217796766025 ] } }
+,
+{ "type": "Feature", "id": 202, "properties": { "En_service": "O", "Y_CC43": 2267862.3798, "Mot_Directeur": "PUJOL (AV CAMILLE PUJOL)", "Nrivoli": "3105551584", "Y_WGS84": 43.600710077626999, "code_insee": "31555", "X_CC43": 1576258.2035, "M_en_S_16_nov_07": "N", "nom": "PUJOL CHAUBET", "X_WGS84": 1.46731232250797, "No": "129", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV CAMILLE PUJOL", "num_station": 213 }, "geometry": { "type": "Point", "coordinates": [ 1.467312322507971, 43.600710077603807 ] } }
+,
+{ "type": "Feature", "id": 203, "properties": { "En_service": "O", "Y_CC43": 2267867.6414, "Mot_Directeur": "CASTRES (AV DE CASTRES)", "Nrivoli": "3105551772", "Y_WGS84": 43.600840085649899, "code_insee": "31555", "X_CC43": 1576762.6109, "M_en_S_16_nov_07": "N", "nom": "CASTRES ACHIARY", "X_WGS84": 1.47355743952202, "No": "48", "nb_bornettes": 17, "commune": "Toulouse", "street": "AV DE CASTRES", "num_station": 214 }, "geometry": { "type": "Point", "coordinates": [ 1.47355743952202, 43.600840085626658 ] } }
+,
+{ "type": "Feature", "id": 204, "properties": { "En_service": "O", "Y_CC43": 2270417.2906, "Mot_Directeur": "GAILLAC (RUE DE GAILLAC)", "Nrivoli": "3105553668", "Y_WGS84": 43.623824125890899, "code_insee": "31555", "X_CC43": 1577001.2493, "M_en_S_16_nov_07": "N", "nom": "METRO ARGOULETS", "X_WGS84": 1.47593975587374, "No": "8", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE GAILLAC", "num_station": 215 }, "geometry": { "type": "Point", "coordinates": [ 1.475939755873739, 43.623824125867678 ] } }
+,
+{ "type": "Feature", "id": 205, "properties": { "En_service": "O", "Y_CC43": 2270302.0744, "Mot_Directeur": "HOUDON (RUE JEAN HOUDON)", "Nrivoli": "3105554592", "Y_WGS84": 43.622761902725003, "code_insee": "31555", "X_CC43": 1576846.0124, "M_en_S_16_nov_07": "N", "nom": "ARGOULETS HOUDON", "X_WGS84": 1.47404258888539, "No": "3", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE JEAN HOUDON", "num_station": 216 }, "geometry": { "type": "Point", "coordinates": [ 1.474042588885383, 43.622761902701811 ] } }
+,
+{ "type": "Feature", "id": 206, "properties": { "En_service": "O", "Y_CC43": 2269485.6288, "Mot_Directeur": "PUCCINI (RUE GIACOMO PUCCINI)", "Nrivoli": "3105553888", "Y_WGS84": 43.614565694031498, "code_insee": "31555", "X_CC43": 1571758.4873, "M_en_S_16_nov_07": "N", "nom": "PUCCINI BLAGNAC", "X_WGS84": 1.41121089956745, "No": "35", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE GIACOMO PUCCINI", "num_station": 219 }, "geometry": { "type": "Point", "coordinates": [ 1.411210899567453, 43.614565694008292 ] } }
+,
+{ "type": "Feature", "id": 207, "properties": { "En_service": "O", "Y_CC43": 2271091.9862, "Mot_Directeur": "AMOUROUX (CHE AMOUROUX)", "Nrivoli": "3105550260", "Y_WGS84": 43.629773713638798, "code_insee": "31555", "X_CC43": 1576255.3762, "M_en_S_16_nov_07": "N", "nom": "AMOUROUX SAINT TROPEZ", "X_WGS84": 1.46654721088749, "No": "42", "nb_bornettes": 18, "commune": "Toulouse", "street": "CHE AMOUROUX", "num_station": 217 }, "geometry": { "type": "Point", "coordinates": [ 1.466547210887485, 43.629773713615613 ] } }
+,
+{ "type": "Feature", "id": 208, "properties": { "En_service": "O", "Y_CC43": 2270864.5414, "Mot_Directeur": "AMOUROUX (CHE AMOUROUX)", "Nrivoli": "3105550260", "Y_WGS84": 43.627665059381997, "code_insee": "31555", "X_CC43": 1575879.5917, "M_en_S_16_nov_07": "N", "nom": "AMOUROUX SAINTE AUGUSTINE", "X_WGS84": 1.46194309591631, "No": "24B", "nb_bornettes": 18, "commune": "Toulouse", "street": "CHE AMOUROUX", "num_station": 218 }, "geometry": { "type": "Point", "coordinates": [ 1.46194309591631, 43.627665059358797 ] } }
+,
+{ "type": "Feature", "id": 209, "properties": { "En_service": "O", "Y_CC43": 2265056.8986, "Mot_Directeur": "MIRAIL (RUE UNIVERSITE DU MIRAIL)", "Nrivoli": "3105558666", "Y_WGS84": 43.574571157116203, "code_insee": "31555", "X_CC43": 1570941.6559, "M_en_S_16_nov_07": "N", "nom": "TABAR UNIVERSITE", "X_WGS84": 1.40213704130626, "No": "3", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE UNIVERSITE DU MIRAIL", "num_station": 220 }, "geometry": { "type": "Point", "coordinates": [ 1.402137041306261, 43.574571157092855 ] } }
+,
+{ "type": "Feature", "id": 210, "properties": { "En_service": "O", "Y_CC43": 2265257.956, "Mot_Directeur": "VAUQUELIN (RUE NICOLAS L VAUQUELIN)", "Nrivoli": "3105556267", "Y_WGS84": 43.576443693102, "code_insee": "31555", "X_CC43": 1571311.1635, "M_en_S_16_nov_07": "N", "nom": "VAUQUELIN", "X_WGS84": 1.4066635857456, "No": "85", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE NICOLAS L VAUQUELIN", "num_station": 221 }, "geometry": { "type": "Point", "coordinates": [ 1.406663585745595, 43.576443693078701 ] } }
+,
+{ "type": "Feature", "id": 211, "properties": { "En_service": "O", "Y_CC43": 2268335.997, "Mot_Directeur": "FONTAINES (RUE DES FONTAINES)", "Nrivoli": "3105553380", "Y_WGS84": 43.6041619432849, "code_insee": "31555", "X_CC43": 1571418.0815, "M_en_S_16_nov_07": "N", "nom": "FONTAINES CASSELARDIT", "X_WGS84": 1.40726460663601, "No": "292", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE DES FONTAINES", "num_station": 226 }, "geometry": { "type": "Point", "coordinates": [ 1.407264606636005, 43.604161943261687 ] } }
+,
+{ "type": "Feature", "id": 212, "properties": { "En_service": "O", "Y_CC43": 2264237.3774, "Mot_Directeur": "MARAICHERS (CHE DES MARAICHERS)", "Nrivoli": "3105555576", "Y_WGS84": 43.568038433732802, "code_insee": "31555", "X_CC43": 1575960.5922, "M_en_S_16_nov_07": "N", "nom": "METRO PHARMACIE", "X_WGS84": 1.46444748379563, "No": "35", "nb_bornettes": 20, "commune": "Toulouse", "street": "CHE DES MARAICHERS", "num_station": 228 }, "geometry": { "type": "Point", "coordinates": [ 1.464447483795627, 43.568038433709475 ] } }
+,
+{ "type": "Feature", "id": 213, "properties": { "En_service": "N", "Y_CC43": 2263428.5066, "Mot_Directeur": "NARBONNE (RTE DE NARBONNE)", "Nrivoli": "3105556196", "Y_WGS84": 43.5607377847451, "code_insee": "31555", "X_CC43": 1575831.3267, "M_en_S_16_nov_07": "N", "nom": "METRO UPS", "X_WGS84": 1.46303076985776, "No": "118", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE NARBONNE", "num_station": 227 }, "geometry": { "type": "Point", "coordinates": [ 1.463030769857762, 43.560737784721752 ] } }
+,
+{ "type": "Feature", "id": 214, "properties": { "En_service": "O", "Y_CC43": 2264623.4158, "Mot_Directeur": "RANGUEIL (AV DE RANGUEIL)", "Nrivoli": "3105557268", "Y_WGS84": 43.571490456957697, "code_insee": "31555", "X_CC43": 1575826.3672, "M_en_S_16_nov_07": "N", "nom": "IUT RANGUEIL", "X_WGS84": 1.46269876705569, "No": "129", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE RANGUEIL", "num_station": 229 }, "geometry": { "type": "Point", "coordinates": [ 1.462698767055693, 43.571490456934349 ] } }
+,
+{ "type": "Feature", "id": 215, "properties": { "En_service": "O", "Y_CC43": 2264077.2052, "Mot_Directeur": "NARBONNE (RTE DE NARBONNE)", "Nrivoli": "3105556196", "Y_WGS84": 43.566519469302001, "code_insee": "31555", "X_CC43": 1575490.3385, "M_en_S_16_nov_07": "N", "nom": "NARBONNE SAHUQUE", "X_WGS84": 1.45866363267974, "No": "105", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE NARBONNE", "num_station": 233 }, "geometry": { "type": "Point", "coordinates": [ 1.458663632679737, 43.566519469278695 ] } }
+,
+{ "type": "Feature", "id": 216, "properties": { "En_service": "O", "Y_CC43": 2264379.0838, "Mot_Directeur": "NARBONNE (RTE DE NARBONNE)", "Nrivoli": "3105556196", "Y_WGS84": 43.569206209395297, "code_insee": "31555", "X_CC43": 1575308.8803, "M_en_S_16_nov_07": "N", "nom": "NARBONNE MIROUSE", "X_WGS84": 1.45634916182147, "No": "64", "nb_bornettes": 18, "commune": "Toulouse", "street": "RTE DE NARBONNE", "num_station": 232 }, "geometry": { "type": "Point", "coordinates": [ 1.456349161821471, 43.569206209371977 ] } }
+,
+{ "type": "Feature", "id": 217, "properties": { "En_service": "O", "Y_CC43": 2264922.2226, "Mot_Directeur": "GUYOU (RUE EMILE GUYOU)", "Nrivoli": "3105552978", "Y_WGS84": 43.574176586233499, "code_insee": "31555", "X_CC43": 1575808.4458, "M_en_S_16_nov_07": "N", "nom": "METRO RANGUEIL", "X_WGS84": 1.46240924557147, "No": "00", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE EMILE GUYOU", "num_station": 166 }, "geometry": { "type": "Point", "coordinates": [ 1.462409245571472, 43.574176586210186 ] } }
+,
+{ "type": "Feature", "id": 218, "properties": { "En_service": "O", "Y_CC43": 2264156.4726, "Mot_Directeur": "RANGUEIL (AV DE RANGUEIL)", "Nrivoli": "3105557268", "Y_WGS84": 43.5673543907591, "code_insee": "31555", "X_CC43": 1576228.6635, "M_en_S_16_nov_07": "N", "nom": "RANGUEIL TRIPODE B", "X_WGS84": 1.46778361535558, "No": "141", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE RANGUEIL", "num_station": 230 }, "geometry": { "type": "Point", "coordinates": [ 1.467783615355584, 43.56735439073573 ] } }
+,
+{ "type": "Feature", "id": 219, "properties": { "En_service": "O", "Y_CC43": 2271421.2784, "Mot_Directeur": "ALBI (RTE D ALBI)", "Nrivoli": "3105550124", "Y_WGS84": 43.632693012464799, "code_insee": "31555", "X_CC43": 1575987.4064, "M_en_S_16_nov_07": "N", "nom": "ALBI AVRANCHES", "X_WGS84": 1.46315260711255, "No": "78", "nb_bornettes": 18, "commune": "Toulouse", "street": "RTE D ALBI", "num_station": 169 }, "geometry": { "type": "Point", "coordinates": [ 1.463152607112551, 43.632693012441635 ] } }
+,
+{ "type": "Feature", "id": 220, "properties": { "En_service": "O", "Y_CC43": 2271740.8216, "Mot_Directeur": "NICOL (CHE DE NICOL)", "Nrivoli": "3105556262", "Y_WGS84": 43.635584411532399, "code_insee": "31555", "X_CC43": 1576083.193, "M_en_S_16_nov_07": "N", "nom": "CROIX DAURADE BIBLIOTHEQUE", "X_WGS84": 1.46426701173367, "No": "164", "nb_bornettes": 17, "commune": "Toulouse", "street": "CHE DE NICOL", "num_station": 170 }, "geometry": { "type": "Point", "coordinates": [ 1.464267011733671, 43.635584411509257 ] } }
+,
+{ "type": "Feature", "id": 221, "properties": { "En_service": "O", "Y_CC43": 2270928.2948, "Mot_Directeur": "LOUIN (RUE PIERRETTE LOUIN)", "Nrivoli": "3105556921", "Y_WGS84": 43.628099572655699, "code_insee": "31555", "X_CC43": 1575037.575, "M_en_S_16_nov_07": "N", "nom": "LOUIN RAYNAL", "X_WGS84": 1.45149691297202, "No": "4", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE PIERRETTE LOUIN", "num_station": 234 }, "geometry": { "type": "Point", "coordinates": [ 1.451496912972017, 43.6280995726325 ] } }
+,
+{ "type": "Feature", "id": 222, "properties": { "En_service": "O", "Y_CC43": 2271551.0174, "Mot_Directeur": "VERLAINE (RUE PAUL VERLAINE)", "Nrivoli": "3105556656", "Y_WGS84": 43.633489621676603, "code_insee": "31555", "X_CC43": 1573754.6248, "M_en_S_16_nov_07": "N", "nom": "METRO LA VACHE", "X_WGS84": 1.4354588784155, "No": "8", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE PAUL VERLAINE", "num_station": 235 }, "geometry": { "type": "Point", "coordinates": [ 1.435458878415498, 43.63348962165341 ] } }
+,
+{ "type": "Feature", "id": 223, "properties": { "En_service": "O", "Y_CC43": 2267580.6014, "Mot_Directeur": "LEMIRE (RUE DE L ABBE JULES LEMIRE)", "Nrivoli": "3105554821", "Y_WGS84": 43.597313147334198, "code_insee": "31555", "X_CC43": 1571120.4443, "M_en_S_16_nov_07": "N", "nom": "TOEC ABBE LEMIRE", "X_WGS84": 1.40375645140907, "No": "1", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE L ABBE JULES LEMIRE", "num_station": 236 }, "geometry": { "type": "Point", "coordinates": [ 1.403756451409072, 43.597313147310956 ] } }
+,
+{ "type": "Feature", "id": 224, "properties": { "En_service": "O", "Y_CC43": 2265479.7268, "Mot_Directeur": "BUTTE (CHE DE LA BUTTE)", "Nrivoli": "3105551468", "Y_WGS84": 43.579337000892302, "code_insee": "31555", "X_CC43": 1576680.8537, "M_en_S_16_nov_07": "N", "nom": "BUTTE HERBETTES", "X_WGS84": 1.47308252565461, "No": "50", "nb_bornettes": 17, "commune": "Toulouse", "street": "CHE DE LA BUTTE", "num_station": 238 }, "geometry": { "type": "Point", "coordinates": [ 1.473082525654605, 43.579337000868961 ] } }
+,
+{ "type": "Feature", "id": 225, "properties": { "En_service": "O", "Y_CC43": 2265222.9032, "Mot_Directeur": "LESPINET (AV DE LESPINET)", "Nrivoli": "3105555196", "Y_WGS84": 43.576977534927899, "code_insee": "31555", "X_CC43": 1576386.5058, "M_en_S_16_nov_07": "N", "nom": "LESPINET HERBETTES", "X_WGS84": 1.46949669040651, "No": "127", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV DE LESPINET", "num_station": 239 }, "geometry": { "type": "Point", "coordinates": [ 1.469496690406514, 43.576977534904572 ] } }
+,
+{ "type": "Feature", "id": 226, "properties": { "En_service": "O", "Y_CC43": 2269761.3342, "Mot_Directeur": "BLAGNAC (RTE DE BLAGNAC)", "Nrivoli": "3105551180", "Y_WGS84": 43.617008875609997, "code_insee": "31555", "X_CC43": 1571535.8236, "M_en_S_16_nov_07": "N", "nom": "JOB BLAGNAC", "X_WGS84": 1.40838826425003, "No": "112", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE BLAGNAC", "num_station": 240 }, "geometry": { "type": "Point", "coordinates": [ 1.408388264250025, 43.617008875586819 ] } }
+,
+{ "type": "Feature", "id": 227, "properties": { "En_service": "O", "Y_CC43": 2271793.7236, "Mot_Directeur": "RENAN (RUE ERNEST RENAN)", "Nrivoli": "3105553044", "Y_WGS84": 43.635787545152802, "code_insee": "31555", "X_CC43": 1574435.2264, "M_en_S_16_nov_07": "N", "nom": "RENAN VITRY", "X_WGS84": 1.44383583377536, "No": "93", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE ERNEST RENAN", "num_station": 244 }, "geometry": { "type": "Point", "coordinates": [ 1.443835833775361, 43.635787545129666 ] } }
+,
+{ "type": "Feature", "id": 228, "properties": { "En_service": "O", "Y_CC43": 2271471.357, "Mot_Directeur": "UNIS (AV DES ETATS UNIS)", "Nrivoli": "3105553104", "Y_WGS84": 43.632722247362501, "code_insee": "31555", "X_CC43": 1573453.7025, "M_en_S_16_nov_07": "N", "nom": "ETATS UNIS FERRY", "X_WGS84": 1.43174888302605, "No": "96", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV DES ETATS UNIS", "num_station": 243 }, "geometry": { "type": "Point", "coordinates": [ 1.43174888302605, 43.632722247339288 ] } }
+,
+{ "type": "Feature", "id": 229, "properties": { "En_service": "O", "Y_CC43": 2271864.5446, "Mot_Directeur": "LAUNAGUET (RTE DE LAUNAGUET)", "Nrivoli": "3105555096", "Y_WGS84": 43.636359902337801, "code_insee": "31555", "X_CC43": 1574046.1188, "M_en_S_16_nov_07": "N", "nom": "LAUNAGUET AUDIBERT", "X_WGS84": 1.43899830066467, "No": "112", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE LAUNAGUET", "num_station": 247 }, "geometry": { "type": "Point", "coordinates": [ 1.438998300664665, 43.636359902314688 ] } }
+,
+{ "type": "Feature", "id": 230, "properties": { "En_service": "O", "Y_CC43": 2272366.308, "Mot_Directeur": "ROSTAND (RUE EDMOND ROSTAND)", "Nrivoli": "3105552888", "Y_WGS84": 43.641005360251299, "code_insee": "31555", "X_CC43": 1574825.9426, "M_en_S_16_nov_07": "N", "nom": "BOUQUETINS ROSTAND", "X_WGS84": 1.44854596555645, "No": "139", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE EDMOND ROSTAND", "num_station": 248 }, "geometry": { "type": "Point", "coordinates": [ 1.448545965556453, 43.641005360228164 ] } }
+,
+{ "type": "Feature", "id": 231, "properties": { "En_service": "O", "Y_CC43": 2267843.9064, "Mot_Directeur": "BRETAGNE (AV DE GRANDE BRETAGNE)", "Nrivoli": "3105553984", "Y_WGS84": 43.599839618999198, "code_insee": "31555", "X_CC43": 1572041.3944, "M_en_S_16_nov_07": "N", "nom": "GRANDE BRETAGNE BADIOU", "X_WGS84": 1.41509868701061, "No": "103B", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE GRANDE BRETAGNE", "num_station": 245 }, "geometry": { "type": "Point", "coordinates": [ 1.415098687010606, 43.599839618975999 ] } }
+,
+{ "type": "Feature", "id": 232, "properties": { "En_service": "O", "Y_CC43": 2268278.3564, "Mot_Directeur": "WAGNER (BD RICHARD WAGNER)", "Nrivoli": "3105557468", "Y_WGS84": 43.603818918087399, "code_insee": "31555", "X_CC43": 1572451.8793, "M_en_S_16_nov_07": "N", "nom": "WAGNER BRUNHES", "X_WGS84": 1.4200805835929, "No": "29", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD RICHARD WAGNER", "num_station": 246 }, "geometry": { "type": "Point", "coordinates": [ 1.420080583592898, 43.603818918064178 ] } }
+,
+{ "type": "Feature", "id": 233, "properties": { "En_service": "O", "Y_CC43": 2270670.8882, "Mot_Directeur": "CURIE (BD PIERRE ET MARIE CURIE)", "Nrivoli": "3105556880", "Y_WGS84": 43.625623443625599, "code_insee": "31555", "X_CC43": 1574078.7206, "M_en_S_16_nov_07": "N", "nom": "CURIE CAMPISTRON", "X_WGS84": 1.43967698797064, "No": "88", "nb_bornettes": 20, "commune": "Toulouse", "street": "BD PIERRE ET MARIE CURIE", "num_station": 150 }, "geometry": { "type": "Point", "coordinates": [ 1.439676987970636, 43.625623443602443 ] } }
+,
+{ "type": "Feature", "id": 234, "properties": { "En_service": "O", "Y_CC43": 2269381.7512, "Mot_Directeur": "BLUM (AV LEON BLUM)", "Nrivoli": "3105555152", "Y_WGS84": 43.614314223594697, "code_insee": "31555", "X_CC43": 1575838.0306, "M_en_S_16_nov_07": "N", "nom": "JOLIMONT", "X_WGS84": 1.46176460069685, "No": "26", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV LEON BLUM", "num_station": 251 }, "geometry": { "type": "Point", "coordinates": [ 1.46176460069685, 43.614314223571519 ] } }
+,
+{ "type": "Feature", "id": 235, "properties": { "En_service": "O", "Y_CC43": 2271577.355, "Mot_Directeur": "RIMBAUD (RUE ARTHUR RIMBAUD)", "Nrivoli": "3105550546", "Y_WGS84": 43.633754860280199, "code_insee": "31555", "X_CC43": 1573923.1148, "M_en_S_16_nov_07": "N", "nom": "RAIMBAUD COLETTE", "X_WGS84": 1.43754039952603, "No": "4", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE ARTHUR RIMBAUD", "num_station": 242 }, "geometry": { "type": "Point", "coordinates": [ 1.43754039952603, 43.633754860257021 ] } }
+,
+{ "type": "Feature", "id": 236, "properties": { "En_service": "O", "Y_CC43": 2267399.791, "Mot_Directeur": "SAUVEUR (PORT SAINT SAUVEUR)", "Nrivoli": "3105558066", "Y_WGS84": 43.596403203033503, "code_insee": "31555", "X_CC43": 1575384.9535, "M_en_S_16_nov_07": "N", "nom": "PORT SAINT SAUVEUR", "X_WGS84": 1.45660377248074, "No": "22", "nb_bornettes": 20, "commune": "Toulouse", "street": "PORT SAINT SAUVEUR", "num_station": 15 }, "geometry": { "type": "Point", "coordinates": [ 1.456603772480741, 43.596403203010205 ] } }
+,
+{ "type": "Feature", "id": 237, "properties": { "En_service": "O", "Y_CC43": 2267201.7338, "Mot_Directeur": "LOMBEZ (AV DE LOMBEZ)", "Nrivoli": "3105555308", "Y_WGS84": 43.593992367825898, "code_insee": "31555", "X_CC43": 1571640.3637, "M_en_S_16_nov_07": "N", "nom": "LOMBEZ HIPPODROME", "X_WGS84": 1.41028318209757, "No": "93", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DE LOMBEZ", "num_station": 194 }, "geometry": { "type": "Point", "coordinates": [ 1.410283182097565, 43.593992367802613 ] } }
+,
+{ "type": "Feature", "id": 238, "properties": { "En_service": "O", "Y_CC43": 2271226.072, "Mot_Directeur": "UNIS (AV DES ETATS UNIS)", "Nrivoli": "3105553104", "Y_WGS84": 43.630522224399499, "code_insee": "31555", "X_CC43": 1573497.3559, "M_en_S_16_nov_07": "N", "nom": "ETATS UNIS  CHARLAS", "X_WGS84": 1.43234645778436, "No": "75", "nb_bornettes": 18, "commune": "Toulouse", "street": "AV DES ETATS UNIS", "num_station": 253 }, "geometry": { "type": "Point", "coordinates": [ 1.432346457784362, 43.630522224376335 ] } }
+,
+{ "type": "Feature", "id": 239, "properties": { "En_service": "O", "Y_CC43": 2263878.0054, "Mot_Directeur": "ROCHE (AV DU COLONEL ROCHE)", "Nrivoli": "3105552202", "Y_WGS84": 43.564984890056103, "code_insee": "31555", "X_CC43": 1577063.312, "M_en_S_16_nov_07": "N", "nom": "BELIN E.N.A.C.", "X_WGS84": 1.47817624528314, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DU COLONEL ROCHE", "num_station": 223 }, "geometry": { "type": "Point", "coordinates": [ 1.478176245283138, 43.564984890032711 ] } }
+,
+{ "type": "Feature", "id": 240, "properties": { "En_service": "O", "Y_CC43": 2264048.1538, "Mot_Directeur": "BELIN (AV EDOUARD BELIN)", "Nrivoli": "3105552894", "Y_WGS84": 43.566478297702602, "code_insee": "31555", "X_CC43": 1576831.4839, "M_en_S_16_nov_07": "N", "nom": "BELIN SUP AERO", "X_WGS84": 1.47526886930367, "No": "10", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV EDOUARD BELIN", "num_station": 224 }, "geometry": { "type": "Point", "coordinates": [ 1.475268869303665, 43.566478297679247 ] } }
+,
+{ "type": "Feature", "id": 241, "properties": { "En_service": "O", "Y_CC43": 2264465.499, "Mot_Directeur": "BELIN (AV EDOUARD BELIN)", "Nrivoli": "3105552894", "Y_WGS84": 43.570210817468997, "code_insee": "31555", "X_CC43": 1576688.623, "M_en_S_16_nov_07": "N", "nom": "BELIN ONERA", "X_WGS84": 1.47340687834623, "No": "4", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV EDOUARD BELIN", "num_station": 225 }, "geometry": { "type": "Point", "coordinates": [ 1.473406878346226, 43.570210817445677 ] } }
+,
+{ "type": "Feature", "id": 242, "properties": { "En_service": "O", "Y_CC43": 2263574.6252, "Mot_Directeur": "BELIN (AV EDOUARD BELIN)", "Nrivoli": "3105552894", "Y_WGS84": 43.5622903583441, "code_insee": "31555", "X_CC43": 1577282.6339, "M_en_S_16_nov_07": "N", "nom": "BELIN C.N.R.S.", "X_WGS84": 1.48095852118614, "No": "16", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV EDOUARD BELIN", "num_station": 237 }, "geometry": { "type": "Point", "coordinates": [ 1.480958521186139, 43.562290358320737 ] } }
+,
+{ "type": "Feature", "id": 243, "properties": { "En_service": "O", "Y_CC43": 2272041.8066, "Mot_Directeur": "ALBI (RTE D ALBI)", "Nrivoli": "3105550124", "Y_WGS84": 43.638304063166103, "code_insee": "31555", "X_CC43": 1576150.2446, "M_en_S_16_nov_07": "N", "nom": "MAIRIE CROIX DAURADE", "X_WGS84": 1.46502966620833, "No": "159", "nb_bornettes": 18, "commune": "Toulouse", "street": "RTE D ALBI", "num_station": 249 }, "geometry": { "type": "Point", "coordinates": [ 1.465029666208326, 43.638304063142982 ] } }
+,
+{ "type": "Feature", "id": 244, "properties": { "En_service": "O", "Y_CC43": 2263669.5456, "Mot_Directeur": "ROCHE (AV DU COLONEL ROCHE)", "Nrivoli": "3105552202", "Y_WGS84": 43.563076672407199, "code_insee": "31555", "X_CC43": 1576866.0135, "M_en_S_16_nov_07": "N", "nom": "CESR", "X_WGS84": 1.47578125220149, "No": "11", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DU COLONEL ROCHE", "num_station": 222 }, "geometry": { "type": "Point", "coordinates": [ 1.475781252201482, 43.563076672383907 ] } }
+,
+{ "type": "Feature", "id": 245, "properties": { "En_service": "O", "Y_CC43": 2270801.8744, "Mot_Directeur": "NEGRENEYS (RUE DE NEGRENEYS)", "Nrivoli": "3105556236", "Y_WGS84": 43.626860828303101, "code_insee": "31555", "X_CC43": 1574429.856, "M_en_S_16_nov_07": "N", "nom": "NEGRENEYS", "X_WGS84": 1.44399694173504, "No": "161", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DE NEGRENEYS", "num_station": 252 }, "geometry": { "type": "Point", "coordinates": [ 1.443996941735039, 43.626860828279938 ] } }
+,
+{ "type": "Feature", "id": 246, "properties": { "En_service": "O", "Y_CC43": 2265082.8824, "Mot_Directeur": "ESPAGNE (RTE D ESPAGNE)", "Nrivoli": "3105553064", "Y_WGS84": 43.575108621757998, "code_insee": "31555", "X_CC43": 1572727.6667, "M_en_S_16_nov_07": "N", "nom": "ESPAGNE CHARPENTIER", "X_WGS84": 1.42423826880092, "No": "57", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE D ESPAGNE", "num_station": 241 }, "geometry": { "type": "Point", "coordinates": [ 1.424238268800916, 43.575108621734643 ] } }
+,
+{ "type": "Feature", "id": 247, "properties": { "En_service": "O", "Y_CC43": 2267092.2652, "Mot_Directeur": "CUGNAUX (RUE DE CUGNAUX)", "Nrivoli": "3105552424", "Y_WGS84": 43.593200579553503, "code_insee": "31555", "X_CC43": 1572780.67, "M_en_S_16_nov_07": "N", "nom": "CUGNAUX GRAVETTE", "X_WGS84": 1.42442781968744, "No": "66", "nb_bornettes": 18, "commune": "Toulouse", "street": "RUE DE CUGNAUX", "num_station": 183 }, "geometry": { "type": "Point", "coordinates": [ 1.424427819687436, 43.593200579530254 ] } }
+,
+{ "type": "Feature", "id": 248, "properties": { "En_service": "N", "Y_CC43": 2267428.0738, "Mot_Directeur": "MAILLART (RUE ELLA MAILLART)", "Nrivoli": "3105552941", "Y_WGS84": 43.596029107549001, "code_insee": "31555", "X_CC43": 1571639.516, "M_en_S_16_nov_07": "N", "nom": "ELLA MAILLART - ROQUEMAUREL", "X_WGS84": 1.41021964501886, "No": "8", "nb_bornettes": 17, "commune": "Toulouse", "street": "RUE ELLA MAILLART", "num_station": 9 }, "geometry": { "type": "Point", "coordinates": [ 1.410219645018863, 43.596029107525737 ] } }
+,
+{ "type": "Feature", "id": 249, "properties": { "En_service": "O", "Y_CC43": 2263035.946, "Mot_Directeur": "NARBONNE (RTE DE NARBONNE)", "Nrivoli": "3105556196", "Y_WGS84": 43.5572334844762, "code_insee": "31555", "X_CC43": 1576004.6943, "M_en_S_16_nov_07": "N", "nom": "NARBONNE IUFM", "X_WGS84": 1.46526500951259, "No": "217", "nb_bornettes": 20, "commune": "Toulouse", "street": "RTE DE NARBONNE", "num_station": 231 }, "geometry": { "type": "Point", "coordinates": [ 1.465265009512586, 43.557233484452844 ] } }
+,
+{ "type": "Feature", "id": 250, "properties": { "En_service": "N", "Y_CC43": 2267090.9332, "Mot_Directeur": "NOVEMBRE 1918 (RUE DU ONZE NOVEMBRE 1918)", "Nrivoli": "3105556383", "Y_WGS84": 43.5930535519731, "code_insee": "31555", "X_CC43": 1571983.1593, "M_en_S_16_nov_07": "N", "nom": "11 NOVEMBRE 1918", "X_WGS84": 1.41455354456212, "No": "00", "nb_bornettes": 20, "commune": "Toulouse", "street": "RUE DU ONZE NOVEMBRE 1918", "num_station": 250 }, "geometry": { "type": "Point", "coordinates": [ 1.41455354456212, 43.593053551949872 ] } }
+,
+{ "type": "Feature", "id": 251, "properties": { "En_service": "N", "Y_CC43": 2269144.8706, "Mot_Directeur": "BLAGNAC (RTE DE BLAGNAC)", "Nrivoli": "3105551180", "Y_WGS84": 43.611543736642403, "code_insee": "31555", "X_CC43": 1572020.6891, "M_en_S_16_nov_07": "N", "nom": "BERNIES POSTE", "X_WGS84": 1.41453821966138, "No": "15", "nb_bornettes": 18, "commune": "Toulouse", "street": "RTE DE BLAGNAC", "num_station": 131 }, "geometry": { "type": "Point", "coordinates": [ 1.414538219661378, 43.611543736619154 ] } }
+,
+{ "type": "Feature", "id": 252, "properties": { "En_service": "O", "Y_CC43": 2269867.1148, "Mot_Directeur": "MINIMES (AV DES MINIMES)", "Nrivoli": "3105555956", "Y_WGS84": 43.618347631501301, "code_insee": "31555", "X_CC43": 1573824.7109, "M_en_S_16_nov_07": "N", "nom": "MINIMES - MARCHE AU COCHONS", "X_WGS84": 1.43671552907841, "No": "22", "nb_bornettes": 20, "commune": "Toulouse", "street": "AV DES MINIMES", "num_station": 133 }, "geometry": { "type": "Point", "coordinates": [ 1.436715529078408, 43.618347631478095 ] } }
+
+]
+};
+
+var cycles2 = L.geoJson(cycles).addTo(map);
+
+cycles2.on('click', function (e) {
+  console.log(e.layer.feature.properties.num_station);
+  var xhr = new XMLHttpRequest();
+  // URL appelée sur http://www.velo.toulouse.fr/Les-stations/Trouver-une-station
+  // Retourne un résultat de type XML comme : 
+  //<?xml version="1.0" encoding="utf-8"?>
+  //<station>
+  //  <available>5</available>
+  //  <free>19</free>
+  //  <total>25</total>
+  //  <ticket>1</ticket>
+  //  <open>1</open>
+  //  <updated>1385328978</updated>
+  //  <connected>1</connected>
+  //</station> 
+  var url = "http://www.velo.toulouse.fr/service/stationdetails/toulouse/" + e.layer.feature.properties.num_station;
+  var yql = "select * from xml where url = '" + url + "'";
+  var yqlurl = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(yql) + '&format=json';
+  xhr.open("GET", yqlurl);
+            xhr.onload = function (data) {
+                var response = JSON.parse(data.currentTarget.response);
+                console.log(response);
+                L.popup()
+                 .setLatLng(e.latlng)
+                 .setContent("Nb de vélos dispo : " + response.query.results.station.free + '<br>Nb de vélos au total : ' + response.query.results.station.total)
+                 .openOn(map);
+            };
+  xhr.send();
+  L.popup()
+	 .setLatLng(e.latlng)
+	 .setContent(e.layer.feature.properties.nom)
+	 .openOn(map);
+});
+
+</script>
+</body>
+
+</html>
