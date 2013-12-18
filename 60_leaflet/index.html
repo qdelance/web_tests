@@ -790,6 +790,10 @@ var cycles = {
 ]
 };
 
+// Possible de charger un JSON directement dans la lib
+// Investiguer l'utilisation de jQuery.getJSON() pour faire des boucles sur le contenu de grosses structures JSON de ce type
+// cf http://makina-corpus.com/blog/metier/dealing-with-cross-domain-issues
+// cf http://api.jquery.com/jQuery.getJSON/
 var cycles2 = L.geoJson(cycles).addTo(map);
 
 cycles2.on('click', function (e) {
@@ -808,6 +812,7 @@ cycles2.on('click', function (e) {
   //  <connected>1</connected>
   //</station> 
   var url = "http://www.velo.toulouse.fr/service/stationdetails/toulouse/" + e.layer.feature.properties.num_station;
+  // Have a look here : http://makina-corpus.com/blog/metier/dealing-with-cross-domain-issues
   var yql = "select * from xml where url = '" + url + "'";
   var yqlurl = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(yql) + '&format=json';
   xhr.open("GET", yqlurl);
