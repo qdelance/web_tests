@@ -48,14 +48,14 @@ list-style-type: none;
 TODO :
 pb des 1px entre FF et Chrome (mineur)
 mise en forme des éléments sur le focus
-vrai reset css (bordures bleues sous IE : c'était ca...)
+vrai reset css (bordures bleues sous IE autour des images : c'était ca...)
 
 Arret : environ 6-7 h
 
 ===================
 CFengine : 
-mettre des line-height sur les a lorsqu'on fait un menu afin que le texte soit centré verticalement (plutôt que de jouer avec height et par exemple margin-top)
-plutôt faire porter la mise en forme des éléments de menu par le a que le ul.li car ainsi - par exemple - c'est tout le rectangle arrondi qui est cliquable (puisque c'est un a et pas un li) ; possible aussi d'envisager de changer la couleur sur un :hover de cette manière
+Mettre des line-height sur les a lorsqu'on fait un menu afin que le texte soit centré verticalement (plutôt que de jouer avec height et par exemple margin-top)
+Faire porter la mise en forme des éléments de menu par le a que le ul.li car ainsi - par exemple - c'est tout le rectangle arrondi qui est cliquable (puisque c'est un a et pas un li) ; possible aussi d'envisager de changer la couleur sur un :hover de cette manière
 
 Pour faire apparaître la box-shadow, qui était dans un premier temps couverte par le background de l'élément en dessous, il a fallu utiliser z-index.
 Attention, z-index ne fonctionne que sur un élément avec position: relative
@@ -82,12 +82,11 @@ Polices : http://www.alsacreations.com/article/lire/631-quelles-polices-pour-un-
 ======
 Lecture livre "intégration web" de Corinne Schillinger
 
-Notion d'outline pour les border sans impacter width
+Notion d'outline comme border mais sans impacter width
 Cacher des éléments avec clip: rect() 
 Attributs data-* pour les exploiter en javascript (cas d'une dic image avec plusieurs noms de fichiers stockés dans data-small et data-large page 88 et 159)
 Utilisation d'ARIA
 Utilisation de Schema.org
 Gestion du mode sans JS : utilisation d'une classe "no-js" transformée en "js" via un appel JS (dans le header => éviter le reflow qu'on aurait si on le chargeait à la fin de la page ?), page 115
 height: auto qui ne marche pas ?
-possible de sérialiser les images pour optimiser les perfs
-gestion du mode sans JS : 
+possible de sérialiser les images pour optimiser les perfs en les mettant inline
