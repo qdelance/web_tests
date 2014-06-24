@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <style>
+  #map { 
+    border: solid 1px black;
+    height: 650px;
+    width: 80%;
+  }
+  </style>
+  </head>
+
+  <body>
+  <div id="map"></div>
+  <script>
+var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    		'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    		'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
+
+var defaultLayer = L.tileLayer(mbUrl, {id: 'qdelance.ijcgd3fk', attribution: mbAttr}),
+    terrainLayer = L.tileLayer(mbUrl, {id: 'qdelance.ijcm327a', attribution: mbAttr});
+
+var map = L.map('map', {
+    center: [48.8588589, 2.3470599],
+    zoom: 4,
+    layers: [defaultLayer, terrainLayer]
+});
+
+// Smile
+var smile = L.marker([48.8901225, 2.2802354]).addTo(map);
+smile.bindPopup('Smile<br><a href="http://www.smile.fr">Website</a>');
+
+var bbs = L.marker([-22.269703, 166.463458]).addTo(map);
+bbs.bindPopup('BBS');
+
+var cdcData = L.marker([49.1648111, 16.6288922]).addTo(map);
+cdcData.bindPopup('CDC');
+
+var baseMaps = {
+    "Par défaut": defaultLayer,
+    "Relief": terrainLayer
+};
+
+L.control.layers(baseMaps).addTo(map);
+
+  </script>
+  </body>
+
+</html>
