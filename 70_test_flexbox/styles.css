@@ -1,0 +1,24 @@
+.container {
+    /* height: 500px; */
+    display: flex;
+    flex-direction: row; /* column */
+    background-color: #cccccc;
+    justify-content: space-between; /* flex-start|end, center, space-* */
+    align-items: flex-end;/* alignement axe secondaire */
+}
+
+div > div {
+    padding: 10px;
+    margin: 10px;
+    background-color: #aaaaaa;
+    flex: 1;
+    text-align: center;
+}
+
+.oignon {
+    line-height: 5;
+}
+
+.tomate {
+    align-self: flex-start;
+}
