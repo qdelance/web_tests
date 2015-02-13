@@ -42,7 +42,7 @@ body {
 .news {
 	background-color: orange;
 	height: 100px;
-	margin: 0px 0 20px 0;
+	margin: 20px 0 20px 0;
 }
 
 #aside {
@@ -53,7 +53,15 @@ body {
 .block {
 	background-color: #dddddd;
 	height: 100px;
-	margin: 0px 0 20px 0;
+	margin: 20px 0 20px 0;
+}
+
+div.last {
+    margin-bottom: 0px;
+}
+
+div.first {
+    margin-top: 0px;
 }
 
 #navigation {
@@ -91,15 +99,15 @@ body {
 
 #pager {
 	text-align: center;
+    margin: 20px 0 0 0;
 }
 
 #pager a {
-	background-color: green;
-	text-decoration: none;
-	/* font-size: 20px; */
-	padding: 3px 3px 3px 3px;
-	margin: 2px;
-	border-radius: 1px 1px 1px 1px;
+    background-color: #008000;
+    text-decoration: none;
+    padding: 2px 12px;
+    margin: 5px;
+    border-radius: 6px;
 }	
 
 /* smartphones */
