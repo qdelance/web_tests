@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+    <style>
+        html, body, #map {
+            height: 100%;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+
+    <!-- Does not work in Chrome (CORS for Ajax request) -->
+    <!-- Simple Ajax loading with GeoJSON files without properties -->
+
+    map = new L.Map('map');
+
+    // create the tile layer with correct attribution
+    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 19, attribution: osmAttrib});
+
+    // start the map in Venise
+    map.setView(new L.LatLng(45.4363, 12.3388), 14);
+    map.addLayer(osm);
+
+    var day1Style = {
+        "color": "red",
+        "weight": 5,
+        "opacity": 0.7
+    };
+
+    var overlayControl = L.control.layers();
+
+    var day1 = new L.geoJson();
+
+    overlayControl.addOverlay(day1, "Day 1");
+    day1.bindPopup("Day 1 path walk");
+    day1.addTo(map);
+
+    $.ajax({
+        dataType: "json",
+        url: "paths/day1.geojson",
+        success: function(data) {
+            $(data.features).each(function(key, data) {
+                day1.addData(data);
+                day1.setStyle({
+                    "color": "red",
+                    "weight": 5,
+                    "opacity": 0.7
+                });
+            });
+        }
+    }).error(function() {});
+
+    var day2 = new L.geoJson();
+    overlayControl.addOverlay(day2, "Day 2");
+    day2.bindPopup("Day 2 path walk");
+    day2.addTo(map);
+
+    $.ajax({
+        dataType: "json",
+        url: "paths/day2.geojson",
+        success: function(data) {
+            $(data.features).each(function(key, data) {
+                day2.addData(data);
+            });
+        }
+    }).error(function() {});
+
+    overlayControl.addTo(map);
+
+</script>
+</body>
+
+</html>
