@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Tests SVG</title>
+		<meta charset="utf-8"/>
+		<link href="styles.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="test.js"></script>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+
+	<h1>Tests SVG</h1>
+
+	<p>
+	Use mouse over shapes and open JS console to have a look at the result
+	</p>
+
+	<svg id="svg" width="200" height="250" version="1.1" style="border: 1px solid black" xmlns="http://www.w3.org/2000/svg">
+
+		<rect id="rect1" x="10" y="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5"/>
+		<rect id="rect2" x="60" y="10" rx="10" ry="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5"/>
+
+		<circle id="circle1" cx="25" cy="75" r="20" stroke="red" fill="transparent" stroke-width="5"/>
+		<ellipse id="elipse1" cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5"/>
+
+		<line id="line1" x1="10" x2="50" y1="110" y2="150" stroke="orange" fill="transparent" stroke-width="5"/>
+		<polyline id="polyline1" points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
+				  stroke="orange" fill="transparent" stroke-width="5"/>
+
+		<polygon id="polygon1" points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180"
+				 stroke="green" fill="transparent" stroke-width="5"/>
+
+		<path id="path1" d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5"/>
+	</svg>
+
+	<p>
+	<a href="javascript:moveRectDown()">Move rectangles down</a> | <a href="javascript:fillRect()">Fill rectangles</a>
+	</p>
+<script type="text/javascript">
+	//<![CDATA[
+///document.write("Hello World!")
+	var path1 = document.getElementById("path1");
+	path1.onclick = function (e) {
+		console.log('path1')
+	};
+
+	var rect1 = document.getElementById("rect1");
+	rect1.onclick = function (e) {
+		console.log('rect1')
+	};
+
+	var rect2 = document.getElementById("rect2");
+	rect1.onclick = function (e) {
+		console.log('rect2')
+	};
+
+	function moveRectDown() {
+		console.log('Move rect down');
+		var rectList = document.querySelectorAll("rect");
+		for (rect of rectList) {
+			console.log('Moving rect "' + rect.id + '"');
+			console.log(rect);
+			rect.setAttribute('y', (parseInt(rect.getAttribute('y')) + 5));
+
+			rect.setAttribute('height', parseInt(rect.getAttribute('height')) + 5);
+		}
+	}
+
+	function fillRect() {
+		console.log('Fill rect');
+		var rectList = document.querySelectorAll("rect");
+		for (rect of rectList) {
+			console.log('Styling rect "' + rect.id + '"');
+			rect.setAttribute('style', 'stroke:#009900; stroke-width: 3;stroke-dasharray: 10 5;');
+		}
+	}
+	//]]>
+</script> 
+		
+
+		
+	</body>
+</html>
