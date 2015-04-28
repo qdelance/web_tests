@@ -58,7 +58,8 @@
 	function moveRectDown() {
 		console.log('Move rect down');
 		var rectList = document.querySelectorAll("rect");
-		for (rect of rectList) {
+		for (var i = 0; i < rectList.length; i++) {
+            var rect = rectList[i];
 			console.log('Moving rect "' + rect.id + '"');
 			console.log(rect);
 			rect.setAttribute('y', (parseInt(rect.getAttribute('y')) + 5));
@@ -70,7 +71,8 @@
 	function fillRect() {
 		console.log('Fill rect');
 		var rectList = document.querySelectorAll("rect");
-		for (rect of rectList) {
+        for (var i = 0; i < rectList.length; i++) {
+            var rect = rectList[i];
 			console.log('Styling rect "' + rect.id + '"');
 			rect.setAttribute('style', 'stroke:#009900; stroke-width: 3;stroke-dasharray: 10 5;');
 		}
