@@ -6,45 +6,97 @@
 // Default coordinates of added elements
 var global_x = 15;
 var global_y = 15;
+var id = 1;
+// id => Host instance
+var hostList = {};
 
-function addHost(hostname) {
+// Prototype
+function Host (id, name, x, y) {
 
-    console.log('Adding hostname "' + hostname + '"');
+    this.id = id;
+    this.name = name;
+    this.x = x;
+    this.y = y;
 
-    var rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute('id', hostname);
-    rect.setAttribute('x', global_x);
+    console.log('Creating host "' + name + '"');
+    this.rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.rect.setAttribute('id', id);
+    this.rect.setAttribute('x', global_x);
     global_x = global_x + 5;
-    rect.setAttribute('y', global_y);
+    this.rect.setAttribute('y', global_y);
     global_y = global_y + 5;
-    rect.setAttribute('height', 50);
-    rect.setAttribute('width', 50);
-    rect.setAttribute('rx', 5);
-    rect.setAttribute('ry', 5);
-    rect.setAttribute('stroke', 'black');
-    rect.setAttribute('fill', 'transparent');
+    this.rect.setAttribute('height', y);
+    this.rect.setAttribute('width', x);
+    this.rect.setAttribute('rx', 5);
+    this.rect.setAttribute('ry', 5);
+    this.rect.setAttribute('stroke', 'black');
+    this.rect.setAttribute('fill', 'transparent');
     // for DND, see below
-    rect.setAttribute('transform', "matrix(1 0 0 1 0 0)");
-    rect.setAttribute('class', 'draggable');
-    rect.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    this.rect.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+    this.rect.setAttribute('class', 'draggable');
+    this.rect.setAttributeNS(null, "onmousedown", "selectElement(evt)");
 
 
     var element = document.getElementById("svg");
-    element.appendChild(rect);
+    element.appendChild(this.rect);
 
-    rect.setAttribute('stroke-width', 2);
+    this.rect.setAttribute('stroke-width', 2);
+}
+
+// status = UP = 1
+// status = DOWN = 2
+Host.prototype.setOwnStatus = function (status) {
+    if (status == 1) {
+        this.rect.setAttribute('fill', 'green');
+    } else if (status == 2) {
+        this.rect.setAttribute('fill', 'red');
+    } else {
+        this.rect.setAttribute('fill', 'transparent');
+    }
+
+};
+
+function addHost(id, hostname) {
+
+    console.log('Adding host "' + hostname + '" with id "' + id + "'");
+
+    var host = new Host(id, hostname, 88, 88);
+    hostList[id] = host;
 
 }
 
-function removeHost(hostname) {
+function setOwnStatusUp(id) {
+    console.log('Set up for id "' + id + "'");
 
-    console.log('Removing hostname "' + hostname + '"');
-
-    var element = document.getElementById(hostname);
-    if (element) {
-        element.removeChild(element);
+    var host = hostList[id];
+    if (host) {
+        host.setOwnStatus(1);
     } else {
-        console.error('No element found with name "' + hostname + '"');
+        console.error('No host found for id "' + id + '"');
+    }
+}
+
+function setOwnStatusDown(id) {
+    console.log('Set down for id "' + id + "'");
+
+    var host = hostList[id];
+    if (host) {
+        host.setOwnStatus(2);
+    } else {
+        console.error('No host found for id "' + id + '"');
+    }
+}
+
+function removeHost(id) {
+
+    console.log('Removing host with id "' + id + '"');
+
+    var element = document.getElementById(id);
+    if (element) {
+        // DOM limitation, cannot remove an element directly without refering to its parent
+        element.parentNode.removeChild(element);
+    } else {
+        console.error('No element found with id "' + id + '"');
     }
 
 }
