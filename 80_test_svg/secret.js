@@ -55,7 +55,7 @@ function Host (id, name, width, height) {
     this.ownRect.setAttribute('id', id + "-own-rect");
     // Upper right
     this.ownRect.setAttribute('x', this.x + this.width - 15);
-    this.ownRect.setAttribute('y', this.y + 15 -10);
+    this.ownRect.setAttribute('y', this.y + 15 - 10);
     this.ownRect.setAttribute('height', 10);
     this.ownRect.setAttribute('width', 10);
     this.ownRect.setAttribute('rx', 2);
@@ -126,11 +126,11 @@ Host.prototype.setInheritedStatus = function (status) {
 
 };
 
-function addHost(id, hostname) {
+function addHost(id, hostname, width, height) {
 
     console.log('Adding host "' + hostname + '" with id "' + id + "'");
 
-    var host = new Host(id, hostname, 88, 88);
+    var host = new Host(id, hostname, width, height);
     hostList[id] = host;
 
 }
