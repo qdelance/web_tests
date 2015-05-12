@@ -4,8 +4,8 @@
 "use strict";
 
 // Default coordinates of added elements
-var global_x = 15;
-var global_y = 15;
+var global_x = 60;
+var global_y = 60;
 var id = 1;
 // id => Host instance
 var hostList = {};
@@ -22,7 +22,7 @@ function Host (id, name, width, height) {
     global_x = global_x + 5;
     global_y = global_y + 5;
 
-    console.log('Creating Ehost "' + name + '"');
+    console.log('Creating host "' + name + '"');
     this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     this.g.setAttribute('id', id);
     this.g.setAttribute('class', 'draggable');
@@ -41,9 +41,11 @@ function Host (id, name, width, height) {
     this.rect.setAttribute('width', this.width);
     this.rect.setAttribute('rx', 5);
     this.rect.setAttribute('ry', 5);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
     this.rect.setAttribute('stroke-width', 2);
     this.rect.setAttribute('stroke', 'black');
     this.rect.setAttribute('fill-opacity', '0.5');
+    // Use transparent instead of none, so that inner rectangle gets draggable...
     this.rect.setAttribute('fill', 'transparent');
 
     ///////////////////////
@@ -60,24 +62,38 @@ function Host (id, name, width, height) {
     this.ownRect.setAttribute('ry', 2);
     this.ownRect.setAttribute('stroke-width', 2);
     this.ownRect.setAttribute('stroke', 'black');
-    this.ownRect.setAttribute('fill-opacity', '0.8');
+    this.ownRect.setAttribute('fill-opacity', '0.5');
     this.ownRect.setAttribute('fill', 'transparent');
+
+    ///////////////////////
+    // Item icon
+    ///////////////////////
+    this.image = document.createElementNS("http://www.w3.org/2000/svg", "image");
+    this.image.setAttribute('id', id + "-image");
+    // FIXME remove magic numbers...
+    this.image.setAttribute('x', this.x + (this.width / 2) - 36/2);
+    this.image.setAttribute('y', this.y + (this.height / 2) - 36/2);
+    this.image.setAttribute('height', 36);
+    this.image.setAttribute('width', 36);
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
 
     ///////////////////////
     // Text
     ///////////////////////
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
     this.text.setAttribute('x', this.x + (this.width / 2));
-    this.text.setAttribute('y', this.y + (this.height / 2));
+    this.text.setAttribute('y', this.y + this.height - this.text.clientHeight - 5);
     // Magic happens !!!, allow easy centering of the text
     this.text.setAttribute('text-anchor', 'middle');
-    this.text.innerHTML = this.name;
+
 
     var element = document.getElementById("svg");
     element.appendChild(this.g);
     this.g.appendChild(this.rect);
     this.g.appendChild(this.ownRect);
+    this.g.appendChild(this.image);
     this.g.appendChild(this.text);
 }
 
