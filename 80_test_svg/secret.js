@@ -295,16 +295,15 @@ function Element(id, name, x, y, width, height) {
 }
 Element.prototype.constructor = Element;
 
-// status = OK = 1
-// status = WARNING = 2
-// status = CRITICAL = 3
 Element.prototype.setInheritedStatus = function (status) {
-    if (status == 1) {
+    if (status == 0) {
         this.rect.setAttribute('fill', 'green');
+    } else if (status == 1) {
+        this.rect.setAttribute('fill', 'yellow');
     } else if (status == 2) {
-        this.rect.setAttribute('fill', 'orange');
-    } else if (status == 3) {
         this.rect.setAttribute('fill', 'red');
+    } else if (status == 3) {
+        this.rect.setAttribute('fill', 'blue');
     } else {
         this.rect.setAttribute('fill', 'transparent');
     }
@@ -331,7 +330,7 @@ function ElementWithOwnStatus(id, name, x, y, width, height) {
     this.ownRect.setAttribute('ry', 2);
     this.ownRect.setAttribute('stroke-width', 2);
     this.ownRect.setAttribute('stroke', 'black');
-    this.ownRect.setAttribute('fill-opacity', '0.5');
+    this.ownRect.setAttribute('fill-opacity', '1');
     this.ownRect.setAttribute('fill', 'transparent');
 
     this.g.appendChild(this.ownRect);
@@ -340,17 +339,20 @@ function ElementWithOwnStatus(id, name, x, y, width, height) {
 ElementWithOwnStatus.prototype = Object.create(Element.prototype);
 ElementWithOwnStatus.prototype.constructor = ElementWithOwnStatus;
 
-// status = UP = 1
-// status = DOWN = 2
 ElementWithOwnStatus.prototype.setOwnStatus = function (status) {
-    if (status == 1) {
+    if (status == 0) {
         this.ownRect.setAttribute('fill', 'green');
+    } else if (status == 1) {
+        this.ownRect.setAttribute('fill', 'yellow');
     } else if (status == 2) {
         this.ownRect.setAttribute('fill', 'red');
+    } else if (status == 3) {
+        this.ownRect.setAttribute('fill', 'blue');
+    } else if (status == 4) {
+        this.ownRect.setAttribute('fill', '#00FF00');
     } else {
         this.ownRect.setAttribute('fill', 'transparent');
     }
-
 };
 
 function Host(id, name, x, y, width, height) {
@@ -392,7 +394,7 @@ function setOwnStatusUp(id) {
     var element = elementList[id];
     if (element) {
         if (typeof element.setOwnStatus == 'function') {
-            element.setOwnStatus(1);
+            element.setOwnStatus(0);
         } else {
             console.warn('This element has no own status');
         }
