@@ -3,6 +3,172 @@
  */
 "use strict";
 
+// FIXME we should unify Triangle and Custom (all SVG polygon)
+// FIXME we could also probably refactor all shapes (at least for the text position which is the same)
+function Custom(id, name, x, y, width, height, color, points) {
+
+    this.id = id;
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    // x, y returned by Map server (we need to calculate "real" x, y for SVG, see below
+    this.x = x;
+    this.y = y;
+
+    this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    this.g.setAttribute('id', id);
+    this.g.setAttribute('class', 'draggable');
+    this.g.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    // for DND, see below
+    this.g.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+
+    ///////////////////////
+    // Main inherited rectangle
+    ///////////////////////
+    this.polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    this.polygon.setAttribute('id', id + "-rect");
+
+    // We convert the Map server "points" attribute to a SVG compliant STR
+    var pointsStr = points.replace(/\//g, ' ');
+
+    this.polygon.setAttribute('points', pointsStr);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
+    this.polygon.setAttribute('stroke-width', 2);
+    this.polygon.setAttribute('stroke', 'black');
+    this.polygon.setAttribute('fill-opacity', '0.5');
+    // Use transparent instead of none, so that inner rectangle gets draggable...
+    this.polygon.setAttribute('fill', color);
+
+    ///////////////////////
+    // Text
+    ///////////////////////
+    this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
+    this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
+    this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
+    // Magic happens !!!, allow easy centering of the text
+    this.text.setAttribute('text-anchor', 'middle');
+
+
+    var element = document.getElementById("svg");
+    element.appendChild(this.g);
+    this.g.appendChild(this.polygon);
+    this.g.appendChild(this.text);
+}
+Custom.prototype.constructor = Custom;
+
+function Triangle(id, name, x, y, width, height, color) {
+
+    this.id = id;
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    // x, y returned by Map server (we need to calculate "real" x, y for SVG, see below
+    this.x = x;
+    this.y = y;
+
+    this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    this.g.setAttribute('id', id);
+    this.g.setAttribute('class', 'draggable');
+    this.g.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    // for DND, see below
+    this.g.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+
+    ///////////////////////
+    // Main inherited rectangle
+    ///////////////////////
+    this.polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    this.polygon.setAttribute('id', id + "-rect");
+    // We need to define 3 points
+    // Top
+    var p1x = x;
+    var p1y = y - height/2;
+    // Lower right
+    var p2x = x + width/2;
+    var p2y = y + height/2;
+    // Lower left
+    var p3x = x - width/2;
+    var p3y = y + height/2;
+    this.polygon.setAttribute('points', p1x + ',' + p1y + ' ' + p2x + ',' + p2y + ' ' + p3x + ',' + p3y);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
+    this.polygon.setAttribute('stroke-width', 2);
+    this.polygon.setAttribute('stroke', 'black');
+    this.polygon.setAttribute('fill-opacity', '0.5');
+    // Use transparent instead of none, so that inner rectangle gets draggable...
+    this.polygon.setAttribute('fill', color);
+
+    ///////////////////////
+    // Text
+    ///////////////////////
+    this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
+    this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
+    this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
+    // Magic happens !!!, allow easy centering of the text
+    this.text.setAttribute('text-anchor', 'middle');
+
+
+    var element = document.getElementById("svg");
+    element.appendChild(this.g);
+    this.g.appendChild(this.polygon);
+    this.g.appendChild(this.text);
+}
+Triangle.prototype.constructor = Triangle;
+
+function Ellipse(id, name, x, y, width, height, color) {
+
+    this.id = id;
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    // x, y returned by Map server (we need to calculate "real" x, y for SVG, see below
+    this.x = x;
+    this.y = y;
+
+    this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    this.g.setAttribute('id', id);
+    this.g.setAttribute('class', 'draggable');
+    this.g.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    // for DND, see below
+    this.g.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+
+    ///////////////////////
+    // Main inherited rectangle
+    ///////////////////////
+    this.ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+    this.ellipse.setAttribute('id', id + "-rect");
+    this.ellipse.setAttribute('cx', this.x);
+    this.ellipse.setAttribute('cy', this.y);
+    this.ellipse.setAttribute('ry', this.height / 2);
+    this.ellipse.setAttribute('rx', this.width / 2);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
+    this.ellipse.setAttribute('stroke-width', 2);
+    this.ellipse.setAttribute('stroke', 'black');
+    this.ellipse.setAttribute('fill-opacity', '0.5');
+    // Use transparent instead of none, so that inner rectangle gets draggable...
+    this.ellipse.setAttribute('fill', color);
+
+    ///////////////////////
+    // Text
+    ///////////////////////
+    this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
+    this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
+    this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
+    // Magic happens !!!, allow easy centering of the text
+    this.text.setAttribute('text-anchor', 'middle');
+
+
+    var element = document.getElementById("svg");
+    element.appendChild(this.g);
+    this.g.appendChild(this.ellipse);
+    this.g.appendChild(this.text);
+}
+Ellipse.prototype.constructor = Ellipse;
+
 function Rectangle(id, name, x, y, width, height, color) {
 
     this.id = id;
@@ -13,7 +179,6 @@ function Rectangle(id, name, x, y, width, height, color) {
     this.x = x;
     this.y = y;
 
-    console.log('Creating element "' + name + '"');
     this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     this.g.setAttribute('id', id);
     this.g.setAttribute('class', 'draggable');
@@ -85,8 +250,8 @@ function Element(id, name, x, y, width, height) {
     ///////////////////////
     this.rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     this.rect.setAttribute('id', id + "-rect");
-    this.rect.setAttribute('x', this.x);
-    this.rect.setAttribute('y', this.y);
+    this.rect.setAttribute('x', this.x - (this.width / 2));
+    this.rect.setAttribute('y', this.y - (this.height / 2));
     this.rect.setAttribute('height', this.height);
     this.rect.setAttribute('width', this.width);
     this.rect.setAttribute('rx', 5);
@@ -104,8 +269,8 @@ function Element(id, name, x, y, width, height) {
     this.image = document.createElementNS("http://www.w3.org/2000/svg", "image");
     this.image.setAttribute('id', id + "-image");
     // FIXME remove magic numbers...
-    this.image.setAttribute('x', this.x + (this.width / 2) - 36/2);
-    this.image.setAttribute('y', this.y + (this.height / 2) - 36/2);
+    this.image.setAttribute('x', this.x - 36/2);
+    this.image.setAttribute('y', this.y - 36/2);
     this.image.setAttribute('height', 36);
     this.image.setAttribute('width', 36);
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
@@ -116,8 +281,8 @@ function Element(id, name, x, y, width, height) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
-    this.text.setAttribute('x', this.x + (this.width / 2));
-    this.text.setAttribute('y', this.y + this.height - this.text.clientHeight - 5);
+    this.text.setAttribute('x', this.x);
+    this.text.setAttribute('y', this.y + this.height / 2 - 10); // 10 = font size ; 5 = extra space between text and bottom of the shape
     // Magic happens !!!, allow easy centering of the text
     this.text.setAttribute('text-anchor', 'middle');
 
@@ -158,10 +323,10 @@ function ElementWithOwnStatus(id, name, x, y, width, height) {
     this.ownRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     this.ownRect.setAttribute('id', id + "-own-rect");
     // Upper right
-    this.ownRect.setAttribute('x', this.x + this.width - 15);
-    this.ownRect.setAttribute('y', this.y + 15 - 10);
-    this.ownRect.setAttribute('height', 10);
-    this.ownRect.setAttribute('width', 10);
+    this.ownRect.setAttribute('x', this.x + this.width / 2 - 5 - 14);
+    this.ownRect.setAttribute('y', this.y - this.height / 2 + 5);
+    this.ownRect.setAttribute('height', 14);
+    this.ownRect.setAttribute('width', 14);
     this.ownRect.setAttribute('rx', 2);
     this.ownRect.setAttribute('ry', 2);
     this.ownRect.setAttribute('stroke-width', 2);
