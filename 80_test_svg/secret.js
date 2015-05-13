@@ -3,28 +3,74 @@
  */
 "use strict";
 
-// Default coordinates of added elements
-var global_x = 60;
-var global_y = 60;
-var id = 1;
-// id => Element instance (Host or whatever)
-var elementList = {};
+function Rectangle(id, name, x, y, width, height, color) {
+
+    this.id = id;
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    // x, y returned by Map server (we need to calculate "real" x, y for SVG, see below
+    this.x = x;
+    this.y = y;
+
+    console.log('Creating element "' + name + '"');
+    this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    this.g.setAttribute('id', id);
+    this.g.setAttribute('class', 'draggable');
+    this.g.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    // for DND, see below
+    this.g.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+
+    ///////////////////////
+    // Main inherited rectangle
+    ///////////////////////
+    this.rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.rect.setAttribute('id', id + "-rect");
+    this.rect.setAttribute('x', this.x - (this.width / 2));
+    this.rect.setAttribute('y', this.y - (this.height / 2));
+    this.rect.setAttribute('height', this.height);
+    this.rect.setAttribute('width', this.width);
+    this.rect.setAttribute('rx', 5);
+    this.rect.setAttribute('ry', 5);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
+    this.rect.setAttribute('stroke-width', 2);
+    this.rect.setAttribute('stroke', 'black');
+    this.rect.setAttribute('fill-opacity', '0.5');
+    // Use transparent instead of none, so that inner rectangle gets draggable...
+    this.rect.setAttribute('fill', color);
+
+    ///////////////////////
+    // Text
+    ///////////////////////
+    this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
+    this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
+    this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
+    // Magic happens !!!, allow easy centering of the text
+    this.text.setAttribute('text-anchor', 'middle');
+
+
+    var element = document.getElementById("svg");
+    element.appendChild(this.g);
+    this.g.appendChild(this.rect);
+    this.g.appendChild(this.text);
+}
+Rectangle.prototype.constructor = Rectangle;
 
 // Setting propre inheritance in JS is a pain
 // We have no class inheritance but rather an object from objact (AKA prototype) inheritance
 // ES5 introduced Object.create()
 // ES6 will add more classical "class"
 // In the meantime, the best doc I found is: http://markdalgleish.com/2012/10/a-touch-of-class-inheritance-in-javascript/
-function Element(id, name, width, height) {
+function Element(id, name, x, y, width, height) {
 
     this.id = id;
     this.name = name;
     this.width = width;
     this.height = height;
-    this.x = global_x;
-    this.y = global_y;
-    global_x = global_x + 5;
-    global_y = global_y + 5;
+    this.x = x;
+    this.y = y;
 
     console.log('Creating element "' + name + '"');
     this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -79,7 +125,6 @@ function Element(id, name, width, height) {
     var element = document.getElementById("svg");
     element.appendChild(this.g);
     this.g.appendChild(this.rect);
-    //this.g.appendChild(this.ownRect);
     this.g.appendChild(this.image);
     this.g.appendChild(this.text);
 }
@@ -102,10 +147,10 @@ Element.prototype.setInheritedStatus = function (status) {
 };
 
 // Prototype
-function ElementWithOwnStatus(id, name, width, height) {
+function ElementWithOwnStatus(id, name, x, y, width, height) {
 
     console.log('Creating element with own status with name "' + name + '"');
-    Element.call(this, id, name, width, height);
+    Element.call(this, id, name, x, y, width, height);
 
     ///////////////////////
     // Own status rectangle
@@ -143,10 +188,10 @@ ElementWithOwnStatus.prototype.setOwnStatus = function (status) {
 
 };
 
-function Host(id, name, width, height) {
+function Host(id, name, x, y, width, height) {
 
     console.log('Creating host "' + name + '"');
-    ElementWithOwnStatus.call(this, id, name, width, height);
+    ElementWithOwnStatus.call(this, id, name, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
 
@@ -154,10 +199,10 @@ function Host(id, name, width, height) {
 Host.prototype = Object.create(ElementWithOwnStatus.prototype);
 Host.prototype.constructor = Host;
 
-function Service(id, name, width, height) {
+function Service(id, name, x, y, width, height) {
 
     console.log('Creating service "' + name + '"');
-    ElementWithOwnStatus.call(this, id, name, width, height);
+    ElementWithOwnStatus.call(this, id, name, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/service.png');
 
@@ -165,43 +210,16 @@ function Service(id, name, width, height) {
 Service.prototype = Object.create(ElementWithOwnStatus.prototype);
 Service.prototype.constructor = Service;
 
-function BA(id, name, width, height) {
+function BA(id, name, x, y, width, height) {
 
     console.log('Creating ba "' + name + '"');
-    Element.call(this, id, name, width, height);
+    Element.call(this, id, name, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/ba.png');
 
 }
 BA.prototype = Object.create(Element.prototype);
 BA.prototype.constructor = BA;
-
-function addHost(id, name, width, height) {
-
-    console.log('Adding host "' + name + '" with id "' + id + "'");
-
-    var host = new Host(id, name, width, height);
-    elementList[id] = host;
-
-}
-
-function addService(id, name, width, height) {
-
-    console.log('Adding service "' + name + '" with id "' + id + "'");
-
-    var service = new Service(id, name, width, height);
-    elementList[id] = service;
-
-}
-
-function addBA(id, name, width, height) {
-
-    console.log('Adding BA "' + name + '" with id "' + id + "'");
-
-    var ba = new BA(id, name, width, height);
-    elementList[id] = ba;
-
-}
 
 function setOwnStatusUp(id) {
     console.log('Set own status up for id "' + id + '"');
