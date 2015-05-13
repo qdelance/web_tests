@@ -7,11 +7,15 @@
 var global_x = 60;
 var global_y = 60;
 var id = 1;
-// id => Host instance
-var hostList = {};
+// id => Element instance (Host or whatever)
+var elementList = {};
 
-// Prototype
-function Host (id, name, width, height) {
+// Setting propre inheritance in JS is a pain
+// We have no class inheritance but rather an object from objact (AKA prototype) inheritance
+// ES5 introduced Object.create()
+// ES6 will add more classical "class"
+// In the meantime, the best doc I found is: http://markdalgleish.com/2012/10/a-touch-of-class-inheritance-in-javascript/
+function Element(id, name, width, height) {
 
     this.id = id;
     this.name = name;
@@ -22,7 +26,7 @@ function Host (id, name, width, height) {
     global_x = global_x + 5;
     global_y = global_y + 5;
 
-    console.log('Creating host "' + name + '"');
+    console.log('Creating element "' + name + '"');
     this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
     this.g.setAttribute('id', id);
     this.g.setAttribute('class', 'draggable');
@@ -47,23 +51,6 @@ function Host (id, name, width, height) {
     this.rect.setAttribute('fill-opacity', '0.5');
     // Use transparent instead of none, so that inner rectangle gets draggable...
     this.rect.setAttribute('fill', 'transparent');
-
-    ///////////////////////
-    // Own status rectangle
-    ///////////////////////
-    this.ownRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    this.ownRect.setAttribute('id', id + "-own-rect");
-    // Upper right
-    this.ownRect.setAttribute('x', this.x + this.width - 15);
-    this.ownRect.setAttribute('y', this.y + 15 - 10);
-    this.ownRect.setAttribute('height', 10);
-    this.ownRect.setAttribute('width', 10);
-    this.ownRect.setAttribute('rx', 2);
-    this.ownRect.setAttribute('ry', 2);
-    this.ownRect.setAttribute('stroke-width', 2);
-    this.ownRect.setAttribute('stroke', 'black');
-    this.ownRect.setAttribute('fill-opacity', '0.5');
-    this.ownRect.setAttribute('fill', 'transparent');
 
     ///////////////////////
     // Item icon
@@ -92,28 +79,16 @@ function Host (id, name, width, height) {
     var element = document.getElementById("svg");
     element.appendChild(this.g);
     this.g.appendChild(this.rect);
-    this.g.appendChild(this.ownRect);
+    //this.g.appendChild(this.ownRect);
     this.g.appendChild(this.image);
     this.g.appendChild(this.text);
 }
-
-// status = UP = 1
-// status = DOWN = 2
-Host.prototype.setOwnStatus = function (status) {
-    if (status == 1) {
-        this.ownRect.setAttribute('fill', 'green');
-    } else if (status == 2) {
-        this.ownRect.setAttribute('fill', 'red');
-    } else {
-        this.ownRect.setAttribute('fill', 'transparent');
-    }
-
-};
+Element.prototype.constructor = Element;
 
 // status = OK = 1
 // status = WARNING = 2
 // status = CRITICAL = 3
-Host.prototype.setInheritedStatus = function (status) {
+Element.prototype.setInheritedStatus = function (status) {
     if (status == 1) {
         this.rect.setAttribute('fill', 'green');
     } else if (status == 2) {
@@ -126,53 +101,154 @@ Host.prototype.setInheritedStatus = function (status) {
 
 };
 
-function addHost(id, hostname, width, height) {
+// Prototype
+function ElementWithOwnStatus(id, name, width, height) {
 
-    console.log('Adding host "' + hostname + '" with id "' + id + "'");
+    console.log('Creating element with own status with name "' + name + '"');
+    Element.call(this, id, name, width, height);
 
-    var host = new Host(id, hostname, width, height);
-    hostList[id] = host;
+    ///////////////////////
+    // Own status rectangle
+    ///////////////////////
+    this.ownRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.ownRect.setAttribute('id', id + "-own-rect");
+    // Upper right
+    this.ownRect.setAttribute('x', this.x + this.width - 15);
+    this.ownRect.setAttribute('y', this.y + 15 - 10);
+    this.ownRect.setAttribute('height', 10);
+    this.ownRect.setAttribute('width', 10);
+    this.ownRect.setAttribute('rx', 2);
+    this.ownRect.setAttribute('ry', 2);
+    this.ownRect.setAttribute('stroke-width', 2);
+    this.ownRect.setAttribute('stroke', 'black');
+    this.ownRect.setAttribute('fill-opacity', '0.5');
+    this.ownRect.setAttribute('fill', 'transparent');
+
+    this.g.appendChild(this.ownRect);
+}
+
+ElementWithOwnStatus.prototype = Object.create(Element.prototype);
+ElementWithOwnStatus.prototype.constructor = ElementWithOwnStatus;
+
+// status = UP = 1
+// status = DOWN = 2
+ElementWithOwnStatus.prototype.setOwnStatus = function (status) {
+    if (status == 1) {
+        this.ownRect.setAttribute('fill', 'green');
+    } else if (status == 2) {
+        this.ownRect.setAttribute('fill', 'red');
+    } else {
+        this.ownRect.setAttribute('fill', 'transparent');
+    }
+
+};
+
+function Host(id, name, width, height) {
+
+    console.log('Creating host "' + name + '"');
+    ElementWithOwnStatus.call(this, id, name, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
+
+}
+Host.prototype = Object.create(ElementWithOwnStatus.prototype);
+Host.prototype.constructor = Host;
+
+function Service(id, name, width, height) {
+
+    console.log('Creating service "' + name + '"');
+    ElementWithOwnStatus.call(this, id, name, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/service.png');
+
+}
+Service.prototype = Object.create(ElementWithOwnStatus.prototype);
+Service.prototype.constructor = Service;
+
+function BA(id, name, width, height) {
+
+    console.log('Creating ba "' + name + '"');
+    Element.call(this, id, name, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/ba.png');
+
+}
+BA.prototype = Object.create(Element.prototype);
+BA.prototype.constructor = BA;
+
+function addHost(id, name, width, height) {
+
+    console.log('Adding host "' + name + '" with id "' + id + "'");
+
+    var host = new Host(id, name, width, height);
+    elementList[id] = host;
+
+}
+
+function addService(id, name, width, height) {
+
+    console.log('Adding service "' + name + '" with id "' + id + "'");
+
+    var service = new Service(id, name, width, height);
+    elementList[id] = service;
+
+}
+
+function addBA(id, name, width, height) {
+
+    console.log('Adding BA "' + name + '" with id "' + id + "'");
+
+    var ba = new BA(id, name, width, height);
+    elementList[id] = ba;
 
 }
 
 function setOwnStatusUp(id) {
-    console.log('Set own status up for id "' + id + "'");
+    console.log('Set own status up for id "' + id + '"');
 
-    var host = hostList[id];
-    if (host) {
-        host.setOwnStatus(1);
+    var element = elementList[id];
+    if (element) {
+        if (typeof element.setOwnStatus == 'function') {
+            element.setOwnStatus(1);
+        } else {
+            console.warn('This element has no own status');
+        }
     } else {
-        console.error('No host found for id "' + id + '"');
+        console.error('No element found for id "' + id + '"');
     }
 }
 
 function setOwnStatusDown(id) {
-    console.log('Set own status down for id "' + id + "'");
+    console.log('Set own status down for id "' + id + '"');
 
-    var host = hostList[id];
-    if (host) {
-        host.setOwnStatus(2);
+    var element = elementList[id];
+    if (element) {
+        if (typeof element.setOwnStatus == 'function') {
+            element.setOwnStatus(2);
+        } else {
+            console.warn('This element has no own status');
+        }
     } else {
-        console.error('No host found for id "' + id + '"');
+        console.error('No element found for id "' + id + '"');
     }
 }
 
 function setInheritedStatus(id, status) {
-    console.log('Set inherited status for id "' + id + "'");
+    console.log('Set inherited status for id "' + id + '"');
 
-    var host = hostList[id];
-    if (host) {
-        host.setInheritedStatus(status);
+    var element = elementList[id];
+    if (element) {
+        element.setInheritedStatus(status);
     } else {
-        console.error('No host found for id "' + id + '"');
+        console.error('No element found for id "' + id + '"');
     }
 }
 
 
 
-function removeHost(id) {
+function removeElement(id) {
 
-    console.log('Removing host with id "' + id + '"');
+    console.log('Removing element with id "' + id + '"');
 
     var element = document.getElementById(id);
     if (element) {
