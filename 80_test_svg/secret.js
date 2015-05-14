@@ -1,10 +1,13 @@
 /**
- * Created by quentin on 28/04/15.
+ * Basic lib for Shapes and Objects (hosts/services/BA) to be displayed in SVG
+ * Requires #svg DOM element
  */
 "use strict";
 
 // FIXME we should unify Triangle and Custom (all SVG polygon)
 // FIXME we could also probably refactor all shapes (at least for the text position which is the same)
+// FIXME text wrapping cannot be implemented cleanly so far (SVG2 proposal, not yet validated or implemented in browsers)
+// Relevant: http://tavmjong.free.fr/SVG/TEXT_FLOW/ http://stackoverflow.com/questions/4991171/auto-line-wrapping-in-svg-text
 function Custom(id, name, x, y, width, height, color, points) {
 
     this.id = id;
