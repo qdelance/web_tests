@@ -8,6 +8,11 @@
 // FIXME we could also probably refactor all shapes (at least for the text position which is the same)
 // FIXME text wrapping cannot be implemented cleanly so far (SVG2 proposal, not yet validated or implemented in browsers)
 // Relevant: http://tavmjong.free.fr/SVG/TEXT_FLOW/ http://stackoverflow.com/questions/4991171/auto-line-wrapping-in-svg-text
+// CSS Shapes won't help (do not apply to SVG) + unsupported outside Chrome...
+// Only solution: large portion of JS at the end of http://stackoverflow.com/questions/4991171/auto-line-wrapping-in-svg-text
+// Demo (mouse over): http://democra.me/svgtext_clean2.htm
+// Another solution to test: http://stackoverflow.com/questions/11007640/fit-text-into-svg-element-using-d3-js
+// Demo: http://jsfiddle.net/MJJEc/ slight overflow with Firefox, ensure we add "word-break: break-all" for long names with "_"...
 function Custom(id, name, x, y, width, height, color, points) {
 
     this.id = id;
