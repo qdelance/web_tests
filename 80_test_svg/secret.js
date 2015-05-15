@@ -4,8 +4,11 @@
  */
 "use strict";
 
-// FIXME we should unify Triangle and Custom (all SVG polygon)
-// FIXME we could also probably refactor all shapes (at least for the text position which is the same)
+
+
+///////////////////////////////////////
+// Text wrapping
+///////////////////////////////////////
 // FIXME text wrapping cannot be implemented cleanly so far (SVG2 proposal, not yet validated or implemented in browsers)
 // Relevant: http://tavmjong.free.fr/SVG/TEXT_FLOW/ http://stackoverflow.com/questions/4991171/auto-line-wrapping-in-svg-text
 // CSS Shapes won't help (do not apply to SVG) + unsupported outside Chrome...
@@ -13,6 +16,20 @@
 // Demo (mouse over): http://democra.me/svgtext_clean2.htm
 // Another solution to test: http://stackoverflow.com/questions/11007640/fit-text-into-svg-element-using-d3-js
 // Demo: http://jsfiddle.net/MJJEc/ slight overflow with Firefox, ensure we add "word-break: break-all" for long names with "_"...
+
+///////////////////////////////////////
+// Arrows
+///////////////////////////////////////
+// SVG markers
+// http://www.svgbasics.com/markers.html
+// http://stackoverflow.com/questions/11808860/arrow-triangles-on-my-svg-line
+// Demo with DnD (D3js)
+// http://stackoverflow.com/questions/13165913/draw-an-arrow-between-two-circles
+// http://jsfiddle.net/yeQS2/ => time to learn Math again !
+
+
+// FIXME we should unify Triangle and Custom (all SVG polygon)
+// FIXME we could also probably refactor all shapes (at least for the text position which is the same)
 function Custom(id, name, x, y, width, height, color, points) {
 
     this.id = id;
