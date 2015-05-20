@@ -26,11 +26,12 @@
 // Demo with DnD (D3js)
 // http://stackoverflow.com/questions/13165913/draw-an-arrow-between-two-circles
 // http://jsfiddle.net/yeQS2/ => time to learn Math again !
+// http://jsfiddle.net/7vJmy/2/
 
 
 // FIXME we should unify Triangle and Custom (all SVG polygon)
 // FIXME we could also probably refactor all shapes (at least for the text position which is the same)
-function Custom(id, name, x, y, width, height, color, points) {
+function Custom(id, name, x, y, width, height, color, fontColor, opacity, points) {
 
     this.id = id;
     this.name = name;
@@ -60,7 +61,7 @@ function Custom(id, name, x, y, width, height, color, points) {
     // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
     this.polygon.setAttribute('stroke-width', 2);
     this.polygon.setAttribute('stroke', 'black');
-    this.polygon.setAttribute('fill-opacity', '0.5');
+    this.polygon.setAttribute('fill-opacity', opacity);
     // Use transparent instead of none, so that inner rectangle gets draggable...
     this.polygon.setAttribute('fill', color);
 
@@ -70,6 +71,7 @@ function Custom(id, name, x, y, width, height, color, points) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
     this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
     this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
     // Magic happens !!!, allow easy centering of the text
@@ -83,7 +85,7 @@ function Custom(id, name, x, y, width, height, color, points) {
 }
 Custom.prototype.constructor = Custom;
 
-function Triangle(id, name, x, y, width, height, color) {
+function Triangle(id, name, x, y, width, height, color, fontColor, opacity) {
 
     this.id = id;
     this.name = name;
@@ -119,7 +121,7 @@ function Triangle(id, name, x, y, width, height, color) {
     // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
     this.polygon.setAttribute('stroke-width', 2);
     this.polygon.setAttribute('stroke', 'black');
-    this.polygon.setAttribute('fill-opacity', '0.5');
+    this.polygon.setAttribute('fill-opacity', opacity);
     // Use transparent instead of none, so that inner rectangle gets draggable...
     this.polygon.setAttribute('fill', color);
 
@@ -129,11 +131,11 @@ function Triangle(id, name, x, y, width, height, color) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
     this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
     this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
     // Magic happens !!!, allow easy centering of the text
     this.text.setAttribute('text-anchor', 'middle');
-
 
     var element = document.getElementById("svg");
     element.appendChild(this.g);
@@ -142,7 +144,7 @@ function Triangle(id, name, x, y, width, height, color) {
 }
 Triangle.prototype.constructor = Triangle;
 
-function Ellipse(id, name, x, y, width, height, color) {
+function Ellipse(id, name, x, y, width, height, color, fontColor, opacity) {
 
     this.id = id;
     this.name = name;
@@ -171,7 +173,7 @@ function Ellipse(id, name, x, y, width, height, color) {
     // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
     this.ellipse.setAttribute('stroke-width', 2);
     this.ellipse.setAttribute('stroke', 'black');
-    this.ellipse.setAttribute('fill-opacity', '0.5');
+    this.ellipse.setAttribute('fill-opacity', opacity);
     // Use transparent instead of none, so that inner rectangle gets draggable...
     this.ellipse.setAttribute('fill', color);
 
@@ -181,6 +183,7 @@ function Ellipse(id, name, x, y, width, height, color) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
     this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
     this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
     // Magic happens !!!, allow easy centering of the text
@@ -194,7 +197,7 @@ function Ellipse(id, name, x, y, width, height, color) {
 }
 Ellipse.prototype.constructor = Ellipse;
 
-function Rectangle(id, name, x, y, width, height, color) {
+function Rectangle(id, name, x, y, width, height, color, fontColor, opacity) {
 
     this.id = id;
     this.name = name;
@@ -225,7 +228,7 @@ function Rectangle(id, name, x, y, width, height, color) {
     // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
     this.rect.setAttribute('stroke-width', 2);
     this.rect.setAttribute('stroke', 'black');
-    this.rect.setAttribute('fill-opacity', '0.5');
+    this.rect.setAttribute('fill-opacity', opacity);
     // Use transparent instead of none, so that inner rectangle gets draggable...
     this.rect.setAttribute('fill', color);
 
@@ -235,6 +238,7 @@ function Rectangle(id, name, x, y, width, height, color) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
     this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
     this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
     // Magic happens !!!, allow easy centering of the text
