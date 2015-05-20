@@ -257,10 +257,12 @@ Rectangle.prototype.constructor = Rectangle;
 // ES5 introduced Object.create()
 // ES6 will add more classical "class"
 // In the meantime, the best doc I found is: http://markdalgleish.com/2012/10/a-touch-of-class-inheritance-in-javascript/
-function Element(id, name, x, y, width, height) {
+function Element(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
     this.id = id;
     this.name = name;
+    this.fontColor = fontColor;
+    this.useFontStatusColor = useFontStatusColor;
     this.width = width;
     this.height = height;
     this.x = x;
@@ -324,98 +326,136 @@ function Element(id, name, x, y, width, height) {
 }
 Element.prototype.constructor = Element;
 
-Element.prototype.setInheritedStatus = function (status) {
+Element.prototype.setStatusColor = function (color) {
+    this.rect.setAttribute('fill', color);
+    if (this.useFontStatusColor) {
+        this.text.setAttribute('fill', 'green');
+    }
+
+};
+
+Element.prototype.setStatus = function (status) {
     if (status == 0) {
-        this.rect.setAttribute('fill', 'green');
+        this.setStatusColor('green');
     } else if (status == 1) {
-        this.rect.setAttribute('fill', 'yellow');
+        this.setStatusColor('yellow');
     } else if (status == 2) {
-        this.rect.setAttribute('fill', 'red');
+        this.setStatusColor('red');
     } else if (status == 3) {
-        this.rect.setAttribute('fill', 'blue');
+        this.setStatusColor('blue');
     } else {
-        this.rect.setAttribute('fill', 'transparent');
+        console.error('Invalid status: ' + status);
     }
 
 };
 
 // Prototype
-function ElementWithOwnStatus(id, name, x, y, width, height) {
+function ElementWithExtraStatus(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
     console.log('Creating element with own status with name "' + name + '"');
-    Element.call(this, id, name, x, y, width, height);
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     ///////////////////////
     // Own status rectangle
     ///////////////////////
-    this.ownRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    this.ownRect.setAttribute('id', id + "-own-rect");
+    this.extraRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.extraRect.setAttribute('id', id + "-own-rect");
     // Upper right
-    this.ownRect.setAttribute('x', this.x + this.width / 2 - 5 - 14);
-    this.ownRect.setAttribute('y', this.y - this.height / 2 + 5);
-    this.ownRect.setAttribute('height', 14);
-    this.ownRect.setAttribute('width', 14);
-    this.ownRect.setAttribute('rx', 2);
-    this.ownRect.setAttribute('ry', 2);
-    this.ownRect.setAttribute('stroke-width', 2);
-    this.ownRect.setAttribute('stroke', 'black');
-    this.ownRect.setAttribute('fill-opacity', '1');
-    this.ownRect.setAttribute('fill', 'transparent');
+    this.extraRect.setAttribute('x', this.x + this.width / 2 - 5 - 14);
+    this.extraRect.setAttribute('y', this.y - this.height / 2 + 5);
+    this.extraRect.setAttribute('height', 14);
+    this.extraRect.setAttribute('width', 14);
+    this.extraRect.setAttribute('rx', 2);
+    this.extraRect.setAttribute('ry', 2);
+    this.extraRect.setAttribute('stroke-width', 2);
+    this.extraRect.setAttribute('stroke', 'black');
+    this.extraRect.setAttribute('fill-opacity', '1');
+    this.extraRect.setAttribute('fill', 'transparent');
 
-    this.g.appendChild(this.ownRect);
+    this.g.appendChild(this.extraRect);
 }
 
-ElementWithOwnStatus.prototype = Object.create(Element.prototype);
-ElementWithOwnStatus.prototype.constructor = ElementWithOwnStatus;
+ElementWithExtraStatus.prototype = Object.create(Element.prototype);
+ElementWithExtraStatus.prototype.constructor = ElementWithExtraStatus;
 
-ElementWithOwnStatus.prototype.setOwnStatus = function (status) {
-    if (status == 0) {
-        this.ownRect.setAttribute('fill', 'green');
-    } else if (status == 1) {
-        this.ownRect.setAttribute('fill', 'yellow');
-    } else if (status == 2) {
-        this.ownRect.setAttribute('fill', 'red');
-    } else if (status == 3) {
-        this.ownRect.setAttribute('fill', 'blue');
-    } else if (status == 4) {
-        this.ownRect.setAttribute('fill', '#00FF00');
-    } else {
-        this.ownRect.setAttribute('fill', 'transparent');
-    }
+ElementWithExtraStatus.prototype.setExtraStatusColor = function (color) {
+    this.extraRect.setAttribute('fill', color);
 };
 
-function Host(id, name, x, y, width, height) {
+ElementWithExtraStatus.prototype.setExtraStatus = function (status) {
+    if (status == 0) {
+        this.setExtraStatusColor('green');
+    } else if (status == 1) {
+        this.setExtraStatusColor('yellow');
+    } else if (status == 2) {
+        this.setExtraStatusColor('red');
+    } else if (status == 3) {
+        this.setExtraStatusColor('blue');
+    } else if (status == 4) {
+        this.setExtraStatusColor('#00FF00');
+    } else {
+        console.error('Invalid extra status: ' + status);
+    }
+
+};
+
+function Host(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
     console.log('Creating host "' + name + '"');
-    ElementWithOwnStatus.call(this, id, name, x, y, width, height);
+    ElementWithExtraStatus.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
 
 }
-Host.prototype = Object.create(ElementWithOwnStatus.prototype);
+Host.prototype = Object.create(ElementWithExtraStatus.prototype);
 Host.prototype.constructor = Host;
 
-function Service(id, name, x, y, width, height) {
+Host.prototype.setOwnStatus = function (status) {
+    this.setExtraStatus(status);
+};
+
+Host.prototype.setInheritedStatus = function (status) {
+    this.setStatus(status);
+};
+
+function Service(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
     console.log('Creating service "' + name + '"');
-    ElementWithOwnStatus.call(this, id, name, x, y, width, height);
+    ElementWithExtraStatus.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/service.png');
 
 }
-Service.prototype = Object.create(ElementWithOwnStatus.prototype);
+Service.prototype = Object.create(ElementWithExtraStatus.prototype);
 Service.prototype.constructor = Service;
 
-function BA(id, name, x, y, width, height) {
+Service.prototype.setOwnStatus = function (status) {
+    this.setExtraStatus(status);
+};
+
+Service.prototype.setInheritedStatus = function (status) {
+    console.error('Service has no inherited status!');
+}
+
+function BA(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
     console.log('Creating ba "' + name + '"');
-    Element.call(this, id, name, x, y, width, height);
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/ba.png');
 
 }
+
 BA.prototype = Object.create(Element.prototype);
 BA.prototype.constructor = BA;
+
+BA.prototype.setOwnStatus = function (status) {
+    console.error('Service has no own status!');
+};
+
+BA.prototype.setInheritedStatus = function (status) {
+    this.setStatus(status);
+}
 
 function setOwnStatusUp(id) {
     console.log('Set own status up for id "' + id + '"');
