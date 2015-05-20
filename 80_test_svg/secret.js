@@ -450,11 +450,11 @@ BA.prototype = Object.create(Element.prototype);
 BA.prototype.constructor = BA;
 
 BA.prototype.setOwnStatus = function (status) {
-    console.error('Service has no own status!');
+    this.setStatus(status);
 };
 
 BA.prototype.setInheritedStatus = function (status) {
-    this.setStatus(status);
+    console.error('BA has no inherited status!');
 }
 
 function HostGroup(id, name, fontColor, useFontStatusColor, x, y, width, height) {
