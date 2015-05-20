@@ -457,6 +457,64 @@ BA.prototype.setInheritedStatus = function (status) {
     this.setStatus(status);
 }
 
+function HostGroup(id, name, fontColor, useFontStatusColor, x, y, width, height) {
+
+    console.log('Creating element with own status with name "' + name + '"');
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/hostgroup.png');
+}
+
+HostGroup.prototype = Object.create(Element.prototype);
+HostGroup.prototype.constructor = HostGroup;
+
+HostGroup.prototype.setOwnStatus = function (status) {
+    console.error('HostGroup has no own status!');
+};
+
+HostGroup.prototype.setInheritedStatus = function (status) {
+    this.setStatus(status);
+}
+
+
+function ServiceGroup(id, name, fontColor, useFontStatusColor, x, y, width, height) {
+
+    console.log('Creating element with own status with name "' + name + '"');
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/servicegroup.png');
+}
+
+ServiceGroup.prototype = Object.create(Element.prototype);
+ServiceGroup.prototype.constructor = ServiceGroup;
+
+ServiceGroup.prototype.setOwnStatus = function (status) {
+    console.error('ServiceGroup has no own status!');
+};
+
+ServiceGroup.prototype.setInheritedStatus = function (status) {
+    this.setStatus(status);
+}
+
+function Poller(id, name, fontColor, useFontStatusColor, x, y, width, height) {
+
+    console.log('Creating element with own status with name "' + name + '"');
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/poller.png');
+}
+
+Poller.prototype = Object.create(Element.prototype);
+Poller.prototype.constructor = Poller;
+
+Poller.prototype.setOwnStatus = function (status) {
+    this.setStatus(status);
+};
+
+Poller.prototype.setInheritedStatus = function (status) {
+    console.error('Poller has no inherited status!');
+}
+
 function setOwnStatusUp(id) {
     console.log('Set own status up for id "' + id + '"');
 
