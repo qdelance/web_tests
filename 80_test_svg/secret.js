@@ -312,6 +312,7 @@ function Element(id, name, fontColor, useFontStatusColor, x, y, width, height) {
     this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     this.text.setAttribute('id', id + "-text");
     this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
     this.text.setAttribute('x', this.x);
     this.text.setAttribute('y', this.y + this.height / 2 - 10); // 10 = font size ; 5 = extra space between text and bottom of the shape
     // Magic happens !!!, allow easy centering of the text
