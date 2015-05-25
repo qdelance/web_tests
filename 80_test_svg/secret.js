@@ -252,6 +252,79 @@ function Rectangle(id, name, x, y, width, height, color, fontColor, opacity) {
 }
 Rectangle.prototype.constructor = Rectangle;
 
+function Image(id, name, x, y, width, height, color, fontColor, opacity, mediaId) {
+
+    this.id = id;
+    this.name = name;
+    this.width = width;
+    this.height = height;
+    // x, y returned by Map server (we need to calculate "real" x, y for SVG, see below
+    this.x = x;
+    this.y = y;
+
+    this.g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    this.g.setAttribute('id', id);
+    this.g.setAttribute('class', 'draggable');
+    this.g.setAttributeNS(null, "onmousedown", "selectElement(evt)");
+    // for DND, see below
+    this.g.setAttribute('transform', "matrix(1 0 0 1 0 0)");
+
+    ///////////////////////
+    // Main inherited rectangle
+    ///////////////////////
+    /*
+    this.rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.rect.setAttribute('id', id + "-rect");
+    this.rect.setAttribute('x', this.x - (this.width / 2));
+    this.rect.setAttribute('y', this.y - (this.height / 2));
+    this.rect.setAttribute('height', this.height);
+    this.rect.setAttribute('width', this.width);
+    this.rect.setAttribute('rx', 5);
+    this.rect.setAttribute('ry', 5);
+    // Use 2 instead of 1 to prevent bad blurring http://stackoverflow.com/questions/18019453/svg-rectangle-blurred-in-all-browsers
+    this.rect.setAttribute('stroke-width', 2);
+    this.rect.setAttribute('stroke', 'black');
+    this.rect.setAttribute('fill-opacity', opacity);
+    // Use transparent instead of none, so that inner rectangle gets draggable...
+    this.rect.setAttribute('fill', color);
+*/
+    ///////////////////////
+    // image
+    ///////////////////////
+    this.image = document.createElementNS("http://www.w3.org/2000/svg", "image");
+    this.image.setAttribute('id', id + "-rect");
+    this.image.setAttribute('x', this.x - (this.width / 2));
+    this.image.setAttribute('y', this.y - (this.height / 2));
+    this.image.setAttribute('height', this.height);
+    this.image.setAttribute('width', this.width);
+    this.image.setAttribute('preserveAspectRatio', 'none');
+    // It seems neither onload neither onsvgload are fired...
+    // this.image.setAttribute('onload', 'javascript:loadMedia(this,' + mediaId + ')');
+    this.image.onload = loadMedia(this.image, mediaId);
+    // this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'javascript:loadMedia(' + mediaId + ')');
+
+    ///////////////////////
+    // Text
+    ///////////////////////
+    /*
+    this.text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    this.text.setAttribute('id', id + "-text");
+    this.text.innerHTML = this.name;
+    this.text.setAttribute('fill', fontColor);
+    this.text.setAttribute('x', this.x); // no need to substract anything for text due to text-anchor
+    this.text.setAttribute('y', this.y + 5); // FIXME not vertical centered, we should substract font-size
+    // Magic happens !!!, allow easy centering of the text
+    this.text.setAttribute('text-anchor', 'middle');
+*/
+
+    var element = document.getElementById("svg");
+    element.appendChild(this.g);
+    // this.g.appendChild(this.rect);
+    // this.g.appendChild(this.text);
+    this.g.appendChild(this.image);
+}
+Image.prototype.constructor = Image;
+
 // Setting propre inheritance in JS is a pain
 // We have no class inheritance but rather an object from objact (AKA prototype) inheritance
 // ES5 introduced Object.create()
