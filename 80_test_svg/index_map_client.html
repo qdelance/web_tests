@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Map Client</title>
+		<meta charset="utf-8"/>
+        <link href="styles.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="secret.js"></script>
+	</head>
+	<body>
+
+	<h1>Map Client</h1>
+
+    <p>Authenticate, then select a "gate", then display it.</p>
+
+    <label for="ip">IP of Map Server: </label>
+    <input id="ip" type="text" value="10.30.3.94" placeholder=""><br>
+    <label for="user">User: </label>
+    <input id="user" type="text" value="admin" placeholder=""><br>
+    <label for="password">Password: </label>
+    <input id="password" type="text" value="merethis" placeholder=""><br>
+    <button type="button" id="authenticate">Authenticate</button><br>
+
+    <hr>
+
+    <label for="gateList">Gates: </label>
+    <select id="gateList" size="5" style="width: 300px"><option>N/A</option></select><br>
+    <button type="button" id="displayGate">Display</button>  <button type="button" id="updateStatus">Update Status</button><br>
+
+	<svg id="svg" width="1200" height="1500" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	</svg>
+
+<script type="text/javascript">
+	//<![CDATA[
+
+    // FIXME activate + fix things
+    // "use strict";
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // Global variables
+    /////////////////////////////////////////////////////////////////////////////////
+
+    // Used to store auth after step #1
+    var studio_session;
+
+    // Used to store info of the gate that is opened after step #2
+    var gateId;
+    var targetId;
+    var contextId;
+
+    // Map server IP used for all Ajax calls
+    // JB 10.40.1.34
+    // Pierre 10.30.3.94
+    var ip_map_server;
+
+    // Struct storing elements on SVG, id => Object
+    var elementList = {};
+
+    // Global element id counter
+    // var elementIdCounter = 0;
+
+    /////////////////////////////////////////////////////////////////////////////////
+    // Functions
+    /////////////////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * Main function used to parse the whole giant JSON received when querying all elements of a gate
+     */
+    function processJsonGateContent(jsonStr) {
+        try {
+            var jsonObj = JSON.parse(jsonStr);
+            console.log(jsonObj);
+
+            for (var i = 0; i < jsonObj.elementRelations.length; i++) {
+                var element = jsonObj.elementRelations[i];
+                var label = '';
+                var color = 'black';
+                var fontColor = 'black';
+                var useFontStatusColor = false;
+                var id = element.child.id;
+                var x = 0;
+                var y = 0;
+                var height = 0;
+                var width = 0;
+                // 0 => 255 (opaque), mapped on opacity (0 => 1) attribute of SVG
+                var alpha;
+                var shape = 'rectangle';
+                // only when shape = custom
+                var points;
+                // only for media
+                var mediaId;
+                var md5;
+
+                for (var j = 0; j < element.properties.length; j++) {
+                    var properties = element.properties[j];
+                    if (properties.key === 'dim') {
+                        tmp = properties.value.split(',');
+                        width = parseFloat(tmp[0]);
+                        height = parseFloat(tmp[1]);
+                    } else if (properties.key === 'pos') {
+                        tmp = properties.value.split(',');
+                        x = parseFloat(tmp[0]);
+                        y = parseFloat(tmp[1]);
+                    }
+                }
+                // console.log('x=' + x + ' y=' + y + ' width=' + width + ' height=' + height);
+
+                for (var j = 0; j < element.child.properties.length; j++) {
+                    var childProperties = element.child.properties[j];
+                    if (childProperties.key === 'label') { // text of filename (for media / image)
+                        label = childProperties.value;
+                    } else if (childProperties.key === 'color') {
+                        color = childProperties.value;
+                    } else if (childProperties.key === 'fontColor') {
+                        fontColor = childProperties.value;
+                    } else if (childProperties.key === 'useFontStatusColor') {
+                        useFontStatusColor = childProperties.value;
+                    } else if (childProperties.key === 'alpha') {
+                        alpha = childProperties.value;
+                    } else if (childProperties.key === 'shape') {
+                        shape = childProperties.value;
+                    } else if (childProperties.key === 'mediaId') { // for media / image
+                        mediaId = childProperties.value;
+                    } else if (childProperties.key === 'md5') { // for media / image
+                        md5 = childProperties.value;
+                    } else if (childProperties.key === 'points') { // custom shape only
+                        points = childProperties.value;
+                    }
+                }
+
+                // Convert alpha managed by map as a SVG compliant property
+                var opacity = alpha / 255;
+                var type = element.child.type;
+                console.log('Processing element: label="' + label + '" type=' + type);
+                console.log(element);
+                switch (type) {
+                    case 3001: // container
+                        // Bug, by default, created containers have no dimension :(
+                        if (width == 0) {
+                            width = 88;
+                        }
+                        if (height == 0) {
+                            height = 88;
+                        }
+                        var e = new Element(id, label, fontColor, false, x, y, width, height);
+                        elementList[id] = e;
+                        break;
+                    case 3003:
+                        var host = new Host(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = host;
+                        break;
+                    case 3005:
+                        var service = new Service(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = service;
+                        break;
+                    case 3011:
+                        var ba = new BA(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = ba;
+                        break;
+                    case 3002: // HG
+                        var hg = new HostGroup(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = hg;
+                        break;
+                    case 3004: // SG
+                        var sg = new ServiceGroup(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = sg;
+                        break;
+                    case 3020: // poller
+                        var p = new Poller(id, label, fontColor, useFontStatusColor, x, y, width, height);
+                        elementList[id] = p;
+                        break;
+                    case 3060: // Shape
+                        if (shape === 'rectangle') {
+                            var rect = new Rectangle(id, label, x, y, width, height, color, fontColor, opacity);
+                            elementList[id] = rect;
+                        } else if (shape === 'ellipse') {
+                            var ellipse = new Ellipse(id, label, x, y, width, height, color, fontColor, opacity);
+                            elementList[id] = ellipse;
+                        } else if (shape === 'triangle') {
+                            var triangle = new Triangle(id, label, x, y, width, height, color, fontColor, opacity);
+                            elementList[id] = triangle;
+                        } else if (shape === 'custom') {
+                            var custom = new Custom(id, label, x, y, width, height, color, fontColor, opacity, points);
+                            elementList[id] = custom;
+                        } else {
+                            console.warn('Shape not (yet) handled: ' + shape);
+                        }
+                        break;
+                    case 3051: // media / image
+                        var img = new Image(id, label, x, y, width, height, color, fontColor, opacity, mediaId);
+                        elementList[id] = img;
+                        break;
+                    case 5010: // Ouput
+                        var rect = new Rectangle(id, 'Not implemented (Output)', x, y, width, height, color, fontColor, opacity);
+                        elementList[id] = rect;
+                        break;
+                    case 5020: // Jauge
+                        var rect = new Rectangle(id, 'Not implemented (Jauge)', x, y, width, height, color, fontColor, opacity);
+                        elementList[id] = rect;
+                        break;
+                    case 5030: // Chart
+                        var rect = new Rectangle(id, 'Not implemented (Chart)', x, y, width, height, color, fontColor, opacity);
+                        elementList[id] = rect;
+                        break;
+                    case 5040: // Pie
+                        var rect = new Rectangle(id, 'Not implemented (Pie)', x, y, width, height, color, fontColor, opacity);
+                        elementList[id] = rect;
+                        break;
+                    default:
+                        console.warn('Type not (yet) handled: ' + type);
+                        console.log(element)
+;                }
+            }
+
+        } catch (e) {
+            console.error('Error while parsing JSON');
+            console.error(e);
+        }
+    }
+
+    /**
+     * Generic error handler for Ajax calls
+     */
+	function onError(e) {
+		console.error('Error in AJAX reqest');
+		console.error(e);
+	}
+
+    /**
+     * Step #1 authenticate + list gates (2 Ajax calls)
+     */
+	var authenticate = document.getElementById("authenticate");
+	authenticate.onclick = function (e) {
+        var user = document.getElementById("user").value;
+		var password = document.getElementById("password").value;
+        ip_map_server = document.getElementById("ip").value
+
+		var req = new XMLHttpRequest();
+		req.onerror = onError;
+		req.onreadystatechange = function (aEvt) {
+			if (req.readyState == 4) {
+                if (req.status == 200) {
+                    console.log("Ajax response received from server");
+                    try {
+                        console.log(req.responseText);
+                        var jsonObj = JSON.parse(req.responseText);
+                    } catch (e) {
+                        console.error('Error parsing JSON response');
+                        console.error(e);
+                    }
+                    studio_session = jsonObj.studio_session;
+                    console.log("studio_session: " + studio_session);
+                }
+				else {
+                    console.error("Error during request");
+                    console.error(req.responseText);
+                }
+			}
+		};
+
+        req.open('POST', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/authentication?encoded=false', false);
+
+        req.setRequestHeader('Accept', 'application/json');
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		req.send('user=' + user + '&password=' + password);
+
+        if (studio_session) {
+            var req2 = new XMLHttpRequest();
+            req2.onerror = onError;
+            req2.onreadystatechange = function (aEvt) {
+                if (req2.readyState == 4) {
+                    if (req2.status == 200) {
+                        console.log("Ajax response received from server");
+                        try {
+                            console.log(req2.responseText);
+
+                            var jsonObj = JSON.parse(req2.responseText);
+
+                            // clear existing gates in list
+                            var gateListElement = document.getElementById("gateList");
+                            while(gateListElement.options.length > 0) {
+                                gateListElement.remove(0);
+                            }
+                            for (var i = 0; i < jsonObj.length; i++) {
+                                var gate = jsonObj[i];
+                                var option = document.createElement("option");
+                                var label = 'FIXME';
+                                for (var j = 0; j < gate.properties.length; j++) {
+                                    property = gate.properties[j];
+                                    if (property.key === 'label') {
+                                        label = property.value;
+                                    }
+                                }
+                                option.text = 'Gate #' + gate.id + ' Label="' + label + '"';
+                                option.value = gate.id;
+                                option.setAttribute('data-targetId', gate.targetId);
+                                gateListElement.appendChild(option);
+                            }
+
+
+                        } catch (e) {
+                            console.error('Error parsing JSON response');
+                            console.error(e);
+                        }
+
+                    }
+                    else {
+                        console.error("Error during request");
+                        console.error(req2.responseText);
+                        alert('Error while listing gates');
+                    }
+                }
+            };
+            req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/gate/', false);
+            req2.setRequestHeader('Accept', 'application/json');
+            req2.setRequestHeader('studio-session', studio_session);
+            req2.send();
+
+        } else {
+            alert('Error: failed to get centreon_studio id');
+        }
+
+	};
+
+    /**
+     * Step #2 open gate + get elements => processJsonGateContent()
+     */
+    var displayGate = document.getElementById("displayGate");
+    displayGate.onclick = function (e) {
+        contextId = '';
+        // clear SVG + elementList
+        var svg = document.getElementById("svg");
+        while (svg.firstChild) {
+            svg.removeChild(svg.firstChild);
+        }
+        elementList = {};
+        var gateList = document.getElementById("gateList");
+        if (gateList.selectedIndex != -1) {
+
+            gateId = gateList.options[gateList.selectedIndex].value;
+            if (gateId != 'N/A') {
+
+                targetId = gateList.options[gateList.selectedIndex].getAttribute('data-targetId');
+
+                var req = new XMLHttpRequest();
+                req.onerror = onError;
+                req.onreadystatechange = function (aEvt) {
+                    if (req.readyState == 4) {
+                        if (req.status == 200) {
+                            console.log("Ajax response received from server");
+                            try {
+                                console.log('RAW response: ' + req.responseText);
+
+                                // JSON.parse is breaking long integers...
+                                // var jsonObj = JSON.parse(req.responseText);
+                                // console.log('(de)JSONified: ' + jsonObj.contextId);
+
+                                match = req.responseText.match('.*"contextId":([0-9]*).*');
+                                if (match) {
+                                    contextId = match[1]
+                                }
+
+                            } catch (e) {
+                                console.error('Error parsing JSON response');
+                                console.error(e);
+                            }
+                        }
+                        else {
+                            console.error("Error during request");
+                            console.error(req.responseText);
+                        }
+                    }
+                };
+
+                req.open('POST', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/gate/open', false);
+
+                req.setRequestHeader('Accept', 'application/json');
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                req.setRequestHeader('studio-session', studio_session);
+                req.send('gateId=' + gateId);
+
+
+                console.log('gate opened, contextId="' + contextId + '"');
+                if (contextId) {
+                    var req2 = new XMLHttpRequest();
+                    req2.onerror = onError;
+                    req2.onreadystatechange = function (aEvt) {
+                        if (req2.readyState == 4) {
+                            if (req2.status == 200) {
+                                console.log("Ajax response received from server");
+
+                                processJsonGateContent(req2.responseText);
+
+                            }
+                            else {
+                                console.error("Error during request");
+                                console.error(req2.responseText);
+                                alert('Error while opening gate');
+                            }
+                        }
+                    };
+                    req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/element/' + targetId /*+ '?level=3'*/, false);
+                    req2.setRequestHeader('Accept', 'application/json');
+                    req2.setRequestHeader('studio-session', studio_session);
+                    req2.setRequestHeader('contextId', contextId);
+                    req2.send('level=3');
+                } else {
+                    alert('Error: failed to get contextId');
+                }
+
+            } else {
+                alert('Invalid gate');
+            }
+        } else {
+            alert('Choose a gate first');
+        }
+    };
+
+    /**
+     * Step #3 apply initial status or update status
+     */
+    var updateStatus = document.getElementById("updateStatus");
+    updateStatus.onclick = function (e) {
+        if (contextId) {
+
+            var req = new XMLHttpRequest();
+            req.onerror = onError;
+            req.onreadystatechange = function (aEvt) {
+                if (req.readyState == 4) {
+                    if (req.status == 200) {
+                        console.log("Ajax response received from server");
+                        try {
+                            statusJsonObj = JSON.parse(req.responseText);
+                            for (var i = 0; i < statusJsonObj.length; i++) {
+                                var status = statusJsonObj[i];
+                                var id = status['elementId'];
+                                var ownStatus = status.ownStatus.status;
+                                var inheritedStatus = status.heritedStatus.status;
+                                console.log(id + ' => ' + elementList[id].name + ' ownStatus=' + ownStatus + ' inheritedStatus=' + inheritedStatus);
+                                var element = elementList[id];
+
+                                // FIXME
+                                // Statuses returned by Map Server does not seem compilant with mail from JBL
+                                //BUILTIN_STATUS_ID_OK              = -1;
+                                //BUILTIN_STATUS_ID_WARNING         = -2;
+                                //BUILTIN_STATUS_ID_CRITICAL        = -3;
+                                //BUILTIN_STATUS_ID_UNKNOW          = -4;
+                                //
+                                //BUILTIN_STATUS_ID_UP              = -5;
+                                //BUILTIN_STATUS_ID_DOWN            = -6;
+                                //BUILTIN_STATUS_ID_UNREACHABLE     = -7;
+                                //
+                                //BUILTIN_STATUS_ID_PENDING         = -8;
+                                //BUILTIN_STATUS_ID_NA              = -9;
+                                switch (ownStatus) {
+                                    case -1:
+                                        element.setOwnStatus(0);
+                                        break;
+                                    case -2:
+                                        element.setOwnStatus(1);
+                                        break;
+                                    case -3:
+                                        element.setOwnStatus(2);
+                                        break;
+                                    case -4:
+                                        element.setOwnStatus(3);
+                                        break
+                                    case -5:
+                                        element.setOwnStatus(4);
+                                        break;
+                                    case -6:
+                                        element.setOwnStatus(2);
+                                        break;
+                                    case -9: // N/A, no need to log anything
+                                        break;
+                                    default:
+                                        console.warn('Unsupported own status: ' + ownStatus);
+                                }
+                                switch (inheritedStatus) {
+                                    case -1:
+                                        element.setInheritedStatus(0);
+                                        break;
+                                    case -2:
+                                        element.setInheritedStatus(1);
+                                        break;
+                                    case -3:
+                                        element.setInheritedStatus(2);
+                                        break;
+                                    case -4:
+                                        element.setInheritedStatus(3);
+                                        break;
+                                    case -5:
+                                        element.setInheritedStatus(4);
+                                        break;
+                                    case -9: // N/A, no need to log anything
+                                        break;
+                                    default:
+                                        console.warn('Unsupported inherited status: ' + ownStatus);
+                                }
+
+                            }
+
+
+                        } catch (e) {
+                            console.error('Error parsing JSON response');
+                            console.error(e);
+                        }
+                    }
+                    else {
+                        console.error("Error during request");
+                        console.error(req.responseText);
+                    }
+                }
+            };
+
+            var idStr = '';
+            for (var id in elementList) {
+                var element = elementList[id];
+                // We are only managing statuses updates at the moment (no position updates...)
+                // So we are ignoring shapes here
+                // Note that JS inheritance is working properly \o/
+                // TODO: handle ouput widget (can be done easily)
+                // TODO: handle chart/pie/jauge (once implemented ;)
+                if (element instanceof Element) {
+                    // OMG, please don't tell anyone I wrote it
+                    // console.log('Object: ' + element.constructor.name + ' id: ' + element.id + ' name:' + element.name);
+                    if (idStr.length > 0) {
+                        idStr = idStr + ':' + element.id;
+                    } else {
+                        idStr = '' + element.id;
+                    }
+                } else {
+                    // console.warn('No possible status for ' + element.id);
+                }
+            }
+
+            req.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/status/' + idStr, false);
+
+            req.setRequestHeader('Accept', 'application/json');
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.setRequestHeader('studio-session', studio_session);
+            req.setRequestHeader('contextId', contextId);
+            req.send();
+        } else {
+            alert('You need to display first');
+        }
+    };
+
+    // http://stackoverflow.com/a/9458996/128597
+    function _arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+
+    function loadMedia(image, mediaId) {
+
+        var req = new XMLHttpRequest();
+        req.onerror = onError;
+        req.onreadystatechange = function (aEvt) {
+            if (req.readyState == 4) {
+                if (req.status == 200) {
+                    console.log("Ajax response received from server");
+                    try {
+                        var contentType = req.getResponseHeader('Content-Type');
+                        var img = req.response;
+                        image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'data:' + contentType + ';base64,' + _arrayBufferToBase64(img));
+                    } catch (e) {
+                        console.error('Error parsing JSON response');
+                        console.error(e);
+                    }
+                }
+                else {
+                    console.error("Error during request");
+                    console.error(req.responseText);
+                }
+            }
+        };
+
+        req.open('GET', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/media/' + mediaId, true);
+        // req.open('GET', 'http://lobbydata.com/Content/images/bg_price2.gif', true);
+        // This line is needed, otherwise image is broken
+        // Note that XHR MUST be async in order to be able to change this property
+        req.responseType = 'arraybuffer';
+
+        // req.setRequestHeader('Accept', 'application/json');
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        // req.setRequestHeader('studio-session', studio_session);
+        req.send();
+
+    }
+
+	//]]>
+</script> 
+		
+
+		
+	</body>
+</html>
