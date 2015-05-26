@@ -58,8 +58,8 @@
     // Struct storing elements on SVG, id => Object
     var elementList = {};
 
-    // Global element id counter
-    // var elementIdCounter = 0;
+    // Global refresh status thread (setInterval())
+    var refreshThread;
 
     /////////////////////////////////////////////////////////////////////////////////
     // Functions
@@ -69,7 +69,7 @@
     /**
      * Main function used to parse the whole giant JSON received when querying all elements of a gate
      */
-    function processJsonGateContent(jsonStr) {
+    function processJsonViewContent(jsonStr) {
         try {
             var jsonObj = JSON.parse(jsonStr);
             console.log(jsonObj);
@@ -230,6 +230,7 @@
 	}
 
     function updateStatus() {
+        console.log("Refresh - " + new Date());
         var req = new XMLHttpRequest();
         req.onerror = onError;
         req.onreadystatechange = function (aEvt) {
@@ -355,11 +356,17 @@
      */
     function displayView(viewId) {
 
-        // clear SVG + elementList
+        // Purge existing view, that's to say
+        // 1) stop status refresh thread on existing objects (if any)
+        if (refreshThread) {
+            clearInterval(refreshThread);
+        }
+        // 2) clear SVG content
         var svg = document.getElementById("svg");
         while (svg.firstChild) {
             svg.removeChild(svg.firstChild);
         }
+        // 3) clear Element struct describing the content of the SVG
         elementList = {};
 
         var req2 = new XMLHttpRequest();
@@ -369,8 +376,11 @@
                 if (req2.status == 200) {
                     console.log("Ajax response received from server");
 
-                    processJsonGateContent(req2.responseText);
+                    // Populate SVG
+                    processJsonViewContent(req2.responseText);
+                    // Start updating statuses of objects created on the SVG
                     updateStatus();
+                    refreshThread = setInterval(updateStatus, 3000);
                 }
                 else {
                     console.error("Error during request");
@@ -483,17 +493,17 @@
 	};
 
     /**
-     * Step #2 open gate + get elements => processJsonGateContent()
+     * Step #2 open gate + get elements => processJsonViewContent()
      */
     var displayGate = document.getElementById("displayGate");
     displayGate.onclick = function (e) {
         contextId = '';
         // clear SVG + elementList
-        var svg = document.getElementById("svg");
+        /*var svg = document.getElementById("svg");
         while (svg.firstChild) {
             svg.removeChild(svg.firstChild);
         }
-        elementList = {};
+        elementList = {};*/
         var gateList = document.getElementById("gateList");
         if (gateList.selectedIndex != -1) {
 
@@ -538,7 +548,6 @@
                 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 req.setRequestHeader('studio-session', studio_session);
                 req.send('gateId=' + gateId);
-
 
                 console.log('gate opened, contextId="' + contextId + '"');
                 if (contextId) {
