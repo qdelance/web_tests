@@ -2,6 +2,10 @@
     cursor: move;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 svg {
     border: 1px solid black;
 }

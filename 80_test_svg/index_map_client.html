@@ -43,8 +43,11 @@
     var studio_session;
 
     // Used to store info of the gate that is opened after step #2
+    // Id of the gate which is opened
     var gateId;
+    // Target Id of the gate which is opened, to be passed as param to the element ressource (Ajax) to get the content of the view
     var targetId;
+    // Token associated to the opened gate (security)
     var contextId;
 
     // Map server IP used for all Ajax calls
@@ -142,8 +145,8 @@
                         if (height == 0) {
                             height = 88;
                         }
-                        var e = new Element(id, label, fontColor, false, x, y, width, height);
-                        elementList[id] = e;
+                        var c = new Container(id, label, fontColor, false, x, y, width, height);
+                        elementList[id] = c;
                         break;
                     case 3003:
                         var host = new Host(id, label, fontColor, useFontStatusColor, x, y, width, height);
@@ -208,8 +211,8 @@
                         break;
                     default:
                         console.warn('Type not (yet) handled: ' + type);
-                        console.log(element)
-;                }
+                        console.log(element);
+                }
             }
 
         } catch (e) {
@@ -225,6 +228,163 @@
 		console.error('Error in AJAX reqest');
 		console.error(e);
 	}
+
+    function updateStatus() {
+        var req = new XMLHttpRequest();
+        req.onerror = onError;
+        req.onreadystatechange = function (aEvt) {
+            if (req.readyState == 4) {
+                if (req.status == 200) {
+                    console.log("Ajax response received from server");
+                    try {
+                        statusJsonObj = JSON.parse(req.responseText);
+                        for (var i = 0; i < statusJsonObj.length; i++) {
+                            var status = statusJsonObj[i];
+                            var id = status['elementId'];
+                            var ownStatus = status.ownStatus.status;
+                            var inheritedStatus = status.heritedStatus.status;
+                            console.log(id + ' => ' + elementList[id].name + ' ownStatus=' + ownStatus + ' inheritedStatus=' + inheritedStatus);
+                            var element = elementList[id];
+
+                            // FIXME
+                            // Statuses returned by Map Server does not seem compilant with mail from JBL
+                            //BUILTIN_STATUS_ID_OK              = -1;
+                            //BUILTIN_STATUS_ID_WARNING         = -2;
+                            //BUILTIN_STATUS_ID_CRITICAL        = -3;
+                            //BUILTIN_STATUS_ID_UNKNOW          = -4;
+                            //
+                            //BUILTIN_STATUS_ID_UP              = -5;
+                            //BUILTIN_STATUS_ID_DOWN            = -6;
+                            //BUILTIN_STATUS_ID_UNREACHABLE     = -7;
+                            //
+                            //BUILTIN_STATUS_ID_PENDING         = -8;
+                            //BUILTIN_STATUS_ID_NA              = -9;
+                            switch (ownStatus) {
+                                case -1:
+                                    element.setOwnStatus(0);
+                                    break;
+                                case -2:
+                                    element.setOwnStatus(1);
+                                    break;
+                                case -3:
+                                    element.setOwnStatus(2);
+                                    break;
+                                case -4:
+                                    element.setOwnStatus(3);
+                                    break
+                                case -5:
+                                    element.setOwnStatus(4);
+                                    break;
+                                case -6:
+                                    element.setOwnStatus(2);
+                                    break;
+                                case -9: // N/A, no need to log anything
+                                    break;
+                                default:
+                                    console.warn('Unsupported own status: ' + ownStatus);
+                            }
+                            switch (inheritedStatus) {
+                                case -1:
+                                    element.setInheritedStatus(0);
+                                    break;
+                                case -2:
+                                    element.setInheritedStatus(1);
+                                    break;
+                                case -3:
+                                    element.setInheritedStatus(2);
+                                    break;
+                                case -4:
+                                    element.setInheritedStatus(3);
+                                    break;
+                                case -5:
+                                    element.setInheritedStatus(4);
+                                    break;
+                                case -9: // N/A, no need to log anything
+                                    break;
+                                default:
+                                    console.warn('Unsupported inherited status: ' + ownStatus);
+                            }
+
+                        }
+
+
+                    } catch (e) {
+                        console.error('Error parsing JSON response');
+                        console.error(e);
+                    }
+                }
+                else {
+                    console.error("Error during request");
+                    console.error(req.responseText);
+                }
+            }
+        };
+
+        var idStr = '';
+        for (var id in elementList) {
+            var element = elementList[id];
+            // We are only managing statuses updates at the moment (no position updates...)
+            // So we are ignoring shapes here
+            // Note that JS inheritance is working properly \o/
+            // TODO: handle ouput widget (can be done easily)
+            // TODO: handle chart/pie/jauge (once implemented ;)
+            if (element instanceof Element) {
+                // OMG, please don't tell anyone I wrote it
+                // console.log('Object: ' + element.constructor.name + ' id: ' + element.id + ' name:' + element.name);
+                if (idStr.length > 0) {
+                    idStr = idStr + ':' + element.id;
+                } else {
+                    idStr = '' + element.id;
+                }
+            } else {
+                // console.warn('No possible status for ' + element.id);
+            }
+        }
+
+        req.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/status/' + idStr, false);
+
+        req.setRequestHeader('Accept', 'application/json');
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        req.setRequestHeader('studio-session', studio_session);
+        req.setRequestHeader('contextId', contextId);
+        req.send();
+    }
+
+    /**
+     * viewId = targetId (when opening a gate) or child.id (when opening a container)
+     */
+    function displayView(viewId) {
+
+        // clear SVG + elementList
+        var svg = document.getElementById("svg");
+        while (svg.firstChild) {
+            svg.removeChild(svg.firstChild);
+        }
+        elementList = {};
+
+        var req2 = new XMLHttpRequest();
+        req2.onerror = onError;
+        req2.onreadystatechange = function (aEvt) {
+            if (req2.readyState == 4) {
+                if (req2.status == 200) {
+                    console.log("Ajax response received from server");
+
+                    processJsonGateContent(req2.responseText);
+                    updateStatus();
+                }
+                else {
+                    console.error("Error during request");
+                    console.error(req2.responseText);
+                    alert('Error while opening gate');
+                }
+            }
+        };
+        req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/element/' + viewId, false);
+        req2.setRequestHeader('Accept', 'application/json');
+        req2.setRequestHeader('studio-session', studio_session);
+        req2.setRequestHeader('contextId', contextId);
+        req2.send('level=3');
+    }
 
     /**
      * Step #1 authenticate + list gates (2 Ajax calls)
@@ -382,28 +542,7 @@
 
                 console.log('gate opened, contextId="' + contextId + '"');
                 if (contextId) {
-                    var req2 = new XMLHttpRequest();
-                    req2.onerror = onError;
-                    req2.onreadystatechange = function (aEvt) {
-                        if (req2.readyState == 4) {
-                            if (req2.status == 200) {
-                                console.log("Ajax response received from server");
-
-                                processJsonGateContent(req2.responseText);
-
-                            }
-                            else {
-                                console.error("Error during request");
-                                console.error(req2.responseText);
-                                alert('Error while opening gate');
-                            }
-                        }
-                    };
-                    req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/element/' + targetId /*+ '?level=3'*/, false);
-                    req2.setRequestHeader('Accept', 'application/json');
-                    req2.setRequestHeader('studio-session', studio_session);
-                    req2.setRequestHeader('contextId', contextId);
-                    req2.send('level=3');
+                    displayView(targetId);
                 } else {
                     alert('Error: failed to get contextId');
                 }
@@ -419,128 +558,10 @@
     /**
      * Step #3 apply initial status or update status
      */
-    var updateStatus = document.getElementById("updateStatus");
-    updateStatus.onclick = function (e) {
+    var updateStatusButton = document.getElementById("updateStatus");
+    updateStatusButton.onclick = function (e) {
         if (contextId) {
-
-            var req = new XMLHttpRequest();
-            req.onerror = onError;
-            req.onreadystatechange = function (aEvt) {
-                if (req.readyState == 4) {
-                    if (req.status == 200) {
-                        console.log("Ajax response received from server");
-                        try {
-                            statusJsonObj = JSON.parse(req.responseText);
-                            for (var i = 0; i < statusJsonObj.length; i++) {
-                                var status = statusJsonObj[i];
-                                var id = status['elementId'];
-                                var ownStatus = status.ownStatus.status;
-                                var inheritedStatus = status.heritedStatus.status;
-                                console.log(id + ' => ' + elementList[id].name + ' ownStatus=' + ownStatus + ' inheritedStatus=' + inheritedStatus);
-                                var element = elementList[id];
-
-                                // FIXME
-                                // Statuses returned by Map Server does not seem compilant with mail from JBL
-                                //BUILTIN_STATUS_ID_OK              = -1;
-                                //BUILTIN_STATUS_ID_WARNING         = -2;
-                                //BUILTIN_STATUS_ID_CRITICAL        = -3;
-                                //BUILTIN_STATUS_ID_UNKNOW          = -4;
-                                //
-                                //BUILTIN_STATUS_ID_UP              = -5;
-                                //BUILTIN_STATUS_ID_DOWN            = -6;
-                                //BUILTIN_STATUS_ID_UNREACHABLE     = -7;
-                                //
-                                //BUILTIN_STATUS_ID_PENDING         = -8;
-                                //BUILTIN_STATUS_ID_NA              = -9;
-                                switch (ownStatus) {
-                                    case -1:
-                                        element.setOwnStatus(0);
-                                        break;
-                                    case -2:
-                                        element.setOwnStatus(1);
-                                        break;
-                                    case -3:
-                                        element.setOwnStatus(2);
-                                        break;
-                                    case -4:
-                                        element.setOwnStatus(3);
-                                        break
-                                    case -5:
-                                        element.setOwnStatus(4);
-                                        break;
-                                    case -6:
-                                        element.setOwnStatus(2);
-                                        break;
-                                    case -9: // N/A, no need to log anything
-                                        break;
-                                    default:
-                                        console.warn('Unsupported own status: ' + ownStatus);
-                                }
-                                switch (inheritedStatus) {
-                                    case -1:
-                                        element.setInheritedStatus(0);
-                                        break;
-                                    case -2:
-                                        element.setInheritedStatus(1);
-                                        break;
-                                    case -3:
-                                        element.setInheritedStatus(2);
-                                        break;
-                                    case -4:
-                                        element.setInheritedStatus(3);
-                                        break;
-                                    case -5:
-                                        element.setInheritedStatus(4);
-                                        break;
-                                    case -9: // N/A, no need to log anything
-                                        break;
-                                    default:
-                                        console.warn('Unsupported inherited status: ' + ownStatus);
-                                }
-
-                            }
-
-
-                        } catch (e) {
-                            console.error('Error parsing JSON response');
-                            console.error(e);
-                        }
-                    }
-                    else {
-                        console.error("Error during request");
-                        console.error(req.responseText);
-                    }
-                }
-            };
-
-            var idStr = '';
-            for (var id in elementList) {
-                var element = elementList[id];
-                // We are only managing statuses updates at the moment (no position updates...)
-                // So we are ignoring shapes here
-                // Note that JS inheritance is working properly \o/
-                // TODO: handle ouput widget (can be done easily)
-                // TODO: handle chart/pie/jauge (once implemented ;)
-                if (element instanceof Element) {
-                    // OMG, please don't tell anyone I wrote it
-                    // console.log('Object: ' + element.constructor.name + ' id: ' + element.id + ' name:' + element.name);
-                    if (idStr.length > 0) {
-                        idStr = idStr + ':' + element.id;
-                    } else {
-                        idStr = '' + element.id;
-                    }
-                } else {
-                    // console.warn('No possible status for ' + element.id);
-                }
-            }
-
-            req.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/status/' + idStr, false);
-
-            req.setRequestHeader('Accept', 'application/json');
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setRequestHeader('studio-session', studio_session);
-            req.setRequestHeader('contextId', contextId);
-            req.send();
+            updateStatus();
         } else {
             alert('You need to display first');
         }

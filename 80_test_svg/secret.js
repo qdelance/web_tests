@@ -513,7 +513,7 @@ Service.prototype.setInheritedStatus = function (status) {
 
 function BA(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
-    console.log('Creating ba "' + name + '"');
+    console.log('Creating ba with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/ba.png');
@@ -533,7 +533,7 @@ BA.prototype.setInheritedStatus = function (status) {
 
 function HostGroup(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
-    console.log('Creating element with own status with name "' + name + '"');
+    console.log('Creating host group with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/hostgroup.png');
@@ -553,7 +553,7 @@ HostGroup.prototype.setInheritedStatus = function (status) {
 
 function ServiceGroup(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
-    console.log('Creating element with own status with name "' + name + '"');
+    console.log('Creating service group with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/servicegroup.png');
@@ -572,7 +572,7 @@ ServiceGroup.prototype.setInheritedStatus = function (status) {
 
 function Poller(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
-    console.log('Creating element with own status with name "' + name + '"');
+    console.log('Creating poller with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/poller.png');
@@ -587,7 +587,29 @@ Poller.prototype.setOwnStatus = function (status) {
 
 Poller.prototype.setInheritedStatus = function (status) {
     console.error('Poller has no inherited status!');
+};
+
+function Container(id, name, fontColor, useFontStatusColor, x, y, width, height) {
+
+    console.log('Creating container with name "' + name + '"');
+    Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
+
+    this.g.setAttribute('class', 'clickable');
+    this.g.setAttribute('onclick', 'javascript:displayView(' + this.id + ')');
+
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
 }
+
+Container.prototype = Object.create(Element.prototype);
+Container.prototype.constructor = Poller;
+
+Container.prototype.setOwnStatus = function (status) {
+    console.error('Container has no own status!');
+};
+
+Container.prototype.setInheritedStatus = function (status) {
+    this.setStatus(status);
+};
 
 function setOwnStatusUp(id) {
     console.log('Set own status up for id "' + id + '"');
