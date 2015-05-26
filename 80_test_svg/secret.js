@@ -79,9 +79,9 @@ function Custom(id, name, x, y, width, height, color, fontColor, opacity, points
 
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     this.g.appendChild(this.polygon);
     this.g.appendChild(this.text);
+    element.appendChild(this.g);
 }
 Custom.prototype.constructor = Custom;
 
@@ -138,9 +138,9 @@ function Triangle(id, name, x, y, width, height, color, fontColor, opacity) {
     this.text.setAttribute('text-anchor', 'middle');
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     this.g.appendChild(this.polygon);
     this.g.appendChild(this.text);
+    element.appendChild(this.g);
 }
 Triangle.prototype.constructor = Triangle;
 
@@ -191,9 +191,9 @@ function Ellipse(id, name, x, y, width, height, color, fontColor, opacity) {
 
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     this.g.appendChild(this.ellipse);
     this.g.appendChild(this.text);
+    element.appendChild(this.g);
 }
 Ellipse.prototype.constructor = Ellipse;
 
@@ -246,9 +246,9 @@ function Rectangle(id, name, x, y, width, height, color, fontColor, opacity) {
 
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     this.g.appendChild(this.rect);
     this.g.appendChild(this.text);
+    element.appendChild(this.g);
 }
 Rectangle.prototype.constructor = Rectangle;
 
@@ -318,10 +318,10 @@ function Image(id, name, x, y, width, height, color, fontColor, opacity, mediaId
 */
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     // this.g.appendChild(this.rect);
     // this.g.appendChild(this.text);
     this.g.appendChild(this.image);
+    element.appendChild(this.g);
 }
 Image.prototype.constructor = Image;
 
@@ -393,10 +393,10 @@ function Element(id, name, fontColor, useFontStatusColor, x, y, width, height) {
 
 
     var element = document.getElementById("svg");
-    element.appendChild(this.g);
     this.g.appendChild(this.rect);
     this.g.appendChild(this.image);
     this.g.appendChild(this.text);
+    element.appendChild(this.g);
 }
 Element.prototype.constructor = Element;
 
@@ -420,7 +420,6 @@ Element.prototype.setStatus = function (status) {
     } else {
         console.error('Invalid status: ' + status);
     }
-
 };
 
 // Prototype
@@ -594,10 +593,15 @@ function Container(id, name, fontColor, useFontStatusColor, x, y, width, height)
     console.log('Creating container with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
+    // draggable => clickable
     this.g.setAttribute('class', 'clickable');
+    // this.g.setAttributeNS(null, "onmousedown", "deselectElement(evt)");
+    // Specific to the containers
     this.g.setAttribute('onclick', 'javascript:displayView(' + this.id + ')');
 
+
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
+
 }
 
 Container.prototype = Object.create(Element.prototype);
@@ -710,7 +714,7 @@ function moveElement(evt){
 }
 
 function deselectElement(evt){
-    if(selectedElement != 0){
+    if (selectedElement != 0){
         selectedElement.removeAttributeNS(null, "onmousemove");
         selectedElement.removeAttributeNS(null, "onmouseout");
         selectedElement.removeAttributeNS(null, "onmouseup");
