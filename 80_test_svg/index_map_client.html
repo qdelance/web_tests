@@ -74,6 +74,12 @@
             var jsonObj = JSON.parse(jsonStr);
             console.log(jsonObj);
 
+            // Max values x/y read during loop thru all elements
+            // so that we can update SVG size to avoid part of the map from being hidden
+            // due to the SVG being too small
+            var max_x = 0;
+            var max_y = 0;
+
             for (var i = 0; i < jsonObj.elementRelations.length; i++) {
                 var element = jsonObj.elementRelations[i];
                 var label = '';
@@ -106,6 +112,12 @@
                         y = parseFloat(tmp[1]);
                     }
                 }
+
+                var tmp_max_x = x + width;
+                var tmp_max_y = y + height;
+                max_x = (tmp_max_x > max_x) ? tmp_max_x : max_x;
+                max_y = (tmp_max_y > max_y) ? tmp_max_y : max_y;
+
                 // console.log('x=' + x + ' y=' + y + ' width=' + width + ' height=' + height);
 
                 for (var j = 0; j < element.child.properties.length; j++) {
@@ -214,6 +226,9 @@
                         console.log(element);
                 }
             }
+            var svg = document.getElementById("svg");
+            svg.setAttribute('width', max_x);
+            svg.setAttribute('height', max_y);
         } catch (e) {
             console.error('Error while parsing JSON');
             console.error(e);
