@@ -373,10 +373,10 @@ function Element(id, name, fontColor, useFontStatusColor, x, y, width, height) {
     this.image = document.createElementNS("http://www.w3.org/2000/svg", "image");
     this.image.setAttribute('id', id + "-image");
     // FIXME remove magic numbers...
-    this.image.setAttribute('x', this.x - 36/2);
-    this.image.setAttribute('y', this.y - 36/2);
-    this.image.setAttribute('height', 36);
-    this.image.setAttribute('width', 36);
+    this.image.setAttribute('x', this.x - 32/2);
+    this.image.setAttribute('y', this.y - 32/2);
+    this.image.setAttribute('height', 32);
+    this.image.setAttribute('width', 32);
     this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host.png');
 
     ///////////////////////
@@ -535,7 +535,7 @@ function HostGroup(id, name, fontColor, useFontStatusColor, x, y, width, height)
     console.log('Creating host group with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
-    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/hostgroup.png');
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/host_group.png');
 }
 
 HostGroup.prototype = Object.create(Element.prototype);
@@ -555,7 +555,7 @@ function ServiceGroup(id, name, fontColor, useFontStatusColor, x, y, width, heig
     console.log('Creating service group with name "' + name + '"');
     Element.call(this, id, name, fontColor, useFontStatusColor, x, y, width, height);
 
-    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/servicegroup.png');
+    this.image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'img/service_group.png');
 }
 
 ServiceGroup.prototype = Object.create(Element.prototype);

@@ -333,6 +333,7 @@
                 if (element2 instanceof Container) {
                     console.log('Moving container "' + element2.name + '" to front');
                     var domElement = document.getElementById(element2.id);
+                    // Magic ! re-add element => on top
                     domElement.parentNode.appendChild(domElement);
                 }
             }
