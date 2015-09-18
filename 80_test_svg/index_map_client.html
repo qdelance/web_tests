@@ -13,11 +13,11 @@
     <p>Authenticate, then select a "gate", then display it.</p>
 
     <label for="ip">IP of Map Server: </label>
-    <input id="ip" type="text" value="10.30.3.94" placeholder=""><br>
+    <input id="ip" type="text" value="10.30.2.131" placeholder=""><br>
     <label for="user">User: </label>
     <input id="user" type="text" value="admin" placeholder=""><br>
     <label for="password">Password: </label>
-    <input id="password" type="text" value="merethis" placeholder=""><br>
+    <input id="password" type="text" value="centreon" placeholder=""><br>
     <button type="button" id="authenticate">Authenticate</button><br>
 
     <hr>
@@ -54,6 +54,7 @@
     // Map server IP used for all Ajax calls
     // JB 10.40.1.34
     // Pierre 10.30.3.94
+    // VM Makina 46.218.140.52 (externe) et 10.30.2.131 (interne)
     var ip_map_server;
 
     // Struct storing elements on SVG, id => Object
@@ -146,7 +147,7 @@
                 // Convert alpha managed by map as a SVG compliant property
                 var opacity = alpha / 255;
                 var type = element.child.type;
-                console.log('Processing element: label="' + label + '" type=' + type);
+                console.log('Processing element: label="' + label + '" type=' + type + '" id=' + id);
                 console.log(element);
                 switch (type) {
                     case 3001: // container
@@ -374,7 +375,7 @@
             }
         }
 
-        req.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/status/' + idStr, false);
+        req.open('GET', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/status/' + idStr, false);
 
         req.setRequestHeader('Accept', 'application/json');
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -421,7 +422,7 @@
                 }
             }
         };
-        req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/element/' + viewId, false);
+        req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/element/' + viewId, false);
         req2.setRequestHeader('Accept', 'application/json');
         req2.setRequestHeader('studio-session', studio_session);
         req2.setRequestHeader('contextId', contextId);
@@ -513,7 +514,7 @@
                     }
                 }
             };
-            req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/gate/', false);
+            req2.open('GET', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/gate/', false);
             req2.setRequestHeader('Accept', 'application/json');
             req2.setRequestHeader('studio-session', studio_session);
             req2.send();
@@ -552,7 +553,7 @@
                                 // var jsonObj = JSON.parse(req.responseText);
                                 // console.log('(de)JSONified: ' + jsonObj.contextId);
 
-                                match = req.responseText.match('.*"contextId":([0-9]*).*');
+                                match = req.responseText.match('.*"contextId":"(.*)".*');
                                 if (match) {
                                     contextId = match[1]
                                 }
@@ -569,7 +570,7 @@
                     }
                 };
 
-                req.open('POST', 'http://' + ip_map_server + ':8080/centreon-map/services/rest/gate/open', false);
+                req.open('POST', 'http://' + ip_map_server + ':8080/centreon-studio/services/rest/gate/open', false);
 
                 req.setRequestHeader('Accept', 'application/json');
                 req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

@@ -326,7 +326,7 @@ function Image(id, name, x, y, width, height, color, fontColor, opacity, mediaId
 Image.prototype.constructor = Image;
 
 // Setting propre inheritance in JS is a pain
-// We have no class inheritance but rather an object from objact (AKA prototype) inheritance
+// We have no class inheritance but rather an object from object (AKA prototype) inheritance
 // ES5 introduced Object.create()
 // ES6 will add more classical "class"
 // In the meantime, the best doc I found is: http://markdalgleish.com/2012/10/a-touch-of-class-inheritance-in-javascript/
@@ -434,10 +434,11 @@ function ElementWithExtraStatus(id, name, fontColor, useFontStatusColor, x, y, w
     this.extraRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     this.extraRect.setAttribute('id', id + "-own-rect");
     // Upper right
-    this.extraRect.setAttribute('x', this.x + this.width / 2 - 5 - 14);
+    var size = 18; // extra rect is 18 x 18 px
+    this.extraRect.setAttribute('x', this.x + this.width / 2 - 5 - size);
     this.extraRect.setAttribute('y', this.y - this.height / 2 + 5);
-    this.extraRect.setAttribute('height', 14);
-    this.extraRect.setAttribute('width', 14);
+    this.extraRect.setAttribute('height', size);
+    this.extraRect.setAttribute('width', size);
     this.extraRect.setAttribute('rx', 2);
     this.extraRect.setAttribute('ry', 2);
     this.extraRect.setAttribute('stroke-width', 2);
