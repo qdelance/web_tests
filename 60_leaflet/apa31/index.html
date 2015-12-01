@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+
+  <script src="export_31.geojson"></script>
+
+  <style>
+  #map { 
+    border: solid 1px black;
+    height: 650px;
+    width: 80%;
+  }
+
+  .info {
+      padding: 6px 8px;
+      font: 14px/16px Arial, Helvetica, sans-serif;
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+  }
+  .info h4 {
+      margin: 0 0 5px;
+      color: #777;
+  }
+
+  </style>
+  </head>
+
+  <body>
+  <h1>Tests Leaflet</h1>
+
+  <p>Cette page présente :
+  <ul>
+      <li>des marqueurs bleus positionnés via Lat/Long (possible de cliquer dessus)</li>
+      <li>des marqueurs verts positionnés via adresse géocodée (Google) + marqueurs utilisant le plugin Leaflet Awesome Markers</li>
+      <li>une zone de contrôle en haut à droite permet d'afficher l'un ou l'autre des groupes de marqueurs</li>
+      <li>un choropleth sur les départements de Haute Garonne, dont les couleurs sont liées à la densité de population, fenêtre d'info sur le mouse over</li>
+  </ul>
+  </p>
+  <div id="map"></div>
+  <script>
+
+      var latLong = L.layerGroup([]);
+      var geocoded = L.layerGroup([]);
+
+      var overlayMaps = {
+          "Avec Lat / Long": latLong,
+          "Geocodé": geocoded
+      };
+
+      // Toulouse
+      // var map = L.map('map').setView([43.6006785, 1.3626297], 11);
+
+      var map = L.map('map', {
+          center: [43.6006785, 1.3626297],
+          zoom: 9,
+          layers: [latLong, geocoded]
+      });
+
+      // OSM
+      /*var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+      var osm = new L.TileLayer(osmUrl, {
+          minZoom: 8,
+          maxZoom: 12,
+          attribution: osmAttrib
+      }).addTo(map);*/
+
+      // MapBox
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+          maxZoom: 18,
+          id: 'qdelance.o9pp3bnk',
+          accessToken: 'pk.eyJ1IjoicWRlbGFuY2UiLCJhIjoiTFI1elBLVSJ9.9Y7nucJCYK0X7awO7xHQdQ'
+      }).addTo(map);
+
+      L.control.layers(null, overlayMaps).addTo(map);
+
+
+      var plants = [
+      {
+          description: 'QDE Perso',
+          latitude: 43.4578801,
+          longitude: 1.3867249
+      },
+      {
+          description: 'QDE boulot',
+          latitude: 43.543218,
+          longitude: 1.5063613
+      },
+      {
+          description: 'APA 31',
+          latitude: 43.4470223,
+          longitude: 1.5988828
+      }
+      ];
+
+      for (var i = 0; i < plants.length; i++) {
+          var p = plants[i];
+          var marker = L.marker([p.latitude, p.longitude]).addTo(map);
+          marker.bindPopup('<strong>' + p.description+'</strong><br>' +
+          'Latitude : ' + p.latitude + '<br>' +
+          'Longitude : ' + p.longitude + '<br>');
+          latLong.addLayer(marker);
+      }
+
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode( { 'address': ' 2, rue Erik Satie - 31560 Nailloux'}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+              // Possible d'avoir plusieurs résultats, on ne prend que le premier
+              // normalement le + pertinent !
+              var lat = results[0].geometry.location.lat();
+              var long = results[0].geometry.location.lng();
+
+              var markerIcon = L.AwesomeMarkers.icon({
+                  icon: 'leaf',
+                  prefix: 'fa', // font awesome
+                  markerColor: 'green'
+              });
+
+
+              var marker = L.marker([lat, long], {icon: markerIcon}).addTo(map);
+              geocoded.addLayer(marker);
+
+              console.log('Geocodage OK, lat=' + lat + ' long=' + long);
+          } else {
+              console.warn("Le geocodage n\'a pu etre effectue pour la raison suivante: " + status);
+          }
+      });
+
+///////////////////////////////////////////:
+// Below Choropleth test
+// Data from export_31.geojson is loaded above
+// It comes from http://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/?tab=table
+
+      // control that shows state info on hover
+      var info = L.control();
+
+      info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info');
+          this.update();
+          return this._div;
+      };
+
+      info.update = function (props) {
+          this._div.innerHTML = '<h4>Info commune</h4>' +  (props ?
+                  '<b>' + props.nom_comm + '</b><br /><b>' + props.superficie + ' km²</b><br />' + props.population + ' milliers de personnes'
+                          : 'Sélectionner commune');
+      };
+
+      info.addTo(map);
+
+      /* Labarthe => Green ; Caraman => Red ; based on INSEE
+      function getColorForInsee(inseeCode) {
+          // console.log(inseeCode);
+          switch(inseeCode) {
+              case '31248':
+                  return 'red';
+              case '31106': // caraman
+                  return 'green';
+              default:
+                  return '#aaaaaa';
+          }
+      }*/
+
+var minDensity = 1000;
+var maxDensity = 0;
+
+      function getColorFromPopulationDensity(d) {
+
+          if (d > maxDensity) {
+              maxDensity = d;
+          }
+
+          if (d < minDensity) {
+              minDensity = d;
+          }
+
+          // An initial test shows that it ranges from 0 to 37
+          return d > 30 ? '#800026' :
+              d > 12  ? '#BD0026' :
+              d > 8  ? '#E31A1C' :
+              d > 5  ? '#FC4E2A' :
+              d > 3   ? '#FD8D3C' :
+              d > 2   ? '#FEB24C' :
+              d > 1   ? '#FED976' :
+              '#FFEDA0';
+      }
+
+      function style(feature) {
+          console.log(feature);
+          return {
+              // fillColor: getColorForInsee(feature.properties.insee_com),
+              fillColor: getColorFromPopulationDensity(feature.properties.population / feature.properties.superficie * 1000),
+              weight: 2,
+              opacity: 1,
+              color: 'white',
+              // dashArray: '3',
+              fillOpacity: 0.7
+          };
+      }
+
+      function highlightFeature(e) {
+          var layer = e.target;
+
+          layer.setStyle({
+              weight: 5,
+              color: '#666',
+              dashArray: '',
+              fillOpacity: 0.7
+          });
+
+          if (!L.Browser.ie && !L.Browser.opera) {
+              layer.bringToFront();
+          }
+
+          info.update(layer.feature.properties);
+      }
+
+      var geojson;
+
+      function resetHighlight(e) {
+          geojson.resetStyle(e.target);
+          info.update();
+      }
+
+      function zoomToFeature(e) {
+          map.fitBounds(e.target.getBounds());
+      }
+
+      function onEachFeature(feature, layer) {
+          layer.on({
+              mouseover: highlightFeature,
+              mouseout: resetHighlight,
+              click: zoomToFeature
+          });
+      }
+
+      // test variable defined in GeoJSON file, added manually after export from OSM
+      geojson = L.geoJson(test31, {
+          style: style,
+          onEachFeature: onEachFeature
+      }).addTo(map);
+
+      console.log('Min density = ' + minDensity);
+      console.log('Max density = ' + maxDensity);
+
+  </script>
+  </body>
+
+</html>
